@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
@@ -19,8 +18,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
-        android:orientation="horizontal"
-        android:background="@drawable/radio_group_background" >
+        android:background="@drawable/radio_group_background"
+        android:orientation="horizontal">
 
         <RadioButton
             android:id="@+id/income_radio"
@@ -28,12 +27,12 @@
             android:layout_height="35dp"
             android:layout_weight="1"
             android:background="@drawable/radio_selector"
+            android:button="@null"
             android:checked="true"
             android:gravity="center"
-            android:textSize="16sp"
             android:text="Income"
-            android:textStyle="bold"
-            android:button="@null" />
+            android:textSize="16sp"
+            android:textStyle="bold" />
 
 
         <RadioButton
@@ -42,12 +41,12 @@
             android:layout_height="35dp"
             android:layout_weight="1"
             android:background="@drawable/radio_selector"
+            android:button="@null"
             android:checked="false"
             android:gravity="center"
-            android:textSize="16dp"
             android:text="Expenditure"
-            android:textStyle="bold"
-            android:button="@null" />
+            android:textSize="16dp"
+            android:textStyle="bold" />
 
     </RadioGroup>
 
@@ -91,8 +90,8 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="0.75"
-            android:inputType="numberDecimal"
-            android:hint="Enter amount" />
+            android:hint="Enter amount"
+            android:inputType="numberDecimal" />
     </LinearLayout>
 
     <LinearLayout

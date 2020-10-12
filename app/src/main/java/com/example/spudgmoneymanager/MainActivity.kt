@@ -2,8 +2,6 @@ package com.example.spudgmoneymanager
 
 import android.app.Dialog
 import android.os.Bundle
-import android.text.InputFilter
-import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -19,8 +17,8 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         setUpTransactionList()
-        
-        add_transaction.setOnClickListener{
+
+        add_transaction.setOnClickListener {
             addTransaction()
         }
 
@@ -70,7 +68,9 @@ class MainActivity : AppCompatActivity() {
                 if (isIncome) {
                     dbHandler.addTransaction(TransactionModel(0, category, amount))
                 } else if (!isIncome) {
-                    dbHandler.addTransaction(TransactionModel(0, category, (amount.toDouble()*-1).toString()
+                    dbHandler.addTransaction(
+                        TransactionModel(
+                            0, category, (amount.toDouble() * -1).toString()
                         )
                     )
                 }

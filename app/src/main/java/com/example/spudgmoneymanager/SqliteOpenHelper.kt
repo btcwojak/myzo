@@ -4,12 +4,11 @@ import android.content.ContentValues
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
-import android.util.Log
-import java.math.BigDecimal
 import java.text.DecimalFormat
 import java.text.NumberFormat
 
-class SqliteOpenHelper (context: Context, factory: SQLiteDatabase.CursorFactory?) : SQLiteOpenHelper(context, DATABASE_NAME, factory, DATABASE_VERSION) {
+class SqliteOpenHelper(context: Context, factory: SQLiteDatabase.CursorFactory?) :
+    SQLiteOpenHelper(context, DATABASE_NAME, factory, DATABASE_VERSION) {
 
     companion object {
         private const val DATABASE_VERSION = 1
@@ -22,7 +21,8 @@ class SqliteOpenHelper (context: Context, factory: SQLiteDatabase.CursorFactory?
     }
 
     override fun onCreate(db: SQLiteDatabase?) {
-        val CREATE_TRANSACTIONS_TABLE = ("CREATE TABLE $TABLE_TRANSACTIONS($KEY_ID INTEGER PRIMARY KEY,$KEY_CATEGORY TEXT,$KEY_AMOUNT TEXT)")
+        val CREATE_TRANSACTIONS_TABLE =
+            ("CREATE TABLE $TABLE_TRANSACTIONS($KEY_ID INTEGER PRIMARY KEY,$KEY_CATEGORY TEXT,$KEY_AMOUNT TEXT)")
         db?.execSQL(CREATE_TRANSACTIONS_TABLE)
     }
 

@@ -9,9 +9,10 @@ import kotlinx.android.synthetic.main.transaction_row.view.*
 import java.text.DecimalFormat
 import java.text.NumberFormat
 
-class TransactionAdapter(val context: Context, val items: ArrayList<TransactionModel>): RecyclerView.Adapter<TransactionAdapter.ViewHolder>() {
+class TransactionAdapter(val context: Context, val items: ArrayList<TransactionModel>) :
+    RecyclerView.Adapter<TransactionAdapter.ViewHolder>() {
 
-    class ViewHolder(view: View): RecyclerView.ViewHolder(view) {
+    class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val transactionItem = view.transaction_row_layout
         val categoryView = view.category
         val amountView = view.amount
@@ -25,9 +26,7 @@ class TransactionAdapter(val context: Context, val items: ArrayList<TransactionM
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 
-
         val formatter: NumberFormat = DecimalFormat("#,##0.00")
-
 
         val transaction = items.get(position)
         holder.categoryView.text = transaction.category
