@@ -97,9 +97,9 @@ class MainActivity : AppCompatActivity() {
         val dbHandler = SqliteOpenHelper(this, null)
         val balance = dbHandler.getBalance()
         if (balance.isEmpty()) {
-            balance_figure_heading.text = "0"
+            balance_heading.text = "Error"
         } else {
-            balance_figure_heading.text = balance
+            balance_heading.text = "Balance: $balance"
         }
 
 

@@ -25,6 +25,7 @@ class TransactionAdapter(val context: Context, val items: ArrayList<TransactionM
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 
+
         val formatter: NumberFormat = DecimalFormat("#,##0.00")
 
 
