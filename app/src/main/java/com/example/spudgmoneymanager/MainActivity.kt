@@ -1,6 +1,8 @@
 package com.example.spudgmoneymanager
 
 import android.app.Dialog
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -44,6 +46,7 @@ class MainActivity : AppCompatActivity() {
         val addDialog = Dialog(this, R.style.Theme_Dialog)
         addDialog.setCancelable(false)
         addDialog.setContentView(R.layout.dialog_add)
+        addDialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT));
 
         addDialog.inc_exp_radio_group.setOnCheckedChangeListener { group, checkedId ->
             if (checkedId == R.id.income_radio) {
@@ -62,6 +65,7 @@ class MainActivity : AppCompatActivity() {
         addDialog.tvAdd.setOnClickListener {
             val category = addDialog.etCategoryLayout.etCategory.text.toString()
             val amount = addDialog.etAmountLayout.etAmount.text.toString()
+
             val dbHandler = SqliteOpenHelper(this, null)
 
             if (category.isNotEmpty() && amount.isNotEmpty()) {
