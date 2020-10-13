@@ -76,8 +76,7 @@
         android:layout_marginTop="10dp"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_marginLeft="15dp"
-        android:layout_marginRight="15dp"
-        app:boxStrokeColor="#000000" >
+        android:layout_marginRight="15dp" >
 
         <androidx.appcompat.widget.AppCompatEditText
             android:id="@+id/etAmount"

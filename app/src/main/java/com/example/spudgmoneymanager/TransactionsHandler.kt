@@ -12,7 +12,7 @@ class TransactionsHandler(context: Context, factory: SQLiteDatabase.CursorFactor
 
     companion object {
         private const val DATABASE_VERSION = 2
-        private const val DATABASE_NAME = "SpudgMoneyManager.db"
+        private const val DATABASE_NAME = "SMMTransactions.db"
         private const val TABLE_TRANSACTIONS = "transactions"
 
         private const val KEY_ID = "_id"
