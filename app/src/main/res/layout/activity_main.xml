@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".MainActivity"
+    android:background="@color/colorPrimary">
 
     <TextView
         android:id="@+id/account_heading"
@@ -14,6 +15,9 @@
         android:text="Main Account"
         android:textSize="24sp"
         android:textStyle="bold"
+        android:textColor="@color/colorAccent"
+        android:layout_marginLeft="225dp"
+        android:layout_marginRight="20dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -24,29 +28,20 @@
         android:layout_height="wrap_content"
         android:text="Balance: 0.00"
         android:textSize="16sp"
-        app:layout_constraintLeft_toLeftOf="@id/account_heading"
         app:layout_constraintRight_toRightOf="@id/account_heading"
         app:layout_constraintTop_toBottomOf="@id/account_heading" />
 
     <Button
-        android:id="@+id/switch_wallet"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Accounts"
-        app:layout_constraintBottom_toBottomOf="@id/account_heading"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toLeftOf="@id/account_heading"
-        app:layout_constraintTop_toTopOf="@id/account_heading" />
-
-    <Button
         android:id="@+id/add_transaction"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Add"
-        app:layout_constraintBottom_toBottomOf="@id/account_heading"
-        app:layout_constraintLeft_toRightOf="@+id/account_heading"
+        android:layout_height="50dp"
+        android:text="+ Transaction"
+        android:textColor="@color/colorAccent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="@id/account_heading" />
+        android:layout_marginBottom="25dp"
+        android:background="#FFFFFF" />
 
     <LinearLayout
         android:layout_width="match_parent"

@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.dialog_add.*
+import kotlinx.android.synthetic.main.dialog_add.view.*
 
 class MainActivity : AppCompatActivity() {
 
@@ -59,8 +60,8 @@ class MainActivity : AppCompatActivity() {
         }
 
         addDialog.tvAdd.setOnClickListener {
-            val category = addDialog.etCategory.text.toString()
-            val amount = addDialog.etAmount.text.toString()
+            val category = addDialog.etCategoryLayout.etCategory.text.toString()
+            val amount = addDialog.etAmountLayout.etAmount.text.toString()
             val dbHandler = SqliteOpenHelper(this, null)
 
             if (category.isNotEmpty() && amount.isNotEmpty()) {

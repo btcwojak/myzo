@@ -1,6 +1,7 @@
 package com.example.spudgmoneymanager
 
 import android.content.Context
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -31,6 +32,12 @@ class TransactionAdapter(val context: Context, val items: ArrayList<TransactionM
         val transaction = items.get(position)
         holder.categoryView.text = transaction.category
         holder.amountView.text = formatter.format((transaction.amount).toDouble()).toString()
+
+        if (position % 2 == 0) {
+            holder.transactionItem.setBackgroundColor(Color.parseColor("#FFFFFF"))
+        } else {
+            holder.transactionItem.setBackgroundColor(Color.parseColor("#EEEEEE"))
+        }
     }
 
     override fun getItemCount(): Int {

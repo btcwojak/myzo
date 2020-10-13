@@ -11,15 +11,18 @@
         android:text="Add Transaction"
         android:textColor="@android:color/black"
         android:textSize="18sp"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="8dp"
         android:textStyle="bold" />
 
     <RadioGroup
         android:id="@+id/inc_exp_radio_group"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:background="@drawable/radio_group_background"
-        android:orientation="horizontal">
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:orientation="horizontal"
+        style="?attr/radioButtonStyle">
 
         <RadioButton
             android:id="@+id/income_radio"
@@ -27,9 +30,9 @@
             android:layout_height="35dp"
             android:layout_weight="1"
             android:background="@drawable/radio_selector"
-            android:button="@null"
             android:checked="true"
             android:gravity="center"
+            android:layout_marginRight="2dp"
             android:text="Income"
             android:textSize="16sp"
             android:textStyle="bold" />
@@ -41,7 +44,7 @@
             android:layout_height="35dp"
             android:layout_weight="1"
             android:background="@drawable/radio_selector"
-            android:button="@null"
+            android:layout_marginLeft="2dp"
             android:checked="false"
             android:gravity="center"
             android:text="Expenditure"
@@ -50,54 +53,45 @@
 
     </RadioGroup>
 
-
-    <LinearLayout
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/etCategoryLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"
-        android:orientation="horizontal">
+        android:layout_marginTop="5dp"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_marginLeft="25dp"
+        android:layout_marginRight="25dp">
 
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.25"
-            android:text="Category"
-            android:textSize="18sp" />
-
-        <EditText
+        <androidx.appcompat.widget.AppCompatEditText
             android:id="@+id/etCategory"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="0.75"
-            android:hint="Enter category" />
-    </LinearLayout>
+            android:hint="Category" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:orientation="horizontal">
+    </com.google.android.material.textfield.TextInputLayout>
 
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.25"
-            android:text="Amount"
-            android:textSize="18sp" />
-
-        <EditText
-            android:id="@+id/etAmount"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.75"
-            android:hint="Enter amount"
-            android:inputType="numberDecimal" />
-    </LinearLayout>
-
-    <LinearLayout
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/etAmountLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_marginLeft="25dp"
+        android:layout_marginRight="25dp">
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/etAmount"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Amount"
+            android:inputType="numberDecimal"/>
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
         android:gravity="end"
         android:orientation="horizontal">
 
