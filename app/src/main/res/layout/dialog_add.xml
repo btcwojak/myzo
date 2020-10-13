@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:padding="10dp"
     android:background="@drawable/add_dialog_background">
@@ -13,8 +14,7 @@
         android:textColor="@android:color/black"
         android:textSize="18sp"
         android:layout_marginTop="5dp"
-        android:layout_marginLeft="8dp"
-        android:textStyle="bold" />
+        android:layout_marginLeft="8dp" />
 
     <RadioGroup
         android:id="@+id/inc_exp_radio_group"
@@ -35,8 +35,7 @@
             android:gravity="center"
             android:layout_marginRight="2dp"
             android:text="Income"
-            android:textSize="16sp"
-            android:textStyle="bold" />
+            android:textSize="16sp" />
 
 
         <RadioButton
@@ -49,8 +48,7 @@
             android:checked="false"
             android:gravity="center"
             android:text="Expenditure"
-            android:textSize="16dp"
-            android:textStyle="bold" />
+            android:textSize="16dp" />
 
     </RadioGroup>
 
@@ -78,14 +76,15 @@
         android:layout_marginTop="10dp"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_marginLeft="15dp"
-        android:layout_marginRight="15dp">
+        android:layout_marginRight="15dp"
+        app:boxStrokeColor="#000000" >
 
         <androidx.appcompat.widget.AppCompatEditText
             android:id="@+id/etAmount"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Amount"
-            android:inputType="numberDecimal"/>
+            android:inputType="numberDecimal" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -104,8 +103,7 @@
             android:gravity="center"
             android:padding="10dp"
             android:text="Add"
-            android:textColor="@android:color/holo_red_dark"
-            android:textStyle="bold" />
+            android:textColor="@android:color/holo_red_dark" />
 
         <TextView
             android:id="@+id/tvCancel"
@@ -115,8 +113,7 @@
             android:gravity="center"
             android:padding="10dp"
             android:text="Cancel"
-            android:textColor="@android:color/black"
-            android:textStyle="bold" />
+            android:textColor="@android:color/black" />
 
     </LinearLayout>
 </LinearLayout>
