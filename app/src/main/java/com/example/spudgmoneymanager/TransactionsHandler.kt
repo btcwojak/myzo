@@ -7,7 +7,7 @@ import android.database.sqlite.SQLiteOpenHelper
 import java.text.DecimalFormat
 import java.text.NumberFormat
 
-class SqliteOpenHelper(context: Context, factory: SQLiteDatabase.CursorFactory?) :
+class TransactionsHandler(context: Context, factory: SQLiteDatabase.CursorFactory?) :
     SQLiteOpenHelper(context, DATABASE_NAME, factory, DATABASE_VERSION) {
 
     companion object {

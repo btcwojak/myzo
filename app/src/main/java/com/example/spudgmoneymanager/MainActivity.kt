@@ -9,8 +9,8 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.dialog_add.*
-import kotlinx.android.synthetic.main.dialog_add.view.*
+import kotlinx.android.synthetic.main.dialog_add_transaction.*
+import kotlinx.android.synthetic.main.dialog_add_transaction.view.*
 
 class MainActivity : AppCompatActivity() {
 
@@ -28,7 +28,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         switch_accounts.setOnClickListener {
-            val intent = Intent(this, Accounts::class.java)
+            val intent = Intent(this, AccountsActivity::class.java)
             startActivity(intent)
         }
 
@@ -46,14 +46,14 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun getTransactionsList(): ArrayList<TransactionModel> {
-        val dbHandler = SqliteOpenHelper(this, null)
+        val dbHandler = TransactionsHandler(this, null)
         return dbHandler.getAllTransactions()
     }
 
     private fun addTransaction() {
         val addDialog = Dialog(this, R.style.Theme_Dialog)
         addDialog.setCancelable(false)
-        addDialog.setContentView(R.layout.dialog_add)
+        addDialog.setContentView(R.layout.dialog_add_transaction)
         addDialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT));
 
         addDialog.inc_exp_radio_group.setOnCheckedChangeListener { group, checkedId ->
@@ -75,7 +75,7 @@ class MainActivity : AppCompatActivity() {
             val amount = addDialog.etAmountLayout.etAmount.text.toString()
             val account = currentAccount
 
-            val dbHandler = SqliteOpenHelper(this, null)
+            val dbHandler = TransactionsHandler(this, null)
 
             if (category.isNotEmpty() && amount.isNotEmpty()) {
 
@@ -106,7 +106,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setBalanceText() {
-        val dbHandler = SqliteOpenHelper(this, null)
+        val dbHandler = TransactionsHandler(this, null)
         val balance = dbHandler.getBalance()
         if (balance.isEmpty()) {
             balance_heading.text = "Error"

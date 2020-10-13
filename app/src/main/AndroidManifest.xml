@@ -9,7 +9,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/SpudgMM">
-        <activity android:name=".Accounts"></activity>
+        <activity android:name=".AccountsActivity"></activity>
         <activity
             android:name=".MainActivity"
             android:screenOrientation="portrait"
