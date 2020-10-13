@@ -11,18 +11,19 @@ class SqliteOpenHelper(context: Context, factory: SQLiteDatabase.CursorFactory?)
     SQLiteOpenHelper(context, DATABASE_NAME, factory, DATABASE_VERSION) {
 
     companion object {
-        private const val DATABASE_VERSION = 1
+        private const val DATABASE_VERSION = 2
         private const val DATABASE_NAME = "SpudgMoneyManager.db"
         private const val TABLE_TRANSACTIONS = "transactions"
 
         private const val KEY_ID = "_id"
         private const val KEY_CATEGORY = "category"
         private const val KEY_AMOUNT = "amount"
+        private const val KEY_ACCOUNT = "account"
     }
 
     override fun onCreate(db: SQLiteDatabase?) {
         val CREATE_TRANSACTIONS_TABLE =
-            ("CREATE TABLE $TABLE_TRANSACTIONS($KEY_ID INTEGER PRIMARY KEY,$KEY_CATEGORY TEXT,$KEY_AMOUNT TEXT)")
+            ("CREATE TABLE $TABLE_TRANSACTIONS($KEY_ID INTEGER PRIMARY KEY,$KEY_CATEGORY TEXT,$KEY_AMOUNT TEXT,$KEY_ACCOUNT INTEGER)")
         db?.execSQL(CREATE_TRANSACTIONS_TABLE)
     }
 
@@ -35,6 +36,7 @@ class SqliteOpenHelper(context: Context, factory: SQLiteDatabase.CursorFactory?)
         val values = ContentValues()
         values.put(KEY_CATEGORY, trans.category)
         values.put(KEY_AMOUNT, trans.amount)
+        values.put(KEY_ACCOUNT, trans.account)
         val db = this.writableDatabase
         val success = db.insert(TABLE_TRANSACTIONS, null, values)
         db.close()
@@ -49,13 +51,15 @@ class SqliteOpenHelper(context: Context, factory: SQLiteDatabase.CursorFactory?)
         var id: Int
         var category: String
         var amount: String
+        var account: Int
 
         if (cursor.moveToFirst()) {
             do {
                 id = cursor.getInt(cursor.getColumnIndex(KEY_ID))
                 category = cursor.getString(cursor.getColumnIndex(KEY_CATEGORY))
                 amount = cursor.getString(cursor.getColumnIndex(KEY_AMOUNT))
-                val transaction = TransactionModel(id = id, category = category, amount = amount)
+                account = cursor.getInt(cursor.getColumnIndex(KEY_ACCOUNT))
+                val transaction = TransactionModel(id = id, category = category, amount = amount, account = account)
                 list.add(transaction)
             } while (cursor.moveToNext())
         }

@@ -9,10 +9,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/SpudgMM">
+        <activity android:name=".Accounts"></activity>
         <activity
             android:name=".MainActivity"
-            android:theme="@style/SpudgMM"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            android:theme="@style/SpudgMM">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

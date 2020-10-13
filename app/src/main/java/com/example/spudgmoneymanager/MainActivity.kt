@@ -1,6 +1,7 @@
 package com.example.spudgmoneymanager
 
 import android.app.Dialog
+import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
@@ -14,6 +15,7 @@ import kotlinx.android.synthetic.main.dialog_add.view.*
 class MainActivity : AppCompatActivity() {
 
     var isIncome = true
+    var currentAccount = 1
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,7 +27,13 @@ class MainActivity : AppCompatActivity() {
             addTransaction()
         }
 
+        switch_accounts.setOnClickListener {
+            val intent = Intent(this, Accounts::class.java)
+            startActivity(intent)
+        }
+
         setBalanceText()
+        setAccount(1)
 
     }
 
@@ -65,18 +73,17 @@ class MainActivity : AppCompatActivity() {
         addDialog.tvAdd.setOnClickListener {
             val category = addDialog.etCategoryLayout.etCategory.text.toString()
             val amount = addDialog.etAmountLayout.etAmount.text.toString()
+            val account = currentAccount
 
             val dbHandler = SqliteOpenHelper(this, null)
 
             if (category.isNotEmpty() && amount.isNotEmpty()) {
 
                 if (isIncome) {
-                    dbHandler.addTransaction(TransactionModel(0, category, amount))
+                    dbHandler.addTransaction(TransactionModel(0, category, amount, account))
                 } else if (!isIncome) {
                     dbHandler.addTransaction(
-                        TransactionModel(
-                            0, category, (amount.toDouble() * -1).toString()
-                        )
+                        TransactionModel(0, category, (amount.toDouble() * -1).toString(), account)
                     )
                 }
 
@@ -108,6 +115,10 @@ class MainActivity : AppCompatActivity() {
         }
 
 
+    }
+
+    private fun setAccount(account: Int) {
+        currentAccount = account
     }
 
 
