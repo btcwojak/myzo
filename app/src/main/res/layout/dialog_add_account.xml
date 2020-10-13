@@ -2,28 +2,27 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/add_dialog_background"
     android:orientation="vertical"
-    android:padding="10dp"
-    android:background="@drawable/add_dialog_background">
+    android:padding="10dp">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="5dp"
         android:text="Add Account"
         android:textColor="@android:color/black"
-        android:textSize="18sp"
-        android:layout_marginTop="5dp"
-        android:layout_marginLeft="8dp" />
+        android:textSize="18sp" />
 
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/etNameLayout"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_marginLeft="15dp"
+        android:layout_marginTop="15dp"
         android:layout_marginRight="15dp">
 
         <androidx.appcompat.widget.AppCompatEditText

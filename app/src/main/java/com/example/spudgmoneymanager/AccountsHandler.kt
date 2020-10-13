@@ -5,7 +5,8 @@ import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 
-class AccountsHandler(context: Context, factory: SQLiteDatabase.CursorFactory?) : SQLiteOpenHelper(context, DATABASE_NAME, factory, DATABASE_VERSION) {
+class AccountsHandler(context: Context, factory: SQLiteDatabase.CursorFactory?) :
+    SQLiteOpenHelper(context, DATABASE_NAME, factory, DATABASE_VERSION) {
 
     companion object {
         private const val DATABASE_VERSION = 1

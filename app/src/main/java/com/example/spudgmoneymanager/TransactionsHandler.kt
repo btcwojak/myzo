@@ -59,7 +59,12 @@ class TransactionsHandler(context: Context, factory: SQLiteDatabase.CursorFactor
                 category = cursor.getString(cursor.getColumnIndex(KEY_CATEGORY))
                 amount = cursor.getString(cursor.getColumnIndex(KEY_AMOUNT))
                 account = cursor.getInt(cursor.getColumnIndex(KEY_ACCOUNT))
-                val transaction = TransactionModel(id = id, category = category, amount = amount, account = account)
+                val transaction = TransactionModel(
+                    id = id,
+                    category = category,
+                    amount = amount,
+                    account = account
+                )
                 list.add(transaction)
             } while (cursor.moveToNext())
         }

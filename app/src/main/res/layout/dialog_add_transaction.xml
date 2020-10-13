@@ -2,38 +2,37 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/add_dialog_background"
     android:orientation="vertical"
-    android:padding="10dp"
-    android:background="@drawable/add_dialog_background">
+    android:padding="10dp">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="5dp"
         android:text="Add Transaction"
         android:textColor="@android:color/black"
-        android:textSize="18sp"
-        android:layout_marginTop="5dp"
-        android:layout_marginLeft="8dp" />
+        android:textSize="18sp" />
 
     <RadioGroup
         android:id="@+id/inc_exp_radio_group"
+        style="?attr/radioButtonStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:layout_marginBottom="10dp"
-        android:orientation="horizontal"
-        style="?attr/radioButtonStyle">
+        android:orientation="horizontal">
 
         <RadioButton
             android:id="@+id/income_radio"
             android:layout_width="0dp"
             android:layout_height="35dp"
+            android:layout_marginRight="2dp"
             android:layout_weight="1"
             android:background="@drawable/radio_selector"
             android:checked="true"
             android:gravity="center"
-            android:layout_marginRight="2dp"
             android:text="Income"
             android:textSize="16sp" />
 
@@ -42,9 +41,9 @@
             android:id="@+id/expenditure_radio"
             android:layout_width="0dp"
             android:layout_height="35dp"
+            android:layout_marginLeft="2dp"
             android:layout_weight="1"
             android:background="@drawable/radio_selector"
-            android:layout_marginLeft="2dp"
             android:checked="false"
             android:gravity="center"
             android:text="Expenditure"
@@ -54,11 +53,11 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/etCategoryLayout"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_marginLeft="15dp"
+        android:layout_marginTop="5dp"
         android:layout_marginRight="15dp">
 
         <androidx.appcompat.widget.AppCompatEditText
@@ -71,12 +70,12 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/etAmountLayout"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_marginLeft="15dp"
-        android:layout_marginRight="15dp" >
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="15dp">
 
         <androidx.appcompat.widget.AppCompatEditText
             android:id="@+id/etAmount"

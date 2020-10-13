@@ -7,11 +7,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.account_row.view.*
-import kotlinx.android.synthetic.main.transaction_row.view.*
 import java.text.DecimalFormat
 import java.text.NumberFormat
 
-class AccountAdapter(val context: Context, val items: ArrayList<AccountModel>) : RecyclerView.Adapter<AccountAdapter.ViewHolder>() {
+class AccountAdapter(val context: Context, val items: ArrayList<AccountModel>) :
+    RecyclerView.Adapter<AccountAdapter.ViewHolder>() {
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val accountItem = view.account_row_layout
