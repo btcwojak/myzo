@@ -9,6 +9,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.activity_main.account_heading
 import kotlinx.android.synthetic.main.dialog_add_transaction.*
 import kotlinx.android.synthetic.main.dialog_add_transaction.view.*
 
@@ -33,8 +34,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         setBalanceText()
-
-        Toast.makeText(this, CurrentAccountVariable.CURRENT_ACCOUNT.toString(), Toast.LENGTH_LONG).show()
+        setAccountName()
 
     }
 
@@ -107,13 +107,19 @@ class MainActivity : AppCompatActivity() {
 
     private fun setBalanceText() {
         val dbHandler = TransactionsHandler(this, null)
-        val balance = dbHandler.getBalance()
+        val balance = dbHandler.getBalance(CurrentAccountVariable.CURRENT_ACCOUNT)
         if (balance.isEmpty()) {
             balance_heading.text = "Error"
         } else {
             balance_heading.text = "Balance: $balance"
         }
 
+    }
+
+    private fun setAccountName() {
+        val dbHandler = AccountsHandler(this, null)
+        val name = dbHandler.getAccountName(CurrentAccountVariable.CURRENT_ACCOUNT)
+        account_heading.text = name
 
     }
 

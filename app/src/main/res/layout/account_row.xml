@@ -30,7 +30,6 @@
         android:gravity="right"
         android:textColor="#212121"
         android:textSize="20sp"
-        android:visibility="invisible"
         tools:text="2,500.00" />
 
 

@@ -1,13 +1,12 @@
 package com.example.spudgmoneymanager
 
 import android.content.ContentValues
-import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 import java.text.DecimalFormat
 import java.text.NumberFormat
 
-class TransactionsHandler(context: Context, factory: SQLiteDatabase.CursorFactory?) :
+class TransactionsHandler(context: MainActivity, factory: SQLiteDatabase.CursorFactory?) :
     SQLiteOpenHelper(context, DATABASE_NAME, factory, DATABASE_VERSION) {
 
     companion object {
@@ -74,10 +73,10 @@ class TransactionsHandler(context: Context, factory: SQLiteDatabase.CursorFactor
 
     }
 
-    fun getBalance(): String {
+    fun getBalance(accountFilter: Int): String {
         val list = ArrayList<Double>()
         val db = this.readableDatabase
-        val cursor = db.rawQuery("SELECT * FROM $TABLE_TRANSACTIONS", null)
+        val cursor = db.rawQuery("SELECT * FROM $TABLE_TRANSACTIONS WHERE $KEY_ACCOUNT = $accountFilter", null)
 
         var amount: String
         var runningBalance: Double = 0.00

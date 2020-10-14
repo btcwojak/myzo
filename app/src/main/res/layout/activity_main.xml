@@ -22,14 +22,13 @@
                 android:id="@+id/switch_accounts"
                 android:layout_width="wrap_content"
                 android:layout_height="50dp"
-                android:layout_marginRight="15dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginLeft="20dp"
                 android:background="#FFFFFF"
                 android:text="Switch account"
                 android:textColor="@color/colorAccent"
-                app:layout_constraintBottom_toBottomOf="@id/balance_heading"
                 app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toLeftOf="@id/account_heading"
-                app:layout_constraintTop_toTopOf="@id/account_heading" />
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/account_heading"
@@ -42,7 +41,6 @@
                 android:textColor="@color/colorAccent"
                 android:textSize="24sp"
                 android:textStyle="bold"
-                app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 

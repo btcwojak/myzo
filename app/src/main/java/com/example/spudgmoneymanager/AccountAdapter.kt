@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.account_row.view.*
+import kotlinx.android.synthetic.main.activity_main.*
 import java.text.DecimalFormat
 import java.text.NumberFormat
 
@@ -16,6 +17,7 @@ class AccountAdapter(private val context: Context, private val items: ArrayList<
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val accountItem = view.account_row_layout!!
         val nameView = view.name!!
+        val balanceView = view.balance!!
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -27,13 +29,17 @@ class AccountAdapter(private val context: Context, private val items: ArrayList<
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 
+
+
         val formatter: NumberFormat = DecimalFormat("#,##0.00")
 
         val account = items[position]
         holder.nameView.text = account.name
 
+
+
         /*
-        holder.amountView.text = formatter.format((transaction.amount).toDouble()).toString()
+        holder.balanceView.text = formatter.format(("1").toDouble()).toString()
          */
 
         holder.accountItem.setOnClickListener { view ->
