@@ -31,7 +31,6 @@
             android:layout_marginRight="2dp"
             android:layout_weight="1"
             android:background="@drawable/radio_selector"
-            android:checked="true"
             android:gravity="center"
             android:text="Income"
             android:textSize="16sp" />

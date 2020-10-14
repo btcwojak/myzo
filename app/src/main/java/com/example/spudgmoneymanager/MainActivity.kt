@@ -78,7 +78,6 @@ class MainActivity : AppCompatActivity() {
             val dbHandler = TransactionsHandler(this, null)
 
             if (category.isNotEmpty() && amount.isNotEmpty()) {
-
                 if (isIncome) {
                     dbHandler.addTransaction(TransactionModel(0, category, amount, account))
                 } else if (!isIncome) {
