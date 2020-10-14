@@ -1,6 +1,7 @@
 package com.example.spudgmoneymanager
 
 import android.app.Dialog
+import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
@@ -22,6 +23,8 @@ class AccountsActivity : AppCompatActivity() {
         add_account.setOnClickListener {
             addAccount()
         }
+
+
 
     }
 
@@ -68,6 +71,13 @@ class AccountsActivity : AppCompatActivity() {
         }
 
         addDialog.show()
+    }
+
+    fun selectAccount(account: AccountModel) {
+        CurrentAccountVariable.CURRENT_ACCOUNT = account.id
+        var intent = Intent(this, MainActivity::class.java)
+        startActivity(intent)
+        finish()
     }
 
 }

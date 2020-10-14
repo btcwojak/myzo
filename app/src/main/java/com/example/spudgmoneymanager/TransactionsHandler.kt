@@ -101,5 +101,36 @@ class TransactionsHandler(context: Context, factory: SQLiteDatabase.CursorFactor
 
     }
 
+    fun filterTransactions(accountFilter: Int): ArrayList<TransactionModel> {
+        val list = ArrayList<TransactionModel>()
+        val db = this.readableDatabase
+        val cursor = db.rawQuery("SELECT * FROM $TABLE_TRANSACTIONS WHERE $KEY_ACCOUNT = $accountFilter", null)
+
+        var id: Int
+        var category: String
+        var amount: String
+        var account: Int
+
+        if (cursor.moveToFirst()) {
+            do {
+                id = cursor.getInt(cursor.getColumnIndex(KEY_ID))
+                category = cursor.getString(cursor.getColumnIndex(KEY_CATEGORY))
+                amount = cursor.getString(cursor.getColumnIndex(KEY_AMOUNT))
+                account = cursor.getInt(cursor.getColumnIndex(KEY_ACCOUNT))
+                val transaction = TransactionModel(
+                    id = id,
+                    category = category,
+                    amount = amount,
+                    account = account
+                )
+                list.add(transaction)
+            } while (cursor.moveToNext())
+        }
+
+        cursor.close()
+        return list
+
+    }
+
 
 }

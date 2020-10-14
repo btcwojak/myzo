@@ -36,6 +36,14 @@ class AccountAdapter(private val context: Context, private val items: ArrayList<
         holder.amountView.text = formatter.format((transaction.amount).toDouble()).toString()
          */
 
+        holder.accountItem.setOnClickListener { view ->
+            if (context is AccountsActivity) {
+                context.selectAccount(account)
+            }
+        }
+
+
+
         if (position % 2 == 0) {
             holder.accountItem.setBackgroundColor(Color.parseColor("#FFFFFF"))
         } else {

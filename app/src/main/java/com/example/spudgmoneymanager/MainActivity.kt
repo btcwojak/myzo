@@ -15,7 +15,7 @@ import kotlinx.android.synthetic.main.dialog_add_transaction.view.*
 class MainActivity : AppCompatActivity() {
 
     var isIncome = true
-    var currentAccount = 1
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,7 +33,8 @@ class MainActivity : AppCompatActivity() {
         }
 
         setBalanceText()
-        setAccount(1)
+
+        Toast.makeText(this, CurrentAccountVariable.CURRENT_ACCOUNT.toString(), Toast.LENGTH_LONG).show()
 
     }
 
@@ -47,7 +48,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun getTransactionsList(): ArrayList<TransactionModel> {
         val dbHandler = TransactionsHandler(this, null)
-        return dbHandler.getAllTransactions()
+        return dbHandler.filterTransactions(CurrentAccountVariable.CURRENT_ACCOUNT)
     }
 
     private fun addTransaction() {
@@ -73,7 +74,7 @@ class MainActivity : AppCompatActivity() {
         addDialog.tvAdd.setOnClickListener {
             val category = addDialog.etCategoryLayout.etCategory.text.toString()
             val amount = addDialog.etAmountLayout.etAmount.text.toString()
-            val account = currentAccount
+            val account = CurrentAccountVariable.CURRENT_ACCOUNT
 
             val dbHandler = TransactionsHandler(this, null)
 
@@ -114,10 +115,6 @@ class MainActivity : AppCompatActivity() {
         }
 
 
-    }
-
-    private fun setAccount(account: Int) {
-        currentAccount = account
     }
 
 
