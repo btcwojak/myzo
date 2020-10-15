@@ -11,7 +11,14 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_main.account_heading
 import kotlinx.android.synthetic.main.dialog_add_transaction.*
+import kotlinx.android.synthetic.main.dialog_add_transaction.etAmountLayout
+import kotlinx.android.synthetic.main.dialog_add_transaction.etCategoryLayout
+import kotlinx.android.synthetic.main.dialog_add_transaction.inc_exp_radio_group
+import kotlinx.android.synthetic.main.dialog_add_transaction.tvCancel
 import kotlinx.android.synthetic.main.dialog_add_transaction.view.*
+import kotlinx.android.synthetic.main.dialog_add_transaction.view.etAmount
+import kotlinx.android.synthetic.main.dialog_add_transaction.view.etCategory
+import kotlinx.android.synthetic.main.dialog_update_transaction.*
 
 class MainActivity : AppCompatActivity() {
 
@@ -111,6 +118,60 @@ class MainActivity : AppCompatActivity() {
         }
 
         addDialog.show()
+    }
+
+    fun updateTransaction(transaction: TransactionModel) {
+        val updateDialog = Dialog(this, R.style.Theme_Dialog)
+        updateDialog.setCancelable(false)
+        updateDialog.setContentView(R.layout.dialog_update_transaction)
+        updateDialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT));
+
+        updateDialog.inc_exp_radio_group.setOnCheckedChangeListener { group, checkedId ->
+            if (checkedId == R.id.income_radio) {
+                isIncome = true
+            } else if (checkedId == R.id.expenditure_radio) {
+                isIncome = false
+            } else {
+                Toast.makeText(
+                    this,
+                    "An error has occurred. Please try restarting the app.",
+                    Toast.LENGTH_LONG
+                ).show()
+            }
+        }
+
+        updateDialog.tvUpdate.setOnClickListener {
+            val category = updateDialog.etCategoryLayout.etCategory.text.toString()
+            val amount = updateDialog.etAmountLayout.etAmount.text.toString()
+            val account = CurrentAccountVariable.CURRENT_ACCOUNT
+
+            val dbHandler = TransactionsHandler(this, null)
+
+            if (category.isNotEmpty() && amount.isNotEmpty()) {
+                if (isIncome) {
+                    dbHandler.updateTransaction(TransactionModel(transaction.id, category, amount, account))
+                } else if (!isIncome) {
+                    dbHandler.updateTransaction(
+                        TransactionModel(transaction.id, category, (amount.toDouble() * -1).toString(), account)
+                    )
+                }
+
+                Toast.makeText(this, "Transaction updated.", Toast.LENGTH_LONG).show()
+                setBalanceText()
+                setUpTransactionList()
+                updateDialog.dismiss()
+
+            } else {
+                Toast.makeText(this, "Category or amount can't be blank.", Toast.LENGTH_LONG).show()
+            }
+
+        }
+
+        updateDialog.tvCancel.setOnClickListener {
+            updateDialog.dismiss()
+        }
+
+        updateDialog.show()
     }
 
     private fun setBalanceText() {

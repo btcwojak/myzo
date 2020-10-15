@@ -10,7 +10,11 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.activity_accounts.*
 import kotlinx.android.synthetic.main.dialog_add_account.*
+import kotlinx.android.synthetic.main.dialog_add_account.etNameLayout
+import kotlinx.android.synthetic.main.dialog_add_account.tvCancel
 import kotlinx.android.synthetic.main.dialog_add_account.view.*
+import kotlinx.android.synthetic.main.dialog_add_account.view.etName
+import kotlinx.android.synthetic.main.dialog_update_account.*
 
 class AccountsActivity : AppCompatActivity() {
 
@@ -23,6 +27,8 @@ class AccountsActivity : AppCompatActivity() {
         add_account.setOnClickListener {
             addAccount()
         }
+
+
 
 
 
@@ -81,6 +87,36 @@ class AccountsActivity : AppCompatActivity() {
         finish()
     }
 
+    fun updateAccount(account: AccountModel) {
+        val updateDialog = Dialog(this, R.style.Theme_Dialog)
+        updateDialog.setCancelable(false)
+        updateDialog.setContentView(R.layout.dialog_update_account)
+        updateDialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT));
+
+        updateDialog.etNameLayout.etName.setText(account.name)
+
+        updateDialog.tvUpdate.setOnClickListener {
+            val name = updateDialog.etNameLayout.etName.text.toString()
+            val dbHandler = AccountsHandler(this, null)
+            dbHandler.updateAccount(AccountModel(account.id, name))
+
+
+            if (name.isNotEmpty()) {
+                Toast.makeText(this, "Account updated.", Toast.LENGTH_LONG).show()
+                setUpAccountList()
+                updateDialog.dismiss()
+            } else {
+                Toast.makeText(this, "Account name can't be blank.", Toast.LENGTH_LONG).show()
+            }
+
+        }
+
+        updateDialog.tvCancel.setOnClickListener {
+            updateDialog.dismiss()
+        }
+
+        updateDialog.show()
+    }
 
 
 }

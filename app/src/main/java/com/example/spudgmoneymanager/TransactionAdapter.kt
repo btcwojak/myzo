@@ -38,6 +38,17 @@ class TransactionAdapter(val context: Context, val items: ArrayList<TransactionM
         } else {
             holder.transactionItem.setBackgroundColor(Color.parseColor("#EEEEEE"))
         }
+
+        holder.transactionItem.setOnClickListener {
+            if (context is MainActivity) {
+                context.updateTransaction(transaction)
+            }
+        }
+
+
+
+
+
     }
 
     override fun getItemCount(): Int {

@@ -43,6 +43,17 @@ class TransactionsHandler(context: Context, factory: SQLiteDatabase.CursorFactor
         return success
     }
 
+    fun updateTransaction(trans: TransactionModel): Int {
+        val values = ContentValues()
+        values.put(KEY_CATEGORY, trans.category)
+        values.put(KEY_AMOUNT, trans.amount)
+        values.put(KEY_ACCOUNT, trans.account)
+        val db = this.writableDatabase
+        val success = db.update(TABLE_TRANSACTIONS, values, KEY_ID + "=" + trans.id, null)
+        db.close()
+        return success
+    }
+
     fun getAllTransactions(): ArrayList<TransactionModel> {
         val list = ArrayList<TransactionModel>()
         val db = this.readableDatabase

@@ -1,7 +1,6 @@
 package com.example.spudgmoneymanager
 
 import android.content.Context
-import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,8 +14,12 @@ class AccountAdapter(private val context: Context, private val items: ArrayList<
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val accountItem = view.account_row_layout!!
-        val nameView = view.name!!
+        val nameView = view.name_account!!
+        val updateView = view.update_account!!
+        val deleteView = view.delete_account!!
+        /*
         val balanceView = view.balance!!
+         */
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -40,11 +43,12 @@ class AccountAdapter(private val context: Context, private val items: ArrayList<
             }
         }
 
-        if (position % 2 == 0) {
-            holder.accountItem.setBackgroundColor(Color.parseColor("#FFFFFF"))
-        } else {
-            holder.accountItem.setBackgroundColor(Color.parseColor("#EEEEEE"))
+        holder.updateView.setOnClickListener { view ->
+            if (context is AccountsActivity) {
+                context.updateAccount(account)
+            }
         }
+
     }
 
     override fun getItemCount(): Int {
