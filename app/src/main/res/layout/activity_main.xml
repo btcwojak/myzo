@@ -22,13 +22,13 @@
                 android:id="@+id/switch_accounts"
                 android:layout_width="wrap_content"
                 android:layout_height="50dp"
-                android:layout_marginTop="20dp"
                 android:layout_marginLeft="20dp"
                 android:background="#FFFFFF"
                 android:text="Switch account"
                 android:textColor="@color/colorAccent"
                 app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"/>
 
             <TextView
                 android:id="@+id/account_heading"

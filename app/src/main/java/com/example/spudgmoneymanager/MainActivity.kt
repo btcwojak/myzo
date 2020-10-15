@@ -36,6 +36,13 @@ class MainActivity : AppCompatActivity() {
         setBalanceText()
         setAccountName()
 
+        if (noAccounts()) {
+            val dbHandler = AccountsHandler(this, null)
+            dbHandler.addAccount(AccountModel(0, "Main Account"))
+            CurrentAccountVariable.CURRENT_ACCOUNT = dbHandler.getAllAccounts().first().id
+            setAccountName()
+            setBalanceText()
+        }
 
     }
 
@@ -122,6 +129,11 @@ class MainActivity : AppCompatActivity() {
         val name = dbHandler.getAccountName(CurrentAccountVariable.CURRENT_ACCOUNT)
         account_heading.text = name
 
+    }
+
+    private fun noAccounts(): Boolean {
+        val dbHandler = AccountsHandler(this, null)
+        return dbHandler.getAllAccounts().size < 1
     }
 
 }
