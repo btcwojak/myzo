@@ -36,6 +36,7 @@ class MainActivity : AppCompatActivity() {
         setBalanceText()
         setAccountName()
 
+
     }
 
     private fun setUpTransactionList() {
@@ -122,6 +123,5 @@ class MainActivity : AppCompatActivity() {
         account_heading.text = name
 
     }
-
 
 }

@@ -9,12 +9,12 @@ class AccountsHandler(context: Context, factory: SQLiteDatabase.CursorFactory?) 
     SQLiteOpenHelper(context, DATABASE_NAME, factory, DATABASE_VERSION) {
 
     companion object {
-        private const val DATABASE_VERSION = 1
+        private const val DATABASE_VERSION = 2
         private const val DATABASE_NAME = "SMMAccounts.db"
         private const val TABLE_ACCOUNTS = "accounts"
 
         private const val KEY_ID = "_id"
-        private const val KEY_NAME = "category"
+        private const val KEY_NAME = "name"
     }
 
     override fun onCreate(db: SQLiteDatabase?) {
@@ -68,7 +68,6 @@ class AccountsHandler(context: Context, factory: SQLiteDatabase.CursorFactory?) 
         } else {
             return "Error"
         }
-
 
     }
 

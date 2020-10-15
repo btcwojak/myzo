@@ -26,6 +26,7 @@ class AccountsActivity : AppCompatActivity() {
 
 
 
+
     }
 
     private fun setUpAccountList() {
@@ -79,7 +80,6 @@ class AccountsActivity : AppCompatActivity() {
         startActivity(intent)
         finish()
     }
-
 
 
 
