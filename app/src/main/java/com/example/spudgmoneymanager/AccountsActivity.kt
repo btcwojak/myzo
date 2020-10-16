@@ -7,6 +7,7 @@ import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.res.ResourcesCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.activity_accounts.*
 import kotlinx.android.synthetic.main.dialog_add_account.*
@@ -27,10 +28,6 @@ class AccountsActivity : AppCompatActivity() {
         add_account.setOnClickListener {
             addAccount()
         }
-
-
-
-
 
 
     }

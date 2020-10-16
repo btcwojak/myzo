@@ -33,12 +33,6 @@ class TransactionAdapter(val context: Context, val items: ArrayList<TransactionM
         holder.categoryView.text = transaction.category
         holder.amountView.text = formatter.format((transaction.amount).toDouble()).toString()
 
-        if (position % 2 == 0) {
-            holder.transactionItem.setBackgroundColor(Color.parseColor("#FFFFFF"))
-        } else {
-            holder.transactionItem.setBackgroundColor(Color.parseColor("#EEEEEE"))
-        }
-
         holder.transactionItem.setOnClickListener {
             if (context is MainActivity) {
                 context.updateTransaction(transaction)

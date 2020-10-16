@@ -1,45 +1,66 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/transaction_row_layout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal"
-    android:padding="10dp">
+    android:orientation="vertical">
 
     <TextView
-        android:id="@+id/icon"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="40dp"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:gravity="center"
-        android:textColor="#212121"
-        android:textSize="16sp"
-        tools:text="(icon)" />
+        android:height="2dp"
+        android:background="@drawable/transaction_row_line"
+        android:layout_gravity="center_horizontal"/>
 
-    <TextView
-        android:id="@+id/category"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:id="@+id/transaction_row_layout"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:gravity="left"
-        android:textColor="#212121"
-        android:textSize="16sp"
-        tools:text="Category name" />
+        android:orientation="horizontal"
+        android:padding="10dp">
 
-    <TextView
-        android:id="@+id/amount"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginRight="10dp"
-        android:layout_weight="1"
-        android:gravity="right"
-        android:textColor="#212121"
-        android:textSize="20sp"
-        tools:text="2,500.00" />
+        <TextView
+            android:id="@+id/icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:fontFamily="@font/open_sans_light"
+            android:gravity="center"
+            android:textColor="#212121"
+            android:textSize="16sp"
+            tools:text="(icon)" />
+
+        <TextView
+            android:id="@+id/category"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:fontFamily="@font/open_sans_light"
+            android:gravity="left"
+            android:textColor="#212121"
+            android:textSize="16sp"
+            tools:text="Category name" />
+
+        <TextView
+            android:id="@+id/amount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginRight="10dp"
+            android:layout_weight="1"
+            android:fontFamily="@font/open_sans_light"
+            android:gravity="right"
+            android:textColor="#212121"
+            android:textSize="20sp"
+            tools:text="2,500.00" />
+    </LinearLayout>
+
 
 
 </LinearLayout>

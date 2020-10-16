@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorPrimary"
     android:orientation="vertical"
     tools:context=".MainActivity">
 
@@ -24,19 +23,20 @@
                 android:layout_height="50dp"
                 android:layout_marginLeft="20dp"
                 android:background="#FFFFFF"
+                android:fontFamily="@font/open_sans_light"
                 android:text="Switch account"
                 android:textColor="@color/colorAccent"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"/>
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/account_heading"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="225dp"
                 android:layout_marginTop="35dp"
                 android:layout_marginRight="20dp"
+                android:fontFamily="@font/open_sans_light"
                 android:text="Main Account"
                 android:textColor="@color/colorAccent"
                 android:textSize="24sp"
@@ -48,6 +48,7 @@
                 android:id="@+id/balance_heading"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/open_sans_light"
                 android:text="Balance: 0.00"
                 android:textSize="16sp"
                 app:layout_constraintRight_toRightOf="@id/account_heading"
@@ -74,6 +75,7 @@
                 android:layout_height="50dp"
                 android:layout_marginBottom="25dp"
                 android:background="#99FFFFFF"
+                android:fontFamily="@font/open_sans_light"
                 android:text="+ Transaction"
                 android:textColor="@color/colorAccent"
                 app:layout_constraintBottom_toBottomOf="parent"
