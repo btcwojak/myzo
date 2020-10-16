@@ -18,7 +18,10 @@ import kotlinx.android.synthetic.main.dialog_add_transaction.tvCancel
 import kotlinx.android.synthetic.main.dialog_add_transaction.view.*
 import kotlinx.android.synthetic.main.dialog_add_transaction.view.etAmount
 import kotlinx.android.synthetic.main.dialog_add_transaction.view.etCategory
+import kotlinx.android.synthetic.main.dialog_add_transaction.view.expenditure_radio
+import kotlinx.android.synthetic.main.dialog_add_transaction.view.income_radio
 import kotlinx.android.synthetic.main.dialog_update_transaction.*
+import kotlinx.android.synthetic.main.dialog_update_transaction.view.*
 
 class MainActivity : AppCompatActivity() {
 
@@ -125,6 +128,16 @@ class MainActivity : AppCompatActivity() {
         updateDialog.setCancelable(false)
         updateDialog.setContentView(R.layout.dialog_update_transaction)
         updateDialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT));
+
+        updateDialog.etCategoryLayout.etCategory.setText(transaction.category)
+
+        if (transaction.amount.toFloat() >= 0) {
+            updateDialog.inc_exp_radio_group.income_radio.isChecked
+            updateDialog.etAmountLayout.etAmount.setText(transaction.amount)
+        } else {
+            updateDialog.inc_exp_radio_group.expenditure_radio.isChecked
+            updateDialog.etAmountLayout.etAmount.setText((transaction.amount.toFloat() * -1).toString())
+        }
 
         updateDialog.inc_exp_radio_group.setOnCheckedChangeListener { group, checkedId ->
             if (checkedId == R.id.income_radio) {
