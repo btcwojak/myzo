@@ -9,7 +9,6 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.activity_main.account_heading
 import kotlinx.android.synthetic.main.dialog_add_transaction.*
 import kotlinx.android.synthetic.main.dialog_add_transaction.etAmountLayout
 import kotlinx.android.synthetic.main.dialog_add_transaction.etCategoryLayout
@@ -161,10 +160,22 @@ class MainActivity : AppCompatActivity() {
 
             if (category.isNotEmpty() && amount.isNotEmpty()) {
                 if (isIncome) {
-                    dbHandler.updateTransaction(TransactionModel(transaction.id, category, amount, account))
+                    dbHandler.updateTransaction(
+                        TransactionModel(
+                            transaction.id,
+                            category,
+                            amount,
+                            account
+                        )
+                    )
                 } else if (!isIncome) {
                     dbHandler.updateTransaction(
-                        TransactionModel(transaction.id, category, (amount.toDouble() * -1).toString(), account)
+                        TransactionModel(
+                            transaction.id,
+                            category,
+                            (amount.toDouble() * -1).toString(),
+                            account
+                        )
                     )
                 }
 

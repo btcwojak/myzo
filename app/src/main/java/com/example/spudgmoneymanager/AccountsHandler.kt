@@ -89,5 +89,4 @@ class AccountsHandler(context: Context, factory: SQLiteDatabase.CursorFactory?) 
     }
 
 
-
 }

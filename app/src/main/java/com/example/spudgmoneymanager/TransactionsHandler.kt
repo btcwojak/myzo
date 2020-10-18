@@ -102,7 +102,10 @@ class TransactionsHandler(context: Context, factory: SQLiteDatabase.CursorFactor
     fun getBalance(accountFilter: Int): String {
         val list = ArrayList<Double>()
         val db = this.readableDatabase
-        val cursor = db.rawQuery("SELECT * FROM $TABLE_TRANSACTIONS WHERE $KEY_ACCOUNT = $accountFilter", null)
+        val cursor = db.rawQuery(
+            "SELECT * FROM $TABLE_TRANSACTIONS WHERE $KEY_ACCOUNT = $accountFilter",
+            null
+        )
 
         var amount: String
         var runningBalance: Double = 0.00
@@ -129,7 +132,10 @@ class TransactionsHandler(context: Context, factory: SQLiteDatabase.CursorFactor
     fun filterTransactions(accountFilter: Int): ArrayList<TransactionModel> {
         val list = ArrayList<TransactionModel>()
         val db = this.readableDatabase
-        val cursor = db.rawQuery("SELECT * FROM $TABLE_TRANSACTIONS WHERE $KEY_ACCOUNT = $accountFilter", null)
+        val cursor = db.rawQuery(
+            "SELECT * FROM $TABLE_TRANSACTIONS WHERE $KEY_ACCOUNT = $accountFilter",
+            null
+        )
 
         var id: Int
         var category: String

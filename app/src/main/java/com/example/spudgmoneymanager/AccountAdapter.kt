@@ -62,7 +62,6 @@ class AccountAdapter(private val context: Context, private val items: ArrayList<
         }
 
 
-
     }
 
     override fun getItemCount(): Int {

@@ -1,24 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/account_row_layout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:padding="10dp"
     android:layout_marginLeft="80dp"
-    android:layout_marginRight="80dp"
     android:layout_marginTop="15dp"
+    android:layout_marginRight="80dp"
     android:layout_marginBottom="15dp"
+    android:background="@drawable/dialog_background_solid"
     android:elevation="5dp"
-    android:background="@drawable/dialog_background_solid">
+    android:orientation="vertical"
+    android:padding="10dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_marginBottom="20dp">
+        android:layout_marginBottom="20dp"
+        android:orientation="vertical">
 
         <TextView
             android:id="@+id/name_account"
@@ -34,12 +33,12 @@
             android:id="@+id/balance"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginRight="10dp"
-            android:layout_weight="1"
-            android:gravity="right"
-            android:fontFamily="@font/open_sans_light"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="8dp"
+            android:layout_marginRight="10dp"
+            android:layout_weight="1"
+            android:fontFamily="@font/open_sans_light"
+            android:gravity="right"
             android:textColor="#212121"
             android:textSize="14sp"
             tools:text="Balance: 99,500.00" />
@@ -50,25 +49,24 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center_horizontal">
+        android:gravity="center_horizontal"
+        android:orientation="horizontal">
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/update_account"
             android:layout_width="25dp"
             android:layout_height="25dp"
-            android:background="@drawable/edit_account_btn"
-            android:layout_marginRight="30dp"/>
+            android:layout_marginRight="30dp"
+            android:background="@drawable/edit_account_btn" />
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/delete_account"
             android:layout_width="25dp"
             android:layout_height="25dp"
-            android:background="@drawable/delete_account_btn"
-            android:layout_marginLeft="30dp"/>
+            android:layout_marginLeft="30dp"
+            android:background="@drawable/delete_account_btn" />
 
     </LinearLayout>
-
 
 
 </LinearLayout>

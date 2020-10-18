@@ -9,8 +9,8 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.activity_accounts.*
+import kotlinx.android.synthetic.main.dialog_add_account.*
 import kotlinx.android.synthetic.main.dialog_add_account.etNameLayout
-import kotlinx.android.synthetic.main.dialog_add_account.tvAdd
 import kotlinx.android.synthetic.main.dialog_add_account.tvCancel
 import kotlinx.android.synthetic.main.dialog_add_account.view.etName
 import kotlinx.android.synthetic.main.dialog_delete_transaction.tvDelete
@@ -27,7 +27,6 @@ class AccountsActivity : AppCompatActivity() {
         add_account.setOnClickListener {
             addAccount()
         }
-
 
 
     }
