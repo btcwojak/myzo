@@ -4,7 +4,6 @@ import android.content.ContentValues
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
-import androidx.appcompat.app.ActionBar
 
 class AccountsHandler(context: Context, factory: SQLiteDatabase.CursorFactory?) :
     SQLiteOpenHelper(context, DATABASE_NAME, factory, DATABASE_VERSION) {
@@ -76,9 +75,15 @@ class AccountsHandler(context: Context, factory: SQLiteDatabase.CursorFactory?) 
         val db = this.writableDatabase
         val contentValues = ContentValues()
         contentValues.put(KEY_NAME, account.name)
-
         val success = db.update(TABLE_ACCOUNTS, contentValues, KEY_ID + "=" + account.id, null)
 
+        db.close()
+        return success
+    }
+
+    fun deleteAccount(account: AccountModel): Int {
+        val db = this.writableDatabase
+        val success = db.delete(TABLE_ACCOUNTS, KEY_ID + "=" + account.id, null)
         db.close()
         return success
     }

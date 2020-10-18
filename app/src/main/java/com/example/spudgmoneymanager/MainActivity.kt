@@ -6,6 +6,7 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.activity_main.*
@@ -20,6 +21,7 @@ import kotlinx.android.synthetic.main.dialog_add_transaction.view.etAmount
 import kotlinx.android.synthetic.main.dialog_add_transaction.view.etCategory
 import kotlinx.android.synthetic.main.dialog_add_transaction.view.expenditure_radio
 import kotlinx.android.synthetic.main.dialog_add_transaction.view.income_radio
+import kotlinx.android.synthetic.main.dialog_delete_transaction.*
 import kotlinx.android.synthetic.main.dialog_update_transaction.*
 import kotlinx.android.synthetic.main.dialog_update_transaction.view.*
 
@@ -185,6 +187,30 @@ class MainActivity : AppCompatActivity() {
         }
 
         updateDialog.show()
+    }
+
+    fun deleteTransaction(transaction: TransactionModel) {
+        val deleteDialog = Dialog(this, R.style.Theme_Dialog)
+        deleteDialog.setCancelable(false)
+        deleteDialog.setContentView(R.layout.dialog_delete_transaction)
+        deleteDialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT));
+
+        deleteDialog.tvDelete.setOnClickListener {
+            val dbHandler = TransactionsHandler(this, null)
+            dbHandler.deleteTransaction(TransactionModel(transaction.id, "", "", 0))
+
+            Toast.makeText(this, "Transaction deleted.", Toast.LENGTH_LONG).show()
+            setBalanceText()
+            setUpTransactionList()
+            deleteDialog.dismiss()
+        }
+
+        deleteDialog.tvCancel.setOnClickListener {
+            deleteDialog.dismiss()
+        }
+
+        deleteDialog.show()
+
     }
 
     private fun setBalanceText() {

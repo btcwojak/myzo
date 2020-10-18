@@ -39,7 +39,12 @@ class TransactionAdapter(val context: Context, val items: ArrayList<TransactionM
             }
         }
 
-
+        holder.transactionItem.setOnLongClickListener() {
+            if (context is MainActivity) {
+                context.deleteTransaction(transaction)
+            }
+            true
+        }
 
 
 

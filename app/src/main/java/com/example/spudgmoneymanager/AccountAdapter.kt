@@ -49,12 +49,16 @@ class AccountAdapter(private val context: Context, private val items: ArrayList<
             }
         }
 
+        holder.deleteView.setOnClickListener { view ->
+            if (context is AccountsActivity) {
+                context.deleteAccount(account)
+            }
+        }
+
     }
 
     override fun getItemCount(): Int {
         return items.size
     }
-
-
 
 }

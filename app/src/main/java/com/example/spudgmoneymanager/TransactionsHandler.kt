@@ -54,6 +54,20 @@ class TransactionsHandler(context: Context, factory: SQLiteDatabase.CursorFactor
         return success
     }
 
+    fun deleteTransaction(trans: TransactionModel): Int {
+        val db = this.writableDatabase
+        val success = db.delete(TABLE_TRANSACTIONS, KEY_ID + "=" + trans.id, null)
+        db.close()
+        return success
+    }
+
+    fun deleteTransactionDueToAccountDeletion(acc: AccountModel): Int {
+        val db = this.writableDatabase
+        val success = db.delete(TABLE_TRANSACTIONS, KEY_ACCOUNT + "=" + acc.id, null)
+        db.close()
+        return success
+    }
+
     fun getAllTransactions(): ArrayList<TransactionModel> {
         val list = ArrayList<TransactionModel>()
         val db = this.readableDatabase

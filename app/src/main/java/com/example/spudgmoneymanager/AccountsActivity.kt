@@ -12,9 +12,14 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.activity_accounts.*
 import kotlinx.android.synthetic.main.dialog_add_account.*
 import kotlinx.android.synthetic.main.dialog_add_account.etNameLayout
+import kotlinx.android.synthetic.main.dialog_add_account.tvAdd
 import kotlinx.android.synthetic.main.dialog_add_account.tvCancel
 import kotlinx.android.synthetic.main.dialog_add_account.view.*
 import kotlinx.android.synthetic.main.dialog_add_account.view.etName
+import kotlinx.android.synthetic.main.dialog_add_transaction.*
+import kotlinx.android.synthetic.main.dialog_delete_account.*
+import kotlinx.android.synthetic.main.dialog_delete_transaction.*
+import kotlinx.android.synthetic.main.dialog_delete_transaction.tvDelete
 import kotlinx.android.synthetic.main.dialog_update_account.*
 
 class AccountsActivity : AppCompatActivity() {
@@ -28,6 +33,7 @@ class AccountsActivity : AppCompatActivity() {
         add_account.setOnClickListener {
             addAccount()
         }
+
 
 
     }
@@ -113,6 +119,31 @@ class AccountsActivity : AppCompatActivity() {
         }
 
         updateDialog.show()
+    }
+
+    fun deleteAccount(account: AccountModel) {
+        val deleteDialog = Dialog(this, R.style.Theme_Dialog)
+        deleteDialog.setCancelable(false)
+        deleteDialog.setContentView(R.layout.dialog_delete_account)
+        deleteDialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT));
+
+        deleteDialog.tvDelete.setOnClickListener {
+            val dbHandlerAcc = AccountsHandler(this, null)
+            val dbHandlerTran = TransactionsHandler(this, null)
+            dbHandlerAcc.deleteAccount(AccountModel(account.id, ""))
+            dbHandlerTran.deleteTransactionDueToAccountDeletion(AccountModel(account.id, ""))
+
+            Toast.makeText(this, "Account deleted.", Toast.LENGTH_LONG).show()
+            setUpAccountList()
+            deleteDialog.dismiss()
+        }
+
+        deleteDialog.tvCancel.setOnClickListener {
+            deleteDialog.dismiss()
+        }
+
+        deleteDialog.show()
+
     }
 
 
