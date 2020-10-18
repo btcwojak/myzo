@@ -49,7 +49,7 @@
             android:fontFamily="@font/open_sans_light"
             android:gravity="center"
             android:text="Expenditure"
-            android:textSize="16dp" />
+            android:textSize="16sp" />
 
     </RadioGroup>
 
@@ -107,7 +107,7 @@
             android:gravity="center"
             android:padding="10dp"
             android:text="Add"
-            android:textColor="@android:color/holo_red_dark" />
+            android:textColor="#673AB7" />
 
         <TextView
             android:id="@+id/tvCancel"

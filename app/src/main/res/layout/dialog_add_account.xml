@@ -52,7 +52,7 @@
             android:gravity="center"
             android:padding="10dp"
             android:text="Add"
-            android:textColor="@android:color/holo_red_dark" />
+            android:textColor="#673AB7" />
 
         <TextView
             android:id="@+id/tvCancel"

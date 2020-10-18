@@ -39,7 +39,7 @@
                 android:layout_marginRight="20dp"
                 android:fontFamily="@font/open_sans_light"
                 android:text="Main Account"
-                android:textColor="@color/colorAccent"
+                android:textColor="#000000"
                 android:textSize="24sp"
                 android:textStyle="bold"
                 app:layout_constraintRight_toRightOf="parent"

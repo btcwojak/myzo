@@ -43,7 +43,7 @@
             android:gravity="center"
             android:padding="10dp"
             android:text="Delete"
-            android:textColor="@android:color/holo_red_dark" />
+            android:textColor="#673AB7" />
 
         <TextView
             android:id="@+id/tvCancel"
