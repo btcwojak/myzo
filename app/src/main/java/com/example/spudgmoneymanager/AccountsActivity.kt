@@ -7,18 +7,12 @@ import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.res.ResourcesCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.activity_accounts.*
-import kotlinx.android.synthetic.main.dialog_add_account.*
 import kotlinx.android.synthetic.main.dialog_add_account.etNameLayout
 import kotlinx.android.synthetic.main.dialog_add_account.tvAdd
 import kotlinx.android.synthetic.main.dialog_add_account.tvCancel
-import kotlinx.android.synthetic.main.dialog_add_account.view.*
 import kotlinx.android.synthetic.main.dialog_add_account.view.etName
-import kotlinx.android.synthetic.main.dialog_add_transaction.*
-import kotlinx.android.synthetic.main.dialog_delete_account.*
-import kotlinx.android.synthetic.main.dialog_delete_transaction.*
 import kotlinx.android.synthetic.main.dialog_delete_transaction.tvDelete
 import kotlinx.android.synthetic.main.dialog_update_account.*
 
@@ -144,6 +138,10 @@ class AccountsActivity : AppCompatActivity() {
 
         deleteDialog.show()
 
+    }
+
+    fun getBalance(): TransactionsHandler {
+        return TransactionsHandler(this, null)
     }
 
 

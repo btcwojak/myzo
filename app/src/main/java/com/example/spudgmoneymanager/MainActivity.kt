@@ -6,7 +6,6 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.widget.Toast
-import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.activity_main.*
@@ -16,14 +15,12 @@ import kotlinx.android.synthetic.main.dialog_add_transaction.etAmountLayout
 import kotlinx.android.synthetic.main.dialog_add_transaction.etCategoryLayout
 import kotlinx.android.synthetic.main.dialog_add_transaction.inc_exp_radio_group
 import kotlinx.android.synthetic.main.dialog_add_transaction.tvCancel
-import kotlinx.android.synthetic.main.dialog_add_transaction.view.*
 import kotlinx.android.synthetic.main.dialog_add_transaction.view.etAmount
 import kotlinx.android.synthetic.main.dialog_add_transaction.view.etCategory
 import kotlinx.android.synthetic.main.dialog_add_transaction.view.expenditure_radio
 import kotlinx.android.synthetic.main.dialog_add_transaction.view.income_radio
 import kotlinx.android.synthetic.main.dialog_delete_transaction.*
 import kotlinx.android.synthetic.main.dialog_update_transaction.*
-import kotlinx.android.synthetic.main.dialog_update_transaction.view.*
 
 class MainActivity : AppCompatActivity() {
 

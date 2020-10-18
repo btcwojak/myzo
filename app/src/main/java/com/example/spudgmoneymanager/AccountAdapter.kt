@@ -17,9 +17,8 @@ class AccountAdapter(private val context: Context, private val items: ArrayList<
         val nameView = view.name_account!!
         val updateView = view.update_account!!
         val deleteView = view.delete_account!!
-        /*
         val balanceView = view.balance!!
-         */
+
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -35,6 +34,13 @@ class AccountAdapter(private val context: Context, private val items: ArrayList<
 
         val account = items[position]
         holder.nameView.text = account.name
+
+        if (context is AccountsActivity) {
+            var db = context.getBalance()
+            var bal = db.getBalance(account.id)
+            holder.balanceView.text = "Balance: $bal"
+        }
+
 
 
         holder.accountItem.setOnClickListener { view ->
@@ -54,6 +60,8 @@ class AccountAdapter(private val context: Context, private val items: ArrayList<
                 context.deleteAccount(account)
             }
         }
+
+
 
     }
 

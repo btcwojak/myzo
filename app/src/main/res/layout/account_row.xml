@@ -17,37 +17,33 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center_horizontal"
+        android:orientation="vertical"
         android:layout_marginBottom="20dp">
 
         <TextView
             android:id="@+id/name_account"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
             android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
             android:fontFamily="@font/open_sans_light"
             android:textColor="#212121"
-            android:textSize="16sp"
+            android:textSize="18sp"
             tools:text="Account name" />
-
-        <!--
 
         <TextView
             android:id="@+id/balance"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
             android:layout_marginRight="10dp"
             android:layout_weight="1"
             android:gravity="right"
+            android:fontFamily="@font/open_sans_light"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="8dp"
             android:textColor="#212121"
-            android:textSize="20sp"
-            tools:text="2,500.00" />
+            android:textSize="14sp"
+            tools:text="Balance: 99,500.00" />
 
-        -->
 
     </LinearLayout>
 
