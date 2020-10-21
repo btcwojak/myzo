@@ -47,7 +47,7 @@ class MainActivity : AppCompatActivity() {
         if (noAccounts()) {
             val dbHandler = AccountsHandler(this, null)
             dbHandler.addAccount(AccountModel(0, "Main Account"))
-            CurrentAccountVariable.CURRENT_ACCOUNT = dbHandler.getAllAccounts().first().id
+            Constants.CURRENT_ACCOUNT = dbHandler.getAllAccounts().first().id
             setAccountName()
             setBalanceText()
         }
@@ -64,7 +64,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun getTransactionsList(): ArrayList<TransactionModel> {
         val dbHandler = TransactionsHandler(this, null)
-        return dbHandler.filterTransactions(CurrentAccountVariable.CURRENT_ACCOUNT)
+        return dbHandler.filterTransactions(Constants.CURRENT_ACCOUNT)
     }
 
     private fun addTransaction() {
@@ -90,7 +90,7 @@ class MainActivity : AppCompatActivity() {
         addDialog.tvAdd.setOnClickListener {
             val category = addDialog.etCategoryLayout.etCategory.text.toString()
             val amount = addDialog.etAmountLayout.etAmount.text.toString()
-            val account = CurrentAccountVariable.CURRENT_ACCOUNT
+            val account = Constants.CURRENT_ACCOUNT
 
             val dbHandler = TransactionsHandler(this, null)
 
@@ -154,7 +154,7 @@ class MainActivity : AppCompatActivity() {
         updateDialog.tvUpdate.setOnClickListener {
             val category = updateDialog.etCategoryLayout.etCategory.text.toString()
             val amount = updateDialog.etAmountLayout.etAmount.text.toString()
-            val account = CurrentAccountVariable.CURRENT_ACCOUNT
+            val account = Constants.CURRENT_ACCOUNT
 
             val dbHandler = TransactionsHandler(this, null)
 
@@ -223,7 +223,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun setBalanceText() {
         val dbHandler = TransactionsHandler(this, null)
-        val balance = dbHandler.getBalance(CurrentAccountVariable.CURRENT_ACCOUNT)
+        val balance = dbHandler.getBalance(Constants.CURRENT_ACCOUNT)
         if (balance.isEmpty()) {
             balance_heading.text = "Error"
         } else {
@@ -234,7 +234,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun setAccountName() {
         val dbHandler = AccountsHandler(this, null)
-        val name = dbHandler.getAccountName(CurrentAccountVariable.CURRENT_ACCOUNT)
+        val name = dbHandler.getAccountName(Constants.CURRENT_ACCOUNT)
         account_heading.text = name
 
     }

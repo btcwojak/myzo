@@ -11,7 +11,7 @@ class TransactionsHandler(context: Context, factory: SQLiteDatabase.CursorFactor
     SQLiteOpenHelper(context, DATABASE_NAME, factory, DATABASE_VERSION) {
 
     companion object {
-        private const val DATABASE_VERSION = 2
+        private const val DATABASE_VERSION = 3
         private const val DATABASE_NAME = "SMMTransactions.db"
         private const val TABLE_TRANSACTIONS = "transactions"
 

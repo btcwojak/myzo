@@ -77,7 +77,7 @@ class AccountsActivity : AppCompatActivity() {
     }
 
     fun selectAccount(account: AccountModel) {
-        CurrentAccountVariable.CURRENT_ACCOUNT = account.id
+        Constants.CURRENT_ACCOUNT = account.id
         var intent = Intent(this, MainActivity::class.java)
         startActivity(intent)
         finish()

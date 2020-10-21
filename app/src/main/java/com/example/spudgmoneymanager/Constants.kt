@@ -1,6 +1,6 @@
 package com.example.spudgmoneymanager
 
-class CurrentAccountVariable {
+class Constants {
 
     companion object {
         var CURRENT_ACCOUNT: Int = 1
