@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/account_row_layout"
+    android:id="@+id/category_row_layout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginLeft="80dp"
@@ -20,29 +20,24 @@
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/name_account"
+            android:id="@+id/title_category"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:fontFamily="@font/open_sans_light"
             android:textColor="#212121"
             android:textSize="18sp"
-            tools:text="Account name" />
+            tools:text="Category title" />
 
         <TextView
-            android:id="@+id/balance"
+            android:id="@+id/colour_category"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginRight="10dp"
-            android:layout_weight="1"
             android:fontFamily="@font/open_sans_light"
-            android:gravity="right"
             android:textColor="#212121"
-            android:textSize="14sp"
-            tools:text="Balance: 99,500.00" />
-
+            android:textSize="18sp"
+            tools:text="#FFFFFF" />
 
     </LinearLayout>
 
@@ -53,14 +48,14 @@
         android:orientation="horizontal">
 
         <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/update_account"
+            android:id="@+id/update_category"
             android:layout_width="25dp"
             android:layout_height="25dp"
             android:layout_marginRight="30dp"
             android:background="@drawable/edit_btn" />
 
         <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/delete_account"
+            android:id="@+id/delete_category"
             android:layout_width="25dp"
             android:layout_height="25dp"
             android:layout_marginLeft="30dp"

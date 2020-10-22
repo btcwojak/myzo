@@ -99,11 +99,41 @@ class TransactionsHandler(context: Context, factory: SQLiteDatabase.CursorFactor
 
     }
 
-    fun getBalance(accountFilter: Int): String {
+    fun getBalanceForAccount(accountFilter: Int): String {
         val list = ArrayList<Double>()
         val db = this.readableDatabase
         val cursor = db.rawQuery(
             "SELECT * FROM $TABLE_TRANSACTIONS WHERE $KEY_ACCOUNT = $accountFilter",
+            null
+        )
+
+        var amount: String
+        var runningBalance: Double = 0.00
+
+        if (cursor.moveToFirst()) {
+            do {
+                amount = cursor.getString(cursor.getColumnIndex(KEY_AMOUNT))
+                var freshAmount = amount.toDouble()
+                list.add(freshAmount)
+            } while (cursor.moveToNext())
+        }
+
+        for (item in list) {
+            runningBalance += item
+        }
+
+        cursor.close()
+
+        val formatter: NumberFormat = DecimalFormat("#,##0.00")
+        return formatter.format(runningBalance).toString()
+
+    }
+
+    fun getBalanceForAllAccounts(): String {
+        val list = ArrayList<Double>()
+        val db = this.readableDatabase
+        val cursor = db.rawQuery(
+            "SELECT * FROM $TABLE_TRANSACTIONS",
             null
         )
 

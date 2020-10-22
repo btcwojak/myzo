@@ -16,6 +16,7 @@
         android:gravity="center">
 
         <TextView
+            android:id="@+id/analysis_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Analysis"
@@ -29,6 +30,7 @@
             android:gravity="center"/>
 
         <TextView
+            android:id="@+id/categories_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Categories"
@@ -43,6 +45,7 @@
             />
 
         <TextView
+            android:id="@+id/export_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Export"

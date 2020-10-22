@@ -23,10 +23,14 @@ class AccountsActivity : AppCompatActivity() {
         setContentView(R.layout.activity_accounts)
 
         setUpAccountList()
+        setTotalBalance()
 
         add_account.setOnClickListener {
             addAccount()
         }
+
+
+
 
 
     }
@@ -142,6 +146,15 @@ class AccountsActivity : AppCompatActivity() {
     fun getBalance(): TransactionsHandler {
         return TransactionsHandler(this, null)
     }
+
+    fun setTotalBalance() {
+        val dbHandler = TransactionsHandler(this, null)
+        balance_heading.text = "Total balance: ${dbHandler.getBalanceForAllAccounts()}"
+    }
+
+
+
+
 
 
 }

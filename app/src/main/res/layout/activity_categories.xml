@@ -25,11 +25,11 @@
             android:layout_margin="15dp">
 
             <TextView
-                android:id="@+id/account_heading"
+                android:id="@+id/categories_heading"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/open_sans_light"
-                android:text="All Accounts"
+                android:text="Categories"
                 android:textColor="#000000"
                 android:textSize="24sp"
                 android:textStyle="bold"
@@ -37,19 +37,18 @@
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
+            <!--
 
             <TextView
                 android:id="@+id/balance_heading"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Total balance: 0.00"
+                android:text="Balance: 0.00"
                 android:textSize="16sp"
-                android:fontFamily="@font/open_sans_light"
                 app:layout_constraintRight_toRightOf="@id/account_heading"
-                app:layout_constraintLeft_toLeftOf="@id/account_heading"
-                app:layout_constraintTop_toBottomOf="@id/account_heading"/>
+                app:layout_constraintTop_toBottomOf="@id/account_heading" />
 
-
+            -->
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -67,26 +66,26 @@
             app:layout_constraintVertical_weight="4">
 
             <Button
-                android:id="@+id/add_account"
+                android:id="@+id/add_category"
                 android:layout_width="wrap_content"
                 android:layout_height="50dp"
                 android:layout_marginBottom="25dp"
                 android:background="#99FFFFFF"
                 android:fontFamily="@font/open_sans_light"
-                android:text="+ Account"
+                android:text="+ Category"
                 android:textColor="@color/colorAccent"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent" />
 
             <LinearLayout
-                android:id="@+id/llAccounts"
+                android:id="@+id/llCategories"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toTopOf="parent">
 
                 <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rvAccounts"
+                    android:id="@+id/rvCategories"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
 

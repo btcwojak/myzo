@@ -25,7 +25,6 @@ class MainActivity : AppCompatActivity() {
 
     var isIncome = true
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -41,6 +40,19 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
+        analysis_btn.setOnClickListener {
+            Toast.makeText(this, "To be added soon...", Toast.LENGTH_SHORT).show()
+        }
+
+        categories_btn.setOnClickListener {
+            val intent = Intent(this, CategoriesActivity::class.java)
+            startActivity(intent)
+        }
+
+        export_btn.setOnClickListener {
+            Toast.makeText(this, "To be added soon...", Toast.LENGTH_SHORT).show()
+        }
+
         setBalanceText()
         setAccountName()
 
@@ -51,6 +63,7 @@ class MainActivity : AppCompatActivity() {
             setAccountName()
             setBalanceText()
         }
+
 
     }
 
@@ -223,7 +236,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun setBalanceText() {
         val dbHandler = TransactionsHandler(this, null)
-        val balance = dbHandler.getBalance(Constants.CURRENT_ACCOUNT)
+        val balance = dbHandler.getBalanceForAccount(Constants.CURRENT_ACCOUNT)
         if (balance.isEmpty()) {
             balance_heading.text = "Error"
         } else {
