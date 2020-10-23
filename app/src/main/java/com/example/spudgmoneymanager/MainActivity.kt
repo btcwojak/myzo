@@ -68,7 +68,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setUpTransactionList() {
-        if (getTransactionsList().size > 0) {
+        if (getTransactionsList().size >= 0) {
             rvTransactions.layoutManager = LinearLayoutManager(this)
             val transactionAdapter = TransactionAdapter(this, getTransactionsList())
             rvTransactions.adapter = transactionAdapter

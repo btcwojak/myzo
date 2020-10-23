@@ -6,6 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.account_row.view.*
+import kotlinx.android.synthetic.main.activity_categories.*
+import kotlinx.android.synthetic.main.category_row.*
 import kotlinx.android.synthetic.main.category_row.view.*
 
 class CategoryAdapter (private val context: Context, private val items: ArrayList<CategoryModel>) : RecyclerView.Adapter<CategoryAdapter.ViewHolder>() {
@@ -29,6 +31,21 @@ class CategoryAdapter (private val context: Context, private val items: ArrayLis
         val category = items[position]
         holder.titleView.text = category.title
         holder.colourView.text = category.colour
+
+        holder.updateView.setOnClickListener { view ->
+            if (context is CategoriesActivity) {
+                context.updateCategory(category)
+            }
+        }
+
+        holder.deleteView.setOnClickListener { view ->
+            if (context is CategoriesActivity) {
+                context.deleteCategory(category)
+            }
+        }
+
+
+
     }
 
     override fun getItemCount(): Int {

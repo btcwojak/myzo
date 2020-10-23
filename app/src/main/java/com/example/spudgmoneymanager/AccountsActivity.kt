@@ -29,10 +29,6 @@ class AccountsActivity : AppCompatActivity() {
             addAccount()
         }
 
-
-
-
-
     }
 
     private fun setUpAccountList() {
