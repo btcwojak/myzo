@@ -5,6 +5,7 @@ import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -20,6 +21,7 @@ import kotlinx.android.synthetic.main.dialog_add_transaction.view.expenditure_ra
 import kotlinx.android.synthetic.main.dialog_add_transaction.view.income_radio
 import kotlinx.android.synthetic.main.dialog_delete_transaction.*
 import kotlinx.android.synthetic.main.dialog_update_transaction.*
+import kotlinx.android.synthetic.main.transaction_row.*
 
 class MainActivity : AppCompatActivity() {
 
@@ -64,7 +66,6 @@ class MainActivity : AppCompatActivity() {
             setBalanceText()
         }
 
-
     }
 
     private fun setUpTransactionList() {
@@ -85,6 +86,11 @@ class MainActivity : AppCompatActivity() {
         addDialog.setCancelable(false)
         addDialog.setContentView(R.layout.dialog_add_transaction)
         addDialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT));
+
+        val categoryListHandler = CategoriesHandler(this, null)
+        val items = categoryListHandler.getAllCategoryTitles()
+        val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, items)
+        addDialog.category_spinner.adapter = adapter
 
         addDialog.inc_exp_radio_group.setOnCheckedChangeListener { group, checkedId ->
             if (checkedId == R.id.income_radio) {

@@ -83,5 +83,24 @@ class CategoriesHandler(context: Context, factory: SQLiteDatabase.CursorFactory?
         return list
 
     }
+
+    fun getAllCategoryTitles(): ArrayList<String> {
+        val list = ArrayList<String>()
+        val db = this.readableDatabase
+        val cursor = db.rawQuery("SELECT * FROM ${TABLE_CATEGORIES}", null)
+
+        var title: String
+
+        if (cursor.moveToFirst()) {
+            do {
+                title = cursor.getString(cursor.getColumnIndex(KEY_TITLE))
+                list.add(title)
+            } while (cursor.moveToNext())
+        }
+
+        cursor.close()
+        return list
+
+    }
     
 }
