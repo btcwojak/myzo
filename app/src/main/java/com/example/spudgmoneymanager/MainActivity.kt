@@ -5,6 +5,8 @@ import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.view.View
+import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -23,9 +25,10 @@ import kotlinx.android.synthetic.main.dialog_delete_transaction.*
 import kotlinx.android.synthetic.main.dialog_update_transaction.*
 import kotlinx.android.synthetic.main.transaction_row.*
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
 
     var isIncome = true
+    var selectedCategory = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -89,8 +92,9 @@ class MainActivity : AppCompatActivity() {
 
         val categoryListHandler = CategoriesHandler(this, null)
         val items = categoryListHandler.getAllCategoryTitles()
-        val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, items)
-        addDialog.category_spinner.adapter = adapter
+        val categoryAdapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, items)
+        addDialog.category_spinner_add_trans.adapter = categoryAdapter
+        addDialog.category_spinner_add_trans.onItemSelectedListener = this
 
         addDialog.inc_exp_radio_group.setOnCheckedChangeListener { group, checkedId ->
             if (checkedId == R.id.income_radio) {
@@ -107,7 +111,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         addDialog.tvAdd.setOnClickListener {
-            val category = addDialog.etCategoryLayout.etCategory.text.toString()
+            val category = selectedCategory
             val amount = addDialog.etAmountLayout.etAmount.text.toString()
             val account = Constants.CURRENT_ACCOUNT
 
@@ -146,7 +150,11 @@ class MainActivity : AppCompatActivity() {
         updateDialog.setContentView(R.layout.dialog_update_transaction)
         updateDialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT));
 
-        updateDialog.etCategoryLayout.etCategory.setText(transaction.category)
+        val categoryListHandler = CategoriesHandler(this, null)
+        val items = categoryListHandler.getAllCategoryTitles()
+        val categoryAdapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, items)
+        updateDialog.category_spinner_update_trans.adapter = categoryAdapter
+        updateDialog.category_spinner_update_trans.onItemSelectedListener = this
 
         if (transaction.amount.toFloat() >= 0) {
             updateDialog.inc_exp_radio_group.income_radio.isChecked
@@ -171,7 +179,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         updateDialog.tvUpdate.setOnClickListener {
-            val category = updateDialog.etCategoryLayout.etCategory.text.toString()
+            val category = selectedCategory
             val amount = updateDialog.etAmountLayout.etAmount.text.toString()
             val account = Constants.CURRENT_ACCOUNT
 
@@ -261,6 +269,14 @@ class MainActivity : AppCompatActivity() {
     private fun noAccounts(): Boolean {
         val dbHandler = AccountsHandler(this, null)
         return dbHandler.getAllAccounts().size < 1
+    }
+
+    override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+        selectedCategory = parent?.getItemAtPosition(position).toString()
+    }
+
+    override fun onNothingSelected(parent: AdapterView<*>?) {
+        Toast.makeText(this, "Nothing's selected in category dropdown.", Toast.LENGTH_SHORT).show()
     }
 
 }
