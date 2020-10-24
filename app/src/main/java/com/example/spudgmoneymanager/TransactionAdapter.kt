@@ -16,6 +16,7 @@ class TransactionAdapter(val context: Context, val items: ArrayList<TransactionM
         val transactionItem = view.transaction_row_layout
         val categoryView = view.category
         val amountView = view.amount
+        val noteView = view.note
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -31,6 +32,7 @@ class TransactionAdapter(val context: Context, val items: ArrayList<TransactionM
         val transaction = items.get(position)
         holder.categoryView.text = transaction.category
         holder.amountView.text = formatter.format((transaction.amount).toDouble()).toString()
+        holder.noteView.text = transaction.note
 
         holder.transactionItem.setOnClickListener {
             if (context is MainActivity) {

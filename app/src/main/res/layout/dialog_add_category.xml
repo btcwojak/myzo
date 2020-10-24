@@ -32,7 +32,7 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/open_sans_light"
             android:hint="Title"
-            android:maxLength="12" />
+            android:maxLength="16" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
