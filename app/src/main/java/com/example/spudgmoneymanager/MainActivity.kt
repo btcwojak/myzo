@@ -115,7 +115,7 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
 
             val dbHandler = TransactionsHandler(this, null)
 
-            if (category.isNotEmpty() && amount.isNotEmpty()) {
+            if (category.isNotEmpty() && amount.isNotEmpty() && note.isNotEmpty()) {
                 if (isIncome) {
                     dbHandler.addTransaction(TransactionModel(0, note, category, amount, account))
                 } else if (!isIncome) {
@@ -130,7 +130,7 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
                 addDialog.dismiss()
 
             } else {
-                Toast.makeText(this, "Category or amount can't be blank.", Toast.LENGTH_LONG).show()
+                Toast.makeText(this, "Category, amount or note can't be blank.", Toast.LENGTH_LONG).show()
             }
 
         }
@@ -186,7 +186,7 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
 
             val dbHandler = TransactionsHandler(this, null)
 
-            if (category.isNotEmpty() && amount.isNotEmpty()) {
+            if (category.isNotEmpty() && amount.isNotEmpty() && note.isNotEmpty()) {
                 if (isIncome) {
                     dbHandler.updateTransaction(
                         TransactionModel(
@@ -215,7 +215,7 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
                 updateDialog.dismiss()
 
             } else {
-                Toast.makeText(this, "Category or amount can't be blank.", Toast.LENGTH_LONG).show()
+                Toast.makeText(this, "Category, amount or note can't be blank.", Toast.LENGTH_LONG).show()
             }
 
         }
