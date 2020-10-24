@@ -14,16 +14,13 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.dialog_add_transaction.*
 import kotlinx.android.synthetic.main.dialog_add_transaction.etAmountLayout
-import kotlinx.android.synthetic.main.dialog_add_transaction.etCategoryLayout
 import kotlinx.android.synthetic.main.dialog_add_transaction.inc_exp_radio_group
 import kotlinx.android.synthetic.main.dialog_add_transaction.tvCancel
-import kotlinx.android.synthetic.main.dialog_add_transaction.view.etAmount
-import kotlinx.android.synthetic.main.dialog_add_transaction.view.etCategory
-import kotlinx.android.synthetic.main.dialog_add_transaction.view.expenditure_radio
-import kotlinx.android.synthetic.main.dialog_add_transaction.view.income_radio
+import kotlinx.android.synthetic.main.dialog_add_transaction.view.*
 import kotlinx.android.synthetic.main.dialog_delete_transaction.*
 import kotlinx.android.synthetic.main.dialog_update_transaction.*
 import kotlinx.android.synthetic.main.transaction_row.*
+import kotlinx.android.synthetic.main.dialog_update_transaction.etNoteLayout as etNoteLayout1
 
 class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
 
@@ -88,7 +85,7 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
         val addDialog = Dialog(this, R.style.Theme_Dialog)
         addDialog.setCancelable(false)
         addDialog.setContentView(R.layout.dialog_add_transaction)
-        addDialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT));
+        addDialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
         val categoryListHandler = CategoriesHandler(this, null)
         val items = categoryListHandler.getAllCategoryTitles()
@@ -113,16 +110,17 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
         addDialog.tvAdd.setOnClickListener {
             val category = selectedCategory
             val amount = addDialog.etAmountLayout.etAmount.text.toString()
+            val note = addDialog.etNoteLayout.etNote.text.toString()
             val account = Constants.CURRENT_ACCOUNT
 
             val dbHandler = TransactionsHandler(this, null)
 
             if (category.isNotEmpty() && amount.isNotEmpty()) {
                 if (isIncome) {
-                    dbHandler.addTransaction(TransactionModel(0, category, amount, account))
+                    dbHandler.addTransaction(TransactionModel(0, note, category, amount, account))
                 } else if (!isIncome) {
                     dbHandler.addTransaction(
-                        TransactionModel(0, category, (amount.toDouble() * -1).toString(), account)
+                        TransactionModel(0, note, category, (amount.toDouble() * -1).toString(), account)
                     )
                 }
 
@@ -156,6 +154,8 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
         updateDialog.category_spinner_update_trans.adapter = categoryAdapter
         updateDialog.category_spinner_update_trans.onItemSelectedListener = this
 
+        updateDialog.etNoteLayout.etNote.setText(transaction.note)
+
         if (transaction.amount.toFloat() >= 0) {
             updateDialog.inc_exp_radio_group.income_radio.isChecked
             updateDialog.etAmountLayout.etAmount.setText(transaction.amount)
@@ -182,6 +182,7 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
             val category = selectedCategory
             val amount = updateDialog.etAmountLayout.etAmount.text.toString()
             val account = Constants.CURRENT_ACCOUNT
+            val note = updateDialog.etNoteLayout.etNote.text.toString()
 
             val dbHandler = TransactionsHandler(this, null)
 
@@ -190,6 +191,7 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
                     dbHandler.updateTransaction(
                         TransactionModel(
                             transaction.id,
+                            note,
                             category,
                             amount,
                             account
@@ -199,6 +201,7 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
                     dbHandler.updateTransaction(
                         TransactionModel(
                             transaction.id,
+                            note,
                             category,
                             (amount.toDouble() * -1).toString(),
                             account
@@ -232,7 +235,7 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
 
         deleteDialog.tvDelete.setOnClickListener {
             val dbHandler = TransactionsHandler(this, null)
-            dbHandler.deleteTransaction(TransactionModel(transaction.id, "", "", 0))
+            dbHandler.deleteTransaction(TransactionModel(transaction.id, "", "", "", 0))
 
             Toast.makeText(this, "Transaction deleted.", Toast.LENGTH_LONG).show()
             setBalanceText()

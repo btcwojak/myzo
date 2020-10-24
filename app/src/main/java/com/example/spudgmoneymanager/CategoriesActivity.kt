@@ -13,13 +13,11 @@ import kotlinx.android.synthetic.main.dialog_add_category.*
 import kotlinx.android.synthetic.main.dialog_add_category.view.*
 import kotlinx.android.synthetic.main.dialog_add_transaction.*
 import kotlinx.android.synthetic.main.dialog_add_transaction.etAmountLayout
-import kotlinx.android.synthetic.main.dialog_add_transaction.etCategoryLayout
 import kotlinx.android.synthetic.main.dialog_add_transaction.inc_exp_radio_group
 import kotlinx.android.synthetic.main.dialog_add_transaction.tvAdd
 import kotlinx.android.synthetic.main.dialog_add_transaction.tvCancel
 import kotlinx.android.synthetic.main.dialog_add_transaction.view.*
 import kotlinx.android.synthetic.main.dialog_add_transaction.view.etAmount
-import kotlinx.android.synthetic.main.dialog_add_transaction.view.etCategory
 import kotlinx.android.synthetic.main.dialog_add_transaction.view.expenditure_radio
 import kotlinx.android.synthetic.main.dialog_add_transaction.view.income_radio
 import kotlinx.android.synthetic.main.dialog_delete_transaction.*
