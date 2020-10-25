@@ -275,6 +275,11 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
         return dbHandler.getAllAccounts().size < 1
     }
 
+    fun getTransactionCategoryColour(categoryTitle: String): Int {
+        val dbHandler = CategoriesHandler(this, null)
+        return dbHandler.getCategoryColour(categoryTitle)
+    }
+
     override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
         selectedCategory = parent?.getItemAtPosition(position).toString()
     }

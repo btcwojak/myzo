@@ -1,16 +1,15 @@
 package com.example.spudgmoneymanager
 
 import android.content.Context
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import kotlinx.android.synthetic.main.account_row.view.*
-import kotlinx.android.synthetic.main.activity_categories.*
-import kotlinx.android.synthetic.main.category_row.*
 import kotlinx.android.synthetic.main.category_row.view.*
 
-class CategoryAdapter (private val context: Context, private val items: ArrayList<CategoryModel>) : RecyclerView.Adapter<CategoryAdapter.ViewHolder>() {
+
+class CategoryAdapter(private val context: Context, private val items: ArrayList<CategoryModel>) : RecyclerView.Adapter<CategoryAdapter.ViewHolder>() {
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val categoryItem = view.category_row_layout!!
@@ -30,7 +29,7 @@ class CategoryAdapter (private val context: Context, private val items: ArrayLis
     override fun onBindViewHolder(holder: CategoryAdapter.ViewHolder, position: Int) {
         val category = items[position]
         holder.titleView.text = category.title
-        holder.colourView.text = category.colour
+        holder.colourView.setBackgroundColor(category.colour.toInt())
 
         holder.updateView.setOnClickListener { view ->
             if (context is CategoriesActivity) {

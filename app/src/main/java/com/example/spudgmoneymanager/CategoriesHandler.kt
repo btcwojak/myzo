@@ -8,7 +8,7 @@ import android.database.sqlite.SQLiteOpenHelper
 class CategoriesHandler(context: Context, factory: SQLiteDatabase.CursorFactory?) : SQLiteOpenHelper(context, DATABASE_NAME, factory, DATABASE_VERSION) {
 
     companion object {
-        private const val DATABASE_VERSION = 1
+        private const val DATABASE_VERSION = 2
         private const val DATABASE_NAME = "SMMCategories.db"
         private const val TABLE_CATEGORIES = "categories"
 
@@ -87,7 +87,7 @@ class CategoriesHandler(context: Context, factory: SQLiteDatabase.CursorFactory?
     fun getAllCategoryTitles(): ArrayList<String> {
         val list = ArrayList<String>()
         val db = this.readableDatabase
-        val cursor = db.rawQuery("SELECT * FROM ${TABLE_CATEGORIES}", null)
+        val cursor = db.rawQuery("SELECT * FROM $TABLE_CATEGORIES", null)
 
         var title: String
 
@@ -100,6 +100,18 @@ class CategoriesHandler(context: Context, factory: SQLiteDatabase.CursorFactory?
 
         cursor.close()
         return list
+
+    }
+
+    fun getCategoryColour(categoryTitle: String): Int {
+        val db = this.readableDatabase
+        val cursor = db.rawQuery("SELECT * FROM $TABLE_CATEGORIES WHERE $KEY_TITLE = $categoryTitle", null)
+
+        if (cursor.moveToFirst()) {
+            return cursor.getString(cursor.getColumnIndex(KEY_COLOUR)).toInt()
+        } else {
+            return 0
+        }
 
     }
     

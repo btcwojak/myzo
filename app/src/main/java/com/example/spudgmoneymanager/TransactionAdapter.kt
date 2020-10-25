@@ -13,10 +13,11 @@ class TransactionAdapter(val context: Context, val items: ArrayList<TransactionM
     RecyclerView.Adapter<TransactionAdapter.ViewHolder>() {
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val transactionItem = view.transaction_row_layout
-        val categoryView = view.category
-        val amountView = view.amount
-        val noteView = view.note
+        val transactionItem = view.transaction_row_layout!!
+        val categoryView = view.category!!
+        val amountView = view.amount!!
+        val noteView = view.note!!
+        val colourView = view.category_colour!!
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -29,10 +30,15 @@ class TransactionAdapter(val context: Context, val items: ArrayList<TransactionM
 
         val formatter: NumberFormat = DecimalFormat("#,##0.00")
 
-        val transaction = items.get(position)
+        val transaction = items[position]
         holder.categoryView.text = transaction.category
         holder.amountView.text = formatter.format((transaction.amount).toDouble()).toString()
         holder.noteView.text = transaction.note
+
+        if (context is MainActivity) {
+            var colour = context.getTransactionCategoryColour(transaction.category)
+            holder.colourView.setBackgroundColor(colour)
+        }
 
         holder.transactionItem.setOnClickListener {
             if (context is MainActivity) {
