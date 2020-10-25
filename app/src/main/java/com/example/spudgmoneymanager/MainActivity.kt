@@ -87,6 +87,7 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
         addDialog.setContentView(R.layout.dialog_add_transaction)
         addDialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
+
         val categoryListHandler = CategoriesHandler(this, null)
         val items = categoryListHandler.getAllCategoryTitles()
         val categoryAdapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, items)

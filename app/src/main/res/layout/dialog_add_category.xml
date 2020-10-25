@@ -7,6 +7,7 @@
     android:padding="10dp">
 
     <TextView
+        android:id="@+id/add_category_heading"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="8dp"
@@ -15,7 +16,6 @@
         android:text="Add Category"
         android:textColor="@android:color/black"
         android:textSize="18sp" />
-
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/etTitleLayout"
@@ -36,24 +36,13 @@
 
     </com.google.android.material.textfield.TextInputLayout>
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/etColourLayout"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="15dp"
-        android:layout_marginTop="15dp"
-        android:layout_marginRight="15dp">
 
-        <androidx.appcompat.widget.AppCompatEditText
-            android:id="@+id/etColour"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/open_sans_light"
-            android:hint="Colour HEX"
-            android:maxLength="12" />
-
-    </com.google.android.material.textfield.TextInputLayout>
+    <com.madrapps.pikolo.HSLColorPicker
+        android:id="@+id/colourPicker"
+        android:layout_width="wrap_content"
+        android:layout_height="300dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"/>
 
     <LinearLayout
         android:layout_width="match_parent"
