@@ -15,11 +15,12 @@ class CategoriesHandler(context: Context, factory: SQLiteDatabase.CursorFactory?
         private const val KEY_ID = "_id"
         private const val KEY_TITLE = "category"
         private const val KEY_COLOUR = "colour"
+
     }
 
 
     override fun onCreate(db: SQLiteDatabase?) {
-        val CREATE_CATEGORIES_TABLE = ("CREATE TABLE $TABLE_CATEGORIES($KEY_ID INTEGER PRIMARY KEY,$KEY_TITLE TEXT, $KEY_COLOUR TEXT)")
+        val CREATE_CATEGORIES_TABLE = ("CREATE TABLE $TABLE_CATEGORIES($KEY_ID INTEGER PRIMARY KEY,$KEY_TITLE TEXT,$KEY_COLOUR TEXT)")
         db?.execSQL(CREATE_CATEGORIES_TABLE)
     }
 
@@ -105,7 +106,9 @@ class CategoriesHandler(context: Context, factory: SQLiteDatabase.CursorFactory?
 
     fun getCategoryColour(categoryTitle: String): Int {
         val db = this.readableDatabase
-        val cursor = db.rawQuery("SELECT * FROM $TABLE_CATEGORIES WHERE $KEY_TITLE = $categoryTitle", null)
+
+        val cursor = db.rawQuery("SELECT * FROM $TABLE_CATEGORIES WHERE category = '$categoryTitle'", null)
+
 
         if (cursor.moveToFirst()) {
             return cursor.getString(cursor.getColumnIndex(KEY_COLOUR)).toInt()
