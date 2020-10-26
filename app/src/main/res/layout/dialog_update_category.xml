@@ -39,9 +39,9 @@
     <com.madrapps.pikolo.HSLColorPicker
         android:id="@+id/colourPicker"
         android:layout_width="wrap_content"
+        android:layout_height="300dp"
         android:layout_marginTop="20dp"
-        android:layout_marginBottom="20dp"
-        android:layout_height="300dp" />
+        android:layout_marginBottom="20dp" />
 
     <LinearLayout
         android:layout_width="match_parent"

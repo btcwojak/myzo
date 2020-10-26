@@ -5,7 +5,8 @@ import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 
-class CategoriesHandler(context: Context, factory: SQLiteDatabase.CursorFactory?) : SQLiteOpenHelper(context, DATABASE_NAME, factory, DATABASE_VERSION) {
+class CategoriesHandler(context: Context, factory: SQLiteDatabase.CursorFactory?) :
+    SQLiteOpenHelper(context, DATABASE_NAME, factory, DATABASE_VERSION) {
 
     companion object {
         private const val DATABASE_VERSION = 2
@@ -20,7 +21,8 @@ class CategoriesHandler(context: Context, factory: SQLiteDatabase.CursorFactory?
 
 
     override fun onCreate(db: SQLiteDatabase?) {
-        val CREATE_CATEGORIES_TABLE = ("CREATE TABLE $TABLE_CATEGORIES($KEY_ID INTEGER PRIMARY KEY,$KEY_TITLE TEXT,$KEY_COLOUR TEXT)")
+        val CREATE_CATEGORIES_TABLE =
+            ("CREATE TABLE $TABLE_CATEGORIES($KEY_ID INTEGER PRIMARY KEY,$KEY_TITLE TEXT,$KEY_COLOUR TEXT)")
         db?.execSQL(CREATE_CATEGORIES_TABLE)
     }
 
@@ -107,7 +109,8 @@ class CategoriesHandler(context: Context, factory: SQLiteDatabase.CursorFactory?
     fun getCategoryColour(categoryTitle: String): Int {
         val db = this.readableDatabase
 
-        val cursor = db.rawQuery("SELECT * FROM $TABLE_CATEGORIES WHERE category = '$categoryTitle'", null)
+        val cursor =
+            db.rawQuery("SELECT * FROM $TABLE_CATEGORIES WHERE category = '$categoryTitle'", null)
 
 
         if (cursor.moveToFirst()) {
@@ -117,5 +120,5 @@ class CategoriesHandler(context: Context, factory: SQLiteDatabase.CursorFactory?
         }
 
     }
-    
+
 }

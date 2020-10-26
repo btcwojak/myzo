@@ -10,8 +10,8 @@
     android:layout_marginBottom="15dp"
     android:background="@drawable/dialog_background_solid"
     android:elevation="5dp"
-    android:orientation="horizontal"
     android:gravity="center"
+    android:orientation="horizontal"
     android:padding="10dp">
 
     <androidx.appcompat.widget.AppCompatImageView
@@ -31,10 +31,10 @@
             android:id="@+id/title_category"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:fontFamily="@font/open_sans_light"
-            android:textColor="#212121"
             android:layout_gravity="center"
+            android:fontFamily="@font/open_sans_light"
+            android:gravity="center"
+            android:textColor="#212121"
             android:textSize="18sp"
             tools:text="Category title" />
 
@@ -53,11 +53,11 @@
 
     </LinearLayout>
 
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/delete_category"
-            android:layout_width="25dp"
-            android:layout_marginLeft="30dp"
-            android:layout_height="25dp"
-            android:background="@drawable/delete_btn" />
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/delete_category"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_marginLeft="30dp"
+        android:background="@drawable/delete_btn" />
 
 </LinearLayout>

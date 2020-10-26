@@ -2,36 +2,20 @@ package com.example.spudgmoneymanager
 
 import android.app.Dialog
 import android.graphics.Color
-import android.graphics.Color.*
-import android.graphics.PorterDuff
+import android.graphics.Color.TRANSPARENT
 import android.graphics.drawable.ColorDrawable
-import android.os.Build
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
-import androidx.annotation.RequiresApi
-import androidx.core.content.ContextCompat
-import androidx.core.graphics.toColorLong
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.madrapps.pikolo.ColorPicker
 import com.madrapps.pikolo.listeners.SimpleColorSelectionListener
 import kotlinx.android.synthetic.main.activity_categories.*
-import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.dialog_add_category.*
 import kotlinx.android.synthetic.main.dialog_add_category.view.*
-import kotlinx.android.synthetic.main.dialog_add_transaction.*
-import kotlinx.android.synthetic.main.dialog_add_transaction.etAmountLayout
-import kotlinx.android.synthetic.main.dialog_add_transaction.inc_exp_radio_group
 import kotlinx.android.synthetic.main.dialog_add_transaction.tvAdd
 import kotlinx.android.synthetic.main.dialog_add_transaction.tvCancel
-import kotlinx.android.synthetic.main.dialog_add_transaction.view.*
-import kotlinx.android.synthetic.main.dialog_add_transaction.view.etAmount
-import kotlinx.android.synthetic.main.dialog_add_transaction.view.expenditure_radio
-import kotlinx.android.synthetic.main.dialog_add_transaction.view.income_radio
 import kotlinx.android.synthetic.main.dialog_delete_transaction.*
 import kotlinx.android.synthetic.main.dialog_update_transaction.*
-import kotlinx.android.synthetic.main.transaction_row.*
-import androidx.core.graphics.toColor as toColorLong
 
 class CategoriesActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

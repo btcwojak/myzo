@@ -149,8 +149,4 @@ class AccountsActivity : AppCompatActivity() {
     }
 
 
-
-
-
-
 }

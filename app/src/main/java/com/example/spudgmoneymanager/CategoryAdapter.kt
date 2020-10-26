@@ -1,7 +1,6 @@
 package com.example.spudgmoneymanager
 
 import android.content.Context
-import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,7 +8,8 @@ import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.category_row.view.*
 
 
-class CategoryAdapter(private val context: Context, private val items: ArrayList<CategoryModel>) : RecyclerView.Adapter<CategoryAdapter.ViewHolder>() {
+class CategoryAdapter(private val context: Context, private val items: ArrayList<CategoryModel>) :
+    RecyclerView.Adapter<CategoryAdapter.ViewHolder>() {
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val categoryItem = view.category_row_layout!!
@@ -42,7 +42,6 @@ class CategoryAdapter(private val context: Context, private val items: ArrayList
                 context.deleteCategory(category)
             }
         }
-
 
 
     }

@@ -10,53 +10,52 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
         android:background="@drawable/main_toolbar_background"
         android:elevation="25dp"
-        android:gravity="center">
+        android:gravity="center"
+        android:orientation="horizontal">
 
         <TextView
             android:id="@+id/analysis_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Analysis"
             android:layout_marginTop="5dp"
             android:layout_marginBottom="5dp"
             android:layout_weight="1"
             android:fontFamily="@font/open_sans_light"
-            android:textSize="16sp"
-            android:textColor="@color/colorAccent"
+            android:gravity="center"
             android:padding="10dp"
-            android:gravity="center"/>
+            android:text="Analysis"
+            android:textColor="@color/colorAccent"
+            android:textSize="16sp" />
 
         <TextView
             android:id="@+id/categories_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Categories"
             android:layout_marginTop="5dp"
             android:layout_marginBottom="5dp"
-            android:textColor="@color/colorAccent"
             android:layout_weight="1"
-            android:textSize="16sp"
             android:fontFamily="@font/open_sans_light"
-            android:padding="10dp"
             android:gravity="center"
-            />
+            android:padding="10dp"
+            android:text="Categories"
+            android:textColor="@color/colorAccent"
+            android:textSize="16sp" />
 
         <TextView
             android:id="@+id/export_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Export"
             android:layout_marginTop="5dp"
             android:layout_marginBottom="5dp"
-            android:textSize="16sp"
-            android:textColor="@color/colorAccent"
             android:layout_weight="1"
-            android:gravity="center"
             android:fontFamily="@font/open_sans_light"
-            android:padding="10dp"/>
+            android:gravity="center"
+            android:padding="10dp"
+            android:text="Export"
+            android:textColor="@color/colorAccent"
+            android:textSize="16sp" />
 
     </LinearLayout>
 

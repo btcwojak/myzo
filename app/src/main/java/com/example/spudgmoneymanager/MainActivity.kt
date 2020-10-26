@@ -19,8 +19,7 @@ import kotlinx.android.synthetic.main.dialog_add_transaction.tvCancel
 import kotlinx.android.synthetic.main.dialog_add_transaction.view.*
 import kotlinx.android.synthetic.main.dialog_delete_transaction.*
 import kotlinx.android.synthetic.main.dialog_update_transaction.*
-import kotlinx.android.synthetic.main.transaction_row.*
-import kotlinx.android.synthetic.main.dialog_update_transaction.etNoteLayout as etNoteLayout1
+import kotlinx.android.synthetic.main.dialog_add_transaction.etNoteLayout as etNoteLayout1
 
 class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
 
@@ -121,7 +120,13 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
                     dbHandler.addTransaction(TransactionModel(0, note, category, amount, account))
                 } else if (!isIncome) {
                     dbHandler.addTransaction(
-                        TransactionModel(0, note, category, (amount.toDouble() * -1).toString(), account)
+                        TransactionModel(
+                            0,
+                            note,
+                            category,
+                            (amount.toDouble() * -1).toString(),
+                            account
+                        )
                     )
                 }
 
@@ -131,7 +136,8 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
                 addDialog.dismiss()
 
             } else {
-                Toast.makeText(this, "Category, amount or note can't be blank.", Toast.LENGTH_LONG).show()
+                Toast.makeText(this, "Category, amount or note can't be blank.", Toast.LENGTH_LONG)
+                    .show()
             }
 
         }
@@ -216,7 +222,8 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
                 updateDialog.dismiss()
 
             } else {
-                Toast.makeText(this, "Category, amount or note can't be blank.", Toast.LENGTH_LONG).show()
+                Toast.makeText(this, "Category, amount or note can't be blank.", Toast.LENGTH_LONG)
+                    .show()
             }
 
         }
