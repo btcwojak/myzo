@@ -17,6 +17,7 @@ class CategoryAdapter(private val context: Context, private val items: ArrayList
         val colourView = view.colour_category!!
         val updateView = view.update_category!!
         val deleteView = view.delete_category!!
+        val defaultView = view.default_category!!
 
     }
 
@@ -31,15 +32,25 @@ class CategoryAdapter(private val context: Context, private val items: ArrayList
         holder.titleView.text = category.title
         holder.colourView.setBackgroundColor(category.colour.toInt())
 
-        holder.updateView.setOnClickListener { view ->
-            if (context is CategoriesActivity) {
-                context.updateCategory(category)
-            }
-        }
+        if (category.title == "Entertainment" || category.title == "Insurance" || category.title == "Travel" || category.title == "Eating Out" || category.title == "Other") {
+            holder.updateView.visibility = View.GONE
+            holder.deleteView.visibility = View.GONE
+            holder.defaultView.visibility = View.VISIBLE
+        } else {
+            holder.updateView.visibility = View.VISIBLE
+            holder.deleteView.visibility = View.VISIBLE
+            holder.defaultView.visibility = View.GONE
 
-        holder.deleteView.setOnClickListener { view ->
-            if (context is CategoriesActivity) {
-                context.deleteCategory(category)
+            holder.updateView.setOnClickListener { view ->
+                if (context is CategoriesActivity) {
+                    context.updateCategory(category)
+                }
+            }
+
+            holder.deleteView.setOnClickListener { view ->
+                if (context is CategoriesActivity) {
+                    context.deleteCategory(category)
+                }
             }
         }
 

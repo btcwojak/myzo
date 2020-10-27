@@ -1,6 +1,7 @@
 package com.example.spudgmoneymanager
 
 import android.app.Dialog
+import android.content.Intent
 import android.graphics.Color
 import android.graphics.Color.TRANSPARENT
 import android.graphics.drawable.ColorDrawable
@@ -8,6 +9,7 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.spudgmoneymanager.Constants.Companion.CAT_COL_SELECTED
 import com.madrapps.pikolo.listeners.SimpleColorSelectionListener
 import kotlinx.android.synthetic.main.activity_categories.*
 import kotlinx.android.synthetic.main.dialog_add_category.*
@@ -28,6 +30,12 @@ class CategoriesActivity : AppCompatActivity() {
 
         add_category.setOnClickListener {
             addCategory()
+        }
+
+        back_to_trans_from_categories.setOnClickListener {
+            val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
+            finish()
         }
 
     }
@@ -62,6 +70,7 @@ class CategoriesActivity : AppCompatActivity() {
         addDialog.tvAdd.setOnClickListener {
             val title = addDialog.etTitleLayout.etTitle.text.toString()
             val colour = Constants.CAT_COL_SELECTED.toString()
+            Toast.makeText(this, "Category added.", Toast.LENGTH_LONG).show()
 
             val dbHandler = CategoriesHandler(this, null)
 
@@ -69,7 +78,7 @@ class CategoriesActivity : AppCompatActivity() {
 
                 dbHandler.addCategory(CategoryModel(0, title, colour))
 
-                Toast.makeText(this, "Category added.", Toast.LENGTH_LONG).show()
+
                 setUpCategoryList()
                 addDialog.dismiss()
 
@@ -105,10 +114,10 @@ class CategoriesActivity : AppCompatActivity() {
             val title = updateDialog.etTitleLayout.etTitle.text.toString()
             val colour = Constants.CAT_COL_SELECTED.toString()
 
-            val dbHandler = CategoriesHandler(this, null)
+            val dbHandlerCat = CategoriesHandler(this, null)
 
             if (title.isNotEmpty() && colour.isNotEmpty()) {
-                dbHandler.updateCategory(CategoryModel(category.id, title, colour))
+                dbHandlerCat.updateCategory(CategoryModel(category.id, title, colour))
                 Toast.makeText(this, "Category updated.", Toast.LENGTH_LONG).show()
                 setUpCategoryList()
                 updateDialog.dismiss()
@@ -132,8 +141,9 @@ class CategoriesActivity : AppCompatActivity() {
         deleteDialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT));
 
         deleteDialog.tvDelete.setOnClickListener {
-            val dbHandler = CategoriesHandler(this, null)
-            dbHandler.deleteCategory(CategoryModel(category.id, "", ""))
+            val dbHandlerCat = CategoriesHandler(this, null)
+            val dbHandlerTrans = TransactionsHandler(this, null)
+            dbHandlerCat.deleteCategory(CategoryModel(category.id, "", ""))
 
             Toast.makeText(this, "Category deleted.", Toast.LENGTH_LONG).show()
 

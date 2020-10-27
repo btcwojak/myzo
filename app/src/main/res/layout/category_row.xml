@@ -19,7 +19,21 @@
         android:layout_width="25dp"
         android:layout_height="25dp"
         android:layout_marginRight="30dp"
-        android:background="@drawable/edit_btn" />
+        android:background="@drawable/edit_btn"
+        tools:visibility="gone"/>
+
+    <TextView
+        android:id="@+id/default_category"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:fontFamily="@font/open_sans_light"
+        android:gravity="left"
+        android:textColor="#212121"
+        android:layout_marginRight="50dp"
+        android:textSize="16sp"
+        android:text="Default \ncategory"
+        tools:visibility="visible" />
 
     <LinearLayout
         android:layout_width="150dp"
@@ -58,6 +72,7 @@
         android:layout_width="25dp"
         android:layout_height="25dp"
         android:layout_marginLeft="30dp"
-        android:background="@drawable/delete_btn" />
+        android:background="@drawable/delete_btn"
+        tools:visibility="gone"/>
 
 </LinearLayout>

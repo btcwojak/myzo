@@ -9,48 +9,51 @@
 
     <LinearLayout
         android:id="@+id/llHeader"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:layout_marginLeft="50dp"
+        android:layout_marginLeft="10dp"
         android:layout_marginTop="20dp"
-        android:layout_marginRight="50dp"
-        android:layout_marginBottom="20dp"
-        android:elevation="10dp"
-        android:orientation="vertical">
+        android:layout_marginRight="10dp"
+        android:gravity="center"
+        android:orientation="horizontal">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_margin="15dp">
+            android:background="#FFFFFF">
+
+            <Button
+                android:id="@+id/back_to_trans_from_categories"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:layout_marginLeft="20dp"
+                android:background="#FFFFFF"
+                android:fontFamily="@font/open_sans_light"
+                android:text="back"
+                android:textColor="@color/colorAccent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="30dp"/>
 
             <TextView
-                android:id="@+id/categories_heading"
+                android:id="@+id/category_heading"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginRight="20dp"
                 android:fontFamily="@font/open_sans_light"
-                android:text="Categories"
+                android:text="All Categories"
                 android:textColor="#000000"
                 android:textSize="24sp"
                 android:textStyle="bold"
-                app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <!--
-
-            <TextView
-                android:id="@+id/balance_heading"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Balance: 0.00"
-                android:textSize="16sp"
-                app:layout_constraintRight_toRightOf="@id/account_heading"
-                app:layout_constraintTop_toBottomOf="@id/account_heading" />
-
-            -->
+                app:layout_constraintTop_toTopOf="@id/back_to_trans_from_categories"
+                app:layout_constraintBottom_toBottomOf="@id/back_to_trans_from_categories"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
+
 
     </LinearLayout>
 

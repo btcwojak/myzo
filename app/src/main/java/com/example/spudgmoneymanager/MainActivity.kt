@@ -5,6 +5,7 @@ import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
@@ -64,6 +65,8 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
             setAccountName()
             setBalanceText()
         }
+
+        checkDefaultCategories()
 
     }
 
@@ -286,6 +289,30 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
         val dbHandler = CategoriesHandler(this, null)
         return dbHandler.getCategoryColour(categoryTitle)
     }
+
+    fun checkDefaultCategories() {
+        val dbHandler = CategoriesHandler(this, null)
+        val allCategories = dbHandler.getAllCategoryTitles()
+
+        if (!allCategories.contains("Entertainment")) {
+            dbHandler.addCategory(CategoryModel(0,"Entertainment", "-16711861"))
+        }
+        if (!allCategories.contains("Insurance")) {
+            dbHandler.addCategory(CategoryModel(0,"Insurance","-16774657"))
+        }
+        if (!allCategories.contains("Travel")) {
+            dbHandler.addCategory(CategoryModel(0,"Travel","-65497"))
+        }
+        if (!allCategories.contains("Eating Out")) {
+            dbHandler.addCategory(CategoryModel(0,"Eating Out","-29696"))
+        }
+        if (!allCategories.contains("Other")) {
+            dbHandler.addCategory(CategoryModel(0,"Other","-65281"))
+        }
+
+
+    }
+
 
     override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
         selectedCategory = parent?.getItemAtPosition(position).toString()
