@@ -10,6 +10,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.spudgmoneymanager.Constants.Companion.CAT_COL_SELECTED
+import com.example.spudgmoneymanager.Constants.Companion.CAT_UNIQUE_TITLE
 import com.madrapps.pikolo.listeners.SimpleColorSelectionListener
 import kotlinx.android.synthetic.main.activity_categories.*
 import kotlinx.android.synthetic.main.dialog_add_category.*
@@ -70,17 +71,20 @@ class CategoriesActivity : AppCompatActivity() {
         addDialog.tvAdd.setOnClickListener {
             val title = addDialog.etTitleLayout.etTitle.text.toString()
             val colour = Constants.CAT_COL_SELECTED.toString()
-            Toast.makeText(this, "Category added.", Toast.LENGTH_LONG).show()
 
             val dbHandler = CategoriesHandler(this, null)
 
             if (title.isNotEmpty() && colour.isNotEmpty()) {
-
                 dbHandler.addCategory(CategoryModel(0, title, colour))
-
+                if (Constants.CAT_UNIQUE_TITLE == 1) {
+                    Toast.makeText(this, "Category added.", Toast.LENGTH_LONG).show()
+                    addDialog.dismiss()
+                } else {
+                    Toast.makeText(this, "Category title already exists.", Toast.LENGTH_LONG).show()
+                }
 
                 setUpCategoryList()
-                addDialog.dismiss()
+
 
             } else {
                 Toast.makeText(this, "Title or colour can't be blank.", Toast.LENGTH_LONG).show()
@@ -114,13 +118,17 @@ class CategoriesActivity : AppCompatActivity() {
             val title = updateDialog.etTitleLayout.etTitle.text.toString()
             val colour = Constants.CAT_COL_SELECTED.toString()
 
-            val dbHandlerCat = CategoriesHandler(this, null)
+            val dbHandler = CategoriesHandler(this, null)
 
             if (title.isNotEmpty() && colour.isNotEmpty()) {
-                dbHandlerCat.updateCategory(CategoryModel(category.id, title, colour))
-                Toast.makeText(this, "Category updated.", Toast.LENGTH_LONG).show()
+                dbHandler.updateCategory(CategoryModel(category.id, title, colour))
+                if (Constants.CAT_UNIQUE_TITLE == 1) {
+                    Toast.makeText(this, "Category updated.", Toast.LENGTH_LONG).show()
+                    updateDialog.dismiss()
+                } else {
+                    Toast.makeText(this, "Category title already exists.", Toast.LENGTH_LONG).show()
+                }
                 setUpCategoryList()
-                updateDialog.dismiss()
             } else {
                 Toast.makeText(this, "Title or colour can't be blank.", Toast.LENGTH_LONG).show()
             }

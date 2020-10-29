@@ -4,6 +4,9 @@ import android.content.ContentValues
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
+import android.util.Log
+import android.widget.Toast
+import android.widget.Toast.makeText as makeText1
 
 class CategoriesHandler(context: Context, factory: SQLiteDatabase.CursorFactory?) :
     SQLiteOpenHelper(context, DATABASE_NAME, factory, DATABASE_VERSION) {
@@ -32,24 +35,66 @@ class CategoriesHandler(context: Context, factory: SQLiteDatabase.CursorFactory?
     }
 
 
-    fun addCategory(category: CategoryModel): Long {
+    fun addCategory(category: CategoryModel) {
         val values = ContentValues()
         values.put(KEY_TITLE, category.title)
         values.put(KEY_COLOUR, category.colour)
         val db = this.writableDatabase
-        val success = db.insert(TABLE_CATEGORIES, null, values)
-        db.close()
-        return success
+
+        val existingTitles = getAllCategoryTitles()
+        var alreadyExists = false
+        for (title in existingTitles) {
+            if (title == category.title) {
+                alreadyExists = true
+            }
+        }
+
+        if (alreadyExists == false) {
+            db.insert(TABLE_CATEGORIES, null, values)
+            db.close()
+            Constants.CAT_UNIQUE_TITLE = 1
+        } else {
+            Constants.CAT_UNIQUE_TITLE = 0
+        }
     }
 
-    fun updateCategory(category: CategoryModel): Int {
+    fun updateCategory(category: CategoryModel) {
         val values = ContentValues()
         values.put(KEY_TITLE, category.title)
         values.put(KEY_COLOUR, category.colour)
-        val db = this.writableDatabase
-        val success = db.update(TABLE_CATEGORIES, values, KEY_ID + "=" + category.id, null)
-        db.close()
-        return success
+        val dbForSearch = this.readableDatabase
+        val dbForUpdate = this.writableDatabase
+
+        val existingTitles = getAllCategoryTitles()
+
+        if (existingTitles.contains(category.title)) {
+            Constants.CAT_UNIQUE_TITLE = 0
+        } else {
+            val dbForUpdate = this.writableDatabase
+            dbForUpdate.update(TABLE_CATEGORIES, values, KEY_ID + "=" + category.id, null)
+            Constants.CAT_UNIQUE_TITLE = 1
+        }
+
+        if (Constants.CAT_UNIQUE_TITLE == 0) {
+            val cursor =
+                dbForSearch.rawQuery("SELECT * FROM $TABLE_CATEGORIES WHERE _id = ${category.id}", null)
+            if (cursor.moveToFirst()) {
+                var oldTitle = cursor.getString(cursor.getColumnIndex(KEY_TITLE))
+                var newTitle = category.title
+                if (oldTitle == newTitle) {
+                    dbForUpdate.update(
+                        TABLE_CATEGORIES,
+                        values,
+                        KEY_ID + "=" + category.id,
+                        null
+                    )
+                    Constants.CAT_UNIQUE_TITLE = 1
+                } else {
+                    Constants.CAT_UNIQUE_TITLE = 0
+                }
+            }
+        }
+
     }
 
     fun deleteCategory(category: CategoryModel): Int {
