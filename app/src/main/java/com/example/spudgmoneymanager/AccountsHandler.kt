@@ -104,14 +104,41 @@ class AccountsHandler(context: Context, factory: SQLiteDatabase.CursorFactory?) 
 
     }
 
-    fun updateAccount(account: AccountModel): Int {
-        val db = this.writableDatabase
-        val contentValues = ContentValues()
-        contentValues.put(KEY_NAME, account.name)
-        val success = db.update(TABLE_ACCOUNTS, contentValues, KEY_ID + "=" + account.id, null)
+    fun updateAccount(account: AccountModel) {
+        val values = ContentValues()
+        values.put(KEY_NAME, account.name)
+        val dbForSearch = this.readableDatabase
+        val dbForUpdate = this.writableDatabase
 
-        db.close()
-        return success
+        val existingNames = getAllAccountNames()
+
+        if (existingNames.contains(account.name)) {
+            Constants.CAT_UNIQUE_TITLE = 0
+        } else {
+            val dbForUpdate = this.writableDatabase
+            dbForUpdate.update(TABLE_ACCOUNTS, values, KEY_ID + "=" + account.id, null)
+            Constants.CAT_UNIQUE_TITLE = 1
+        }
+
+        if (Constants.CAT_UNIQUE_TITLE == 0) {
+            val cursor =
+                dbForSearch.rawQuery("SELECT * FROM $TABLE_ACCOUNTS WHERE _id = ${account.id}", null)
+            if (cursor.moveToFirst()) {
+                var oldName = cursor.getString(cursor.getColumnIndex(KEY_NAME))
+                var newName = account.name
+                if (oldName == newName) {
+                    dbForUpdate.update(
+                        TABLE_ACCOUNTS,
+                        values,
+                        KEY_ID + "=" + account.id,
+                        null
+                    )
+                    Constants.CAT_UNIQUE_TITLE = 1
+                } else {
+                    Constants.CAT_UNIQUE_TITLE = 0
+                }
+            }
+        }
     }
 
     fun deleteAccount(account: AccountModel): Int {

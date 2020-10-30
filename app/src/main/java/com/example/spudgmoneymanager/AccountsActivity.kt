@@ -94,14 +94,19 @@ class AccountsActivity : AppCompatActivity() {
 
         updateDialog.tvUpdate.setOnClickListener {
             val name = updateDialog.etNameLayout.etName.text.toString()
-            val dbHandler = AccountsHandler(this, null)
-            dbHandler.updateAccount(AccountModel(account.id, name))
 
+            val dbHandler = AccountsHandler(this, null)
 
             if (name.isNotEmpty()) {
-                Toast.makeText(this, "Account updated.", Toast.LENGTH_LONG).show()
+                dbHandler.updateAccount(AccountModel(account.id, name))
+                if (Constants.CAT_UNIQUE_TITLE == 1) {
+                    Toast.makeText(this, "Account updated.", Toast.LENGTH_LONG).show()
+                    setUpAccountList()
+                    updateDialog.dismiss()
+                } else {
+                    Toast.makeText(this, "Account name already exists.", Toast.LENGTH_LONG).show()
+                }
                 setUpAccountList()
-                updateDialog.dismiss()
             } else {
                 Toast.makeText(this, "Account name can't be blank.", Toast.LENGTH_LONG).show()
             }

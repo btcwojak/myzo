@@ -125,6 +125,7 @@ class CategoriesActivity : AppCompatActivity() {
                 dbHandler.updateCategory(CategoryModel(category.id, title, colour))
                 if (Constants.CAT_UNIQUE_TITLE == 1) {
                     Toast.makeText(this, "Category updated.", Toast.LENGTH_LONG).show()
+                    setUpCategoryList()
                     updateDialog.dismiss()
                 } else {
                     Toast.makeText(this, "Category title already exists.", Toast.LENGTH_LONG).show()
