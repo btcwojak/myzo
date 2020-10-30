@@ -42,7 +42,8 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
         }
 
         analysis_btn.setOnClickListener {
-            Toast.makeText(this, "To be added soon...", Toast.LENGTH_SHORT).show()
+            val intent = Intent(this, AnalyticsActivity::class.java)
+            startActivity(intent)
         }
 
         categories_btn.setOnClickListener {
