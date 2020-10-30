@@ -5,7 +5,6 @@ import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
@@ -111,18 +110,22 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
         }
 
         addDialog.tvAdd.setOnClickListener {
-            val category = selectedCategory
+            val dbHandlerTrans = TransactionsHandler(this, null)
+            val dbHandlerCat = CategoriesHandler(this, null)
+
+            val category = dbHandlerCat.getCategoryId(selectedCategory)
             val amount = addDialog.etAmountLayout.etAmount.text.toString()
             val note = addDialog.etNoteLayout.etNote.text.toString()
             val account = Constants.CURRENT_ACCOUNT
 
-            val dbHandler = TransactionsHandler(this, null)
 
-            if (category.isNotEmpty() && amount.isNotEmpty() && note.isNotEmpty()) {
+
+
+            if (selectedCategory.isNotEmpty() && amount.isNotEmpty() && note.isNotEmpty()) {
                 if (isIncome) {
-                    dbHandler.addTransaction(TransactionModel(0, note, category, amount, account))
+                    dbHandlerTrans.addTransaction(TransactionModel(0, note, category, amount, account))
                 } else if (!isIncome) {
-                    dbHandler.addTransaction(
+                    dbHandlerTrans.addTransaction(
                         TransactionModel(
                             0,
                             note,
@@ -189,14 +192,15 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
         }
 
         updateDialog.tvUpdate.setOnClickListener {
-            val category = selectedCategory
+            val dbHandler = TransactionsHandler(this, null)
+            val dbHandlerCat = CategoriesHandler(this, null)
+
+            val category = dbHandlerCat.getCategoryId(selectedCategory)
             val amount = updateDialog.etAmountLayout.etAmount.text.toString()
             val account = Constants.CURRENT_ACCOUNT
             val note = updateDialog.etNoteLayout.etNote.text.toString()
 
-            val dbHandler = TransactionsHandler(this, null)
-
-            if (category.isNotEmpty() && amount.isNotEmpty() && note.isNotEmpty()) {
+            if (selectedCategory.isNotEmpty() && amount.isNotEmpty() && note.isNotEmpty()) {
                 if (isIncome) {
                     dbHandler.updateTransaction(
                         TransactionModel(
@@ -246,7 +250,7 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
 
         deleteDialog.tvDelete.setOnClickListener {
             val dbHandler = TransactionsHandler(this, null)
-            dbHandler.deleteTransaction(TransactionModel(transaction.id, "", "", "", 0))
+            dbHandler.deleteTransaction(TransactionModel(transaction.id, "", 0, "", 0))
 
             Toast.makeText(this, "Transaction deleted.", Toast.LENGTH_LONG).show()
             setBalanceText()
@@ -285,9 +289,9 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
         return dbHandler.getAllAccounts().size < 1
     }
 
-    fun getTransactionCategoryColour(categoryTitle: String): Int {
+    fun getTransactionCategoryColour(categoryId: Int): Int {
         val dbHandler = CategoriesHandler(this, null)
-        return dbHandler.getCategoryColour(categoryTitle)
+        return dbHandler.getCategoryColour(categoryId)
     }
 
     fun checkDefaultCategories() {
@@ -311,6 +315,12 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
         }
 
 
+    }
+
+    fun getTransactionCategoryTitle(CategoryId: Int): String {
+        val dbHandlerCat = CategoriesHandler(this, null)
+
+        return dbHandlerCat.getCategoryTitle(CategoryId)
     }
 
 

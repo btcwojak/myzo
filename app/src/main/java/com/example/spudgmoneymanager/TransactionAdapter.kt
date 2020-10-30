@@ -31,7 +31,11 @@ class TransactionAdapter(val context: Context, val items: ArrayList<TransactionM
         val formatter: NumberFormat = DecimalFormat("#,##0.00")
 
         val transaction = items[position]
-        holder.categoryView.text = transaction.category
+
+        if (context is MainActivity) {
+            holder.categoryView.text = context.getTransactionCategoryTitle(transaction.category)
+        }
+
         holder.amountView.text = formatter.format((transaction.amount).toDouble()).toString()
         holder.noteView.text = transaction.note
 

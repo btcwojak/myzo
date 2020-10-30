@@ -11,7 +11,7 @@ class TransactionsHandler(context: Context, factory: SQLiteDatabase.CursorFactor
     SQLiteOpenHelper(context, DATABASE_NAME, factory, DATABASE_VERSION) {
 
     companion object {
-        private const val DATABASE_VERSION = 4
+        private const val DATABASE_VERSION = 5
         private const val DATABASE_NAME = "SMMTransactions.db"
         private const val TABLE_TRANSACTIONS = "transactions"
 
@@ -24,7 +24,7 @@ class TransactionsHandler(context: Context, factory: SQLiteDatabase.CursorFactor
 
     override fun onCreate(db: SQLiteDatabase?) {
         val CREATE_TRANSACTIONS_TABLE =
-            ("CREATE TABLE $TABLE_TRANSACTIONS($KEY_ID INTEGER PRIMARY KEY,$KEY_NOTE TEXT,$KEY_CATEGORY TEXT,$KEY_AMOUNT TEXT,$KEY_ACCOUNT INTEGER)")
+            ("CREATE TABLE $TABLE_TRANSACTIONS($KEY_ID INTEGER PRIMARY KEY,$KEY_NOTE TEXT,$KEY_CATEGORY INTEGER,$KEY_AMOUNT TEXT,$KEY_ACCOUNT INTEGER)")
         db?.execSQL(CREATE_TRANSACTIONS_TABLE)
     }
 
@@ -77,7 +77,7 @@ class TransactionsHandler(context: Context, factory: SQLiteDatabase.CursorFactor
         val cursor = db.rawQuery("SELECT * FROM $TABLE_TRANSACTIONS", null)
 
         var id: Int
-        var category: String
+        var category: Int
         var amount: String
         var account: Int
         var note: String
@@ -85,7 +85,7 @@ class TransactionsHandler(context: Context, factory: SQLiteDatabase.CursorFactor
         if (cursor.moveToFirst()) {
             do {
                 id = cursor.getInt(cursor.getColumnIndex(KEY_ID))
-                category = cursor.getString(cursor.getColumnIndex(KEY_CATEGORY))
+                category = cursor.getInt(cursor.getColumnIndex(KEY_CATEGORY))
                 amount = cursor.getString(cursor.getColumnIndex(KEY_AMOUNT))
                 account = cursor.getInt(cursor.getColumnIndex(KEY_ACCOUNT))
                 note = cursor.getString(cursor.getColumnIndex(KEY_NOTE))
@@ -174,7 +174,7 @@ class TransactionsHandler(context: Context, factory: SQLiteDatabase.CursorFactor
         )
 
         var id: Int
-        var category: String
+        var category: Int
         var amount: String
         var account: Int
         var note: String
@@ -182,7 +182,7 @@ class TransactionsHandler(context: Context, factory: SQLiteDatabase.CursorFactor
         if (cursor.moveToFirst()) {
             do {
                 id = cursor.getInt(cursor.getColumnIndex(KEY_ID))
-                category = cursor.getString(cursor.getColumnIndex(KEY_CATEGORY))
+                category = cursor.getInt(cursor.getColumnIndex(KEY_CATEGORY))
                 amount = cursor.getString(cursor.getColumnIndex(KEY_AMOUNT))
                 account = cursor.getInt(cursor.getColumnIndex(KEY_ACCOUNT))
                 note = cursor.getString(cursor.getColumnIndex(KEY_NOTE))

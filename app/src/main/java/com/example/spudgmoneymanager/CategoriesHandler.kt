@@ -6,7 +6,6 @@ import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 import android.util.Log
 import android.widget.Toast
-import android.widget.Toast.makeText as makeText1
 
 class CategoriesHandler(context: Context, factory: SQLiteDatabase.CursorFactory?) :
     SQLiteOpenHelper(context, DATABASE_NAME, factory, DATABASE_VERSION) {
@@ -151,11 +150,11 @@ class CategoriesHandler(context: Context, factory: SQLiteDatabase.CursorFactory?
 
     }
 
-    fun getCategoryColour(categoryTitle: String): Int {
+    fun getCategoryColour(categoryId: Int): Int {
         val db = this.readableDatabase
 
         val cursor =
-            db.rawQuery("SELECT * FROM $TABLE_CATEGORIES WHERE category = '$categoryTitle'", null)
+            db.rawQuery("SELECT * FROM $TABLE_CATEGORIES WHERE $KEY_ID = '$categoryId'", null)
 
 
         if (cursor.moveToFirst()) {
@@ -165,5 +164,37 @@ class CategoriesHandler(context: Context, factory: SQLiteDatabase.CursorFactory?
         }
 
     }
+
+    fun getCategoryId(categoryTitle: String): Int {
+        val db = this.readableDatabase
+
+        val cursor =
+            db.rawQuery("SELECT * FROM $TABLE_CATEGORIES WHERE $KEY_TITLE = '$categoryTitle'", null)
+
+
+        if (cursor.moveToFirst()) {
+            return cursor.getInt(cursor.getColumnIndex(KEY_ID))
+        } else {
+            return 0
+        }
+
+    }
+
+    fun getCategoryTitle(categoryId: Int): String {
+        val db = this.readableDatabase
+
+        val cursor =
+            db.rawQuery("SELECT * FROM $TABLE_CATEGORIES WHERE $KEY_ID = $categoryId", null)
+
+
+        if (cursor.moveToFirst()) {
+            return cursor.getString(cursor.getColumnIndex(KEY_TITLE))
+        } else {
+            return "Error"
+        }
+
+    }
+
+
 
 }
