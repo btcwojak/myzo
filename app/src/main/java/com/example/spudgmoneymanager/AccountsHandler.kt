@@ -28,13 +28,27 @@ class AccountsHandler(context: Context, factory: SQLiteDatabase.CursorFactory?) 
         onCreate(db)
     }
 
-    fun addAccount(trans: AccountModel): Long {
+    fun addAccount(account: AccountModel) {
         val values = ContentValues()
-        values.put(KEY_NAME, trans.name)
+        values.put(KEY_NAME, account.name)
         val db = this.writableDatabase
-        val success = db.insert(TABLE_ACCOUNTS, null, values)
-        db.close()
-        return success
+
+        val existingNames = getAllAccountNames()
+        var alreadyExists = false
+        for (name in existingNames) {
+            if (name == account.name) {
+                alreadyExists = true
+            }
+        }
+
+        if (alreadyExists == false) {
+            db.insert(TABLE_ACCOUNTS, null, values)
+            db.close()
+            Constants.CAT_UNIQUE_TITLE = 1
+        } else {
+            Constants.CAT_UNIQUE_TITLE = 0
+        }
+
     }
 
     fun getAllAccounts(): ArrayList<AccountModel> {
@@ -51,6 +65,25 @@ class AccountsHandler(context: Context, factory: SQLiteDatabase.CursorFactory?) 
                 name = cursor.getString(cursor.getColumnIndex(KEY_NAME))
                 val account = AccountModel(id = id, name = name)
                 list.add(account)
+            } while (cursor.moveToNext())
+        }
+
+        cursor.close()
+        return list
+
+    }
+
+    fun getAllAccountNames(): ArrayList<String> {
+        val list = ArrayList<String>()
+        val db = this.readableDatabase
+        val cursor = db.rawQuery("SELECT * FROM $TABLE_ACCOUNTS", null)
+
+        var name: String
+
+        if (cursor.moveToFirst()) {
+            do {
+                name = cursor.getString(cursor.getColumnIndex(KEY_NAME)).toString()
+                list.add(name)
             } while (cursor.moveToNext())
         }
 

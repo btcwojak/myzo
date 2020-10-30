@@ -55,14 +55,15 @@ class AccountsActivity : AppCompatActivity() {
 
             val dbHandler = AccountsHandler(this, null)
 
-
-            dbHandler.addAccount(AccountModel(0, name))
-
-
-            if (name.isNotEmpty()) {
-                Toast.makeText(this, "Account added.", Toast.LENGTH_LONG).show()
-                setUpAccountList()
-                addDialog.dismiss()
+            if (title.isNotEmpty()) {
+                dbHandler.addAccount(AccountModel(0, name))
+                if (Constants.CAT_UNIQUE_TITLE == 1) {
+                    Toast.makeText(this, "Account added.", Toast.LENGTH_LONG).show()
+                    setUpAccountList()
+                    addDialog.dismiss()
+                } else {
+                    Toast.makeText(this, "Account name already exists.", Toast.LENGTH_LONG).show()
+                }
             } else {
                 Toast.makeText(this, "Account name can't be blank.", Toast.LENGTH_LONG).show()
             }
