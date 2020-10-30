@@ -64,11 +64,18 @@ class TransactionsHandler(context: Context, factory: SQLiteDatabase.CursorFactor
         return success
     }
 
-    fun deleteTransactionDueToAccountDeletion(acc: AccountModel): Int {
+    fun deleteTransactionDueToAccountDeletion(account: AccountModel) {
         val db = this.writableDatabase
-        val success = db.delete(TABLE_TRANSACTIONS, KEY_ACCOUNT + "=" + acc.id, null)
+        db.delete(TABLE_TRANSACTIONS, KEY_ACCOUNT + "=" + account.id, null)
         db.close()
-        return success
+    }
+
+    fun changeTransactionCategoryDueToCategoryDeletion(category: CategoryModel) {
+        val values = ContentValues()
+        values.put(KEY_CATEGORY, 5)
+        val db = this.writableDatabase
+        db.update(TABLE_TRANSACTIONS, values, KEY_CATEGORY + "=" + category.id, null)
+        db.close()
     }
 
     fun getAllTransactions(): ArrayList<TransactionModel> {

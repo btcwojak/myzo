@@ -124,13 +124,13 @@ class AccountsActivity : AppCompatActivity() {
         val deleteDialog = Dialog(this, R.style.Theme_Dialog)
         deleteDialog.setCancelable(false)
         deleteDialog.setContentView(R.layout.dialog_delete_account)
-        deleteDialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT));
+        deleteDialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
         deleteDialog.tvDelete.setOnClickListener {
             val dbHandlerAcc = AccountsHandler(this, null)
-            val dbHandlerTran = TransactionsHandler(this, null)
+            val dbHandlerTrans = TransactionsHandler(this, null)
             dbHandlerAcc.deleteAccount(AccountModel(account.id, ""))
-            dbHandlerTran.deleteTransactionDueToAccountDeletion(AccountModel(account.id, ""))
+            dbHandlerTrans.deleteTransactionDueToAccountDeletion(AccountModel(account.id, ""))
 
             Toast.makeText(this, "Account deleted.", Toast.LENGTH_LONG).show()
             setUpAccountList()

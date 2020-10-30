@@ -154,9 +154,9 @@ class CategoriesActivity : AppCompatActivity() {
             val dbHandlerCat = CategoriesHandler(this, null)
             val dbHandlerTrans = TransactionsHandler(this, null)
             dbHandlerCat.deleteCategory(CategoryModel(category.id, "", ""))
+            dbHandlerTrans.changeTransactionCategoryDueToCategoryDeletion(CategoryModel(category.id,"",""))
 
             Toast.makeText(this, "Category deleted.", Toast.LENGTH_LONG).show()
-
             setUpCategoryList()
             deleteDialog.dismiss()
         }
