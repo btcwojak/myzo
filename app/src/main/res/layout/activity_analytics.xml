@@ -6,10 +6,67 @@
     android:layout_height="match_parent"
     tools:context=".AnalyticsActivity">
 
+    <LinearLayout
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/aa_chart_view"
+        android:id="@+id/llHeader"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginRight="10dp"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#FFFFFF">
+
+            <Button
+                android:id="@+id/back_to_trans_from_analytics"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:layout_marginLeft="20dp"
+                android:background="#FFFFFF"
+                android:fontFamily="@font/open_sans_light"
+                android:text="back"
+                android:textColor="@color/colorAccent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="30dp"/>
+
+            <TextView
+                android:id="@+id/analytics_heading"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="20dp"
+                android:fontFamily="@font/open_sans_light"
+                android:text="Analytics"
+                android:textColor="#000000"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="@id/back_to_trans_from_analytics"
+                app:layout_constraintBottom_toBottomOf="@id/back_to_trans_from_analytics"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    </LinearLayout>
+
     <com.github.aachartmodel.aainfographics.aachartcreator.AAChartView
         android:id="@+id/aa_chart_view"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/llHeader"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="500dp">
 
     </com.github.aachartmodel.aainfographics.aachartcreator.AAChartView>
 

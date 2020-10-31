@@ -1,39 +1,56 @@
 package com.example.spudgmoneymanager
 
-import android.icu.lang.UCharacter.GraphemeClusterBreak.T
-import androidx.appcompat.app.AppCompatActivity
+import android.content.Intent
 import android.os.Bundle
+import android.util.Log
+import androidx.appcompat.app.AppCompatActivity
 import com.github.aachartmodel.aainfographics.aachartcreator.AAChartModel
 import com.github.aachartmodel.aainfographics.aachartcreator.AAChartType
 import com.github.aachartmodel.aainfographics.aachartcreator.AAChartView
 import com.github.aachartmodel.aainfographics.aachartcreator.AASeriesElement
-import java.lang.Math.E
+import kotlinx.android.synthetic.main.activity_analytics.*
 
 class AnalyticsActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_analytics)
 
+        back_to_trans_from_analytics.setOnClickListener {
+            val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
+        }
+
         val aaChartView = findViewById<AAChartView>(R.id.aa_chart_view)
 
         val dbHandlerCategory = CategoriesHandler(this, null)
         val dbHandlerTransaction = TransactionsHandler(this, null)
-        var categories = dbHandlerCategory.getAllCategoryTitles()
+        var categories = dbHandlerCategory.getAllCategories()
+        var categoryTitles: ArrayList<String> = ArrayList()
+        var categoryColours: ArrayList<String> = ArrayList()
+
+        for (category in categories) {
+            categoryTitles.add(category.title)
+        }
+
+        for (category in categories) {
+            var intColor = category.colour.toInt()
+            categoryColours.add(java.lang.String.format("#%06X", 0xFFFFFF and intColor))
+        }
 
         var graphElements: Array<AASeriesElement> = Array(categories.size) { AASeriesElement() }
 
-
         for (i in 0 until categories.size) {
-            var transactions = dbHandlerTransaction.getTransactionsForCategory(i+1)
-            graphElements[i] = AASeriesElement().name(categories[i]).data(transactions)
+            var transactions = dbHandlerTransaction.getTransactionsForCategory(i + 1)
+            graphElements[i] = AASeriesElement().name(categoryTitles[i]).data(transactions).color(categoryColours[i])
         }
 
         val aaChartModel : AAChartModel = AAChartModel()
-            .chartType(AAChartType.Column)
-            .title("title")
-            .subtitle("subtitle")
-            .backgroundColor("#4b2b7f")
+            .chartType(AAChartType.Area)
+            .title("Transactions")
+            .subtitle("per category")
+            .backgroundColor("#FFFFFF")
             .dataLabelsEnabled(true)
+            .xAxisLabelsEnabled(false)
             .series(
                 graphElements
             )
@@ -41,4 +58,5 @@ class AnalyticsActivity : AppCompatActivity() {
         aaChartView.aa_drawChartWithChartModel(aaChartModel)
 
     }
+
 }
