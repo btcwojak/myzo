@@ -5,6 +5,7 @@ import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
@@ -19,6 +20,8 @@ import kotlinx.android.synthetic.main.dialog_add_transaction.tvCancel
 import kotlinx.android.synthetic.main.dialog_add_transaction.view.*
 import kotlinx.android.synthetic.main.dialog_delete_transaction.*
 import kotlinx.android.synthetic.main.dialog_update_transaction.*
+import java.util.*
+import kotlin.collections.ArrayList
 import kotlinx.android.synthetic.main.dialog_add_transaction.etNoteLayout as etNoteLayout1
 
 class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
@@ -118,13 +121,12 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
             val amount = addDialog.etAmountLayout.etAmount.text.toString()
             val note = addDialog.etNoteLayout.etNote.text.toString()
             val account = Constants.CURRENT_ACCOUNT
-
-
+            val date_created = java.util.Calendar.getInstance().time.time.toInt()
 
 
             if (selectedCategory.isNotEmpty() && amount.isNotEmpty() && note.isNotEmpty()) {
                 if (isIncome) {
-                    dbHandlerTrans.addTransaction(TransactionModel(0, note, category, amount, account))
+                    dbHandlerTrans.addTransaction(TransactionModel(0, note, category, amount, account, date_created))
                 } else if (!isIncome) {
                     dbHandlerTrans.addTransaction(
                         TransactionModel(
@@ -132,7 +134,8 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
                             note,
                             category,
                             (amount.toDouble() * -1).toString(),
-                            account
+                            account,
+                            date_created
                         )
                     )
                 }
@@ -209,7 +212,8 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
                             note,
                             category,
                             amount,
-                            account
+                            account,
+                            transaction.date_created
                         )
                     )
                 } else if (!isIncome) {
@@ -219,7 +223,8 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
                             note,
                             category,
                             (amount.toDouble() * -1).toString(),
-                            account
+                            account,
+                            transaction.date_created
                         )
                     )
                 }
@@ -251,7 +256,7 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
 
         deleteDialog.tvDelete.setOnClickListener {
             val dbHandler = TransactionsHandler(this, null)
-            dbHandler.deleteTransaction(TransactionModel(transaction.id, "", 0, "", 0))
+            dbHandler.deleteTransaction(TransactionModel(transaction.id, "", 0, "", 0, 0))
 
             Toast.makeText(this, "Transaction deleted.", Toast.LENGTH_LONG).show()
             setBalanceText()
