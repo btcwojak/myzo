@@ -218,6 +218,26 @@ class TransactionsHandler(context: Context, factory: SQLiteDatabase.CursorFactor
 
     }
 
+    fun getTransactionTotalForCategory(categoryId: Int): Float {
+        var amount: String
+        var runningTotal: Float = 0.00F
+        val dbTrans = this.readableDatabase
+        val cursor = dbTrans.rawQuery(
+            "SELECT * FROM $TABLE_TRANSACTIONS WHERE $KEY_CATEGORY = $categoryId",
+            null
+        )
+
+        if (cursor.moveToFirst()) {
+            do {
+                amount = cursor.getString(cursor.getColumnIndex(KEY_AMOUNT))
+                runningTotal += amount.toFloat()
+            } while (cursor.moveToNext())
+        }
+
+        return runningTotal
+
+    }
+
     fun getTransactionsForCategory(categoryId: Int): Array<Any> {
         var amount: String
         var list: ArrayList<Float> = ArrayList()

@@ -40,17 +40,20 @@ class AnalyticsActivity : AppCompatActivity() {
         var graphElements: Array<AASeriesElement> = Array(categories.size) { AASeriesElement() }
 
         for (i in 0 until categories.size) {
-            var transactions = dbHandlerTransaction.getTransactionsForCategory(i + 1)
-            graphElements[i] = AASeriesElement().name(categoryTitles[i]).data(transactions).color(categoryColours[i])
+            var totalForCategory = dbHandlerTransaction.getTransactionTotalForCategory(i + 1)
+            var categoryNameTotal = arrayOf(categoryTitles[i], totalForCategory)
+            graphElements[i] = AASeriesElement().name(categoryTitles[i]).data(arrayOf(categoryNameTotal)).color(categoryColours[i])
         }
 
         val aaChartModel : AAChartModel = AAChartModel()
-            .chartType(AAChartType.Area)
+            .chartType(AAChartType.Column)
             .title("Transactions")
             .subtitle("per category")
             .backgroundColor("#FFFFFF")
+            .yAxisAllowDecimals(true)
             .dataLabelsEnabled(true)
             .xAxisLabelsEnabled(false)
+            .yAxisTitle("Total transactions")
             .series(
                 graphElements
             )
