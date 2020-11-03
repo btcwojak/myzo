@@ -9,8 +9,6 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.spudgmoneymanager.Constants.Companion.CAT_COL_SELECTED
-import com.example.spudgmoneymanager.Constants.Companion.CAT_UNIQUE_TITLE
 import com.madrapps.pikolo.listeners.SimpleColorSelectionListener
 import kotlinx.android.synthetic.main.activity_categories.*
 import kotlinx.android.synthetic.main.dialog_add_category.*
@@ -59,7 +57,7 @@ class CategoriesActivity : AppCompatActivity() {
         val addDialog = Dialog(this, R.style.Theme_Dialog)
         addDialog.setCancelable(false)
         addDialog.setContentView(R.layout.dialog_add_category)
-        addDialog.window!!.setBackgroundDrawable(ColorDrawable(TRANSPARENT));
+        addDialog.window!!.setBackgroundDrawable(ColorDrawable(TRANSPARENT))
 
         val colorPicker = addDialog.colourPicker
         colorPicker.setColorSelectionListener(object : SimpleColorSelectionListener() {
@@ -104,7 +102,7 @@ class CategoriesActivity : AppCompatActivity() {
         val updateDialog = Dialog(this, R.style.Theme_Dialog)
         updateDialog.setCancelable(false)
         updateDialog.setContentView(R.layout.dialog_update_category)
-        updateDialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT));
+        updateDialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
         updateDialog.etTitleLayout.etTitle.setText(category.title)
 
@@ -148,13 +146,19 @@ class CategoriesActivity : AppCompatActivity() {
         val deleteDialog = Dialog(this, R.style.Theme_Dialog)
         deleteDialog.setCancelable(false)
         deleteDialog.setContentView(R.layout.dialog_delete_category)
-        deleteDialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT));
+        deleteDialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
         deleteDialog.tvDelete.setOnClickListener {
             val dbHandlerCat = CategoriesHandler(this, null)
             val dbHandlerTrans = TransactionsHandler(this, null)
             dbHandlerCat.deleteCategory(CategoryModel(category.id, "", ""))
-            dbHandlerTrans.changeTransactionCategoryDueToCategoryDeletion(CategoryModel(category.id,"",""))
+            dbHandlerTrans.changeTransactionCategoryDueToCategoryDeletion(
+                CategoryModel(
+                    category.id,
+                    "",
+                    ""
+                )
+            )
 
             Toast.makeText(this, "Category deleted.", Toast.LENGTH_LONG).show()
             setUpCategoryList()

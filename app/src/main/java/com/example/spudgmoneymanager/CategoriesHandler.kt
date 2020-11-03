@@ -4,8 +4,6 @@ import android.content.ContentValues
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
-import android.util.Log
-import android.widget.Toast
 
 class CategoriesHandler(context: Context, factory: SQLiteDatabase.CursorFactory?) :
     SQLiteOpenHelper(context, DATABASE_NAME, factory, DATABASE_VERSION) {
@@ -76,7 +74,10 @@ class CategoriesHandler(context: Context, factory: SQLiteDatabase.CursorFactory?
 
         if (Constants.CAT_UNIQUE_TITLE == 0) {
             val cursor =
-                dbForSearch.rawQuery("SELECT * FROM $TABLE_CATEGORIES WHERE _id = ${category.id}", null)
+                dbForSearch.rawQuery(
+                    "SELECT * FROM $TABLE_CATEGORIES WHERE _id = ${category.id}",
+                    null
+                )
             if (cursor.moveToFirst()) {
                 var oldTitle = cursor.getString(cursor.getColumnIndex(KEY_TITLE))
                 var newTitle = category.title
@@ -194,7 +195,6 @@ class CategoriesHandler(context: Context, factory: SQLiteDatabase.CursorFactory?
         }
 
     }
-
 
 
 }

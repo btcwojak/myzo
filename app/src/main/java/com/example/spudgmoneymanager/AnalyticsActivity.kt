@@ -2,7 +2,6 @@ package com.example.spudgmoneymanager
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.github.aachartmodel.aainfographics.aachartcreator.AAChartModel
 import com.github.aachartmodel.aainfographics.aachartcreator.AAChartType
@@ -42,10 +41,12 @@ class AnalyticsActivity : AppCompatActivity() {
         for (i in 0 until categories.size) {
             var totalForCategory = dbHandlerTransaction.getTransactionTotalForCategory(i + 1)
             var categoryNameTotal = arrayOf(categoryTitles[i], totalForCategory)
-            graphElements[i] = AASeriesElement().name(categoryTitles[i]).data(arrayOf(categoryNameTotal)).color(categoryColours[i])
+            graphElements[i] =
+                AASeriesElement().name(categoryTitles[i]).data(arrayOf(categoryNameTotal))
+                    .color(categoryColours[i])
         }
 
-        val aaChartModel : AAChartModel = AAChartModel()
+        val aaChartModel: AAChartModel = AAChartModel()
             .chartType(AAChartType.Column)
             .title("Transactions")
             .subtitle("per category")

@@ -122,7 +122,10 @@ class AccountsHandler(context: Context, factory: SQLiteDatabase.CursorFactory?) 
 
         if (Constants.CAT_UNIQUE_TITLE == 0) {
             val cursor =
-                dbForSearch.rawQuery("SELECT * FROM $TABLE_ACCOUNTS WHERE _id = ${account.id}", null)
+                dbForSearch.rawQuery(
+                    "SELECT * FROM $TABLE_ACCOUNTS WHERE _id = ${account.id}",
+                    null
+                )
             if (cursor.moveToFirst()) {
                 var oldName = cursor.getString(cursor.getColumnIndex(KEY_NAME))
                 var newName = account.name

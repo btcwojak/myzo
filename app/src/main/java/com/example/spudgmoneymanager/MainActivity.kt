@@ -5,7 +5,6 @@ import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
@@ -18,11 +17,12 @@ import kotlinx.android.synthetic.main.dialog_add_transaction.etAmountLayout
 import kotlinx.android.synthetic.main.dialog_add_transaction.inc_exp_radio_group
 import kotlinx.android.synthetic.main.dialog_add_transaction.tvCancel
 import kotlinx.android.synthetic.main.dialog_add_transaction.view.*
+import kotlinx.android.synthetic.main.dialog_add_transaction.view.etAmount
+import kotlinx.android.synthetic.main.dialog_add_transaction.view.expenditure_radio
+import kotlinx.android.synthetic.main.dialog_add_transaction.view.income_radio
 import kotlinx.android.synthetic.main.dialog_delete_transaction.*
 import kotlinx.android.synthetic.main.dialog_update_transaction.*
-import java.util.*
-import kotlin.collections.ArrayList
-import kotlinx.android.synthetic.main.dialog_add_transaction.etNoteLayout as etNoteLayout1
+import kotlinx.android.synthetic.main.dialog_update_transaction.view.*
 
 class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
 
@@ -119,14 +119,23 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
 
             val category = dbHandlerCat.getCategoryId(selectedCategory)
             val amount = addDialog.etAmountLayout.etAmount.text.toString()
-            val note = addDialog.etNoteLayout.etNote.text.toString()
+            val note = addDialog.etNoteLayoutAdd.etNoteAdd.text.toString()
             val account = Constants.CURRENT_ACCOUNT
             val date_created = java.util.Calendar.getInstance().time.time.toInt()
 
 
             if (selectedCategory.isNotEmpty() && amount.isNotEmpty() && note.isNotEmpty()) {
                 if (isIncome) {
-                    dbHandlerTrans.addTransaction(TransactionModel(0, note, category, amount, account, date_created))
+                    dbHandlerTrans.addTransaction(
+                        TransactionModel(
+                            0,
+                            note,
+                            category,
+                            amount,
+                            account,
+                            date_created
+                        )
+                    )
                 } else if (!isIncome) {
                     dbHandlerTrans.addTransaction(
                         TransactionModel(
@@ -163,7 +172,7 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
         val updateDialog = Dialog(this, R.style.Theme_Dialog)
         updateDialog.setCancelable(false)
         updateDialog.setContentView(R.layout.dialog_update_transaction)
-        updateDialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT));
+        updateDialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
         val categoryListHandler = CategoriesHandler(this, null)
         val items = categoryListHandler.getAllCategoryTitles()
@@ -171,7 +180,7 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
         updateDialog.category_spinner_update_trans.adapter = categoryAdapter
         updateDialog.category_spinner_update_trans.onItemSelectedListener = this
 
-        updateDialog.etNoteLayout.etNote.setText(transaction.note)
+        updateDialog.etNoteLayoutUpdate.etNoteUpdate.setText(transaction.note)
 
         if (transaction.amount.toFloat() >= 0) {
             updateDialog.inc_exp_radio_group.income_radio.isChecked
@@ -202,7 +211,7 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
             val category = dbHandlerCat.getCategoryId(selectedCategory)
             val amount = updateDialog.etAmountLayout.etAmount.text.toString()
             val account = Constants.CURRENT_ACCOUNT
-            val note = updateDialog.etNoteLayout.etNote.text.toString()
+            val note = updateDialog.etNoteLayoutUpdate.etNoteUpdate.text.toString()
 
             if (selectedCategory.isNotEmpty() && amount.isNotEmpty() && note.isNotEmpty()) {
                 if (isIncome) {
@@ -252,7 +261,7 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
         val deleteDialog = Dialog(this, R.style.Theme_Dialog)
         deleteDialog.setCancelable(false)
         deleteDialog.setContentView(R.layout.dialog_delete_transaction)
-        deleteDialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT));
+        deleteDialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
         deleteDialog.tvDelete.setOnClickListener {
             val dbHandler = TransactionsHandler(this, null)
@@ -305,19 +314,19 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
         val allCategories = dbHandler.getAllCategoryTitles()
 
         if (!allCategories.contains("Entertainment")) {
-            dbHandler.addCategory(CategoryModel(0,"Entertainment", "-16711861"))
+            dbHandler.addCategory(CategoryModel(0, "Entertainment", "-16711861"))
         }
         if (!allCategories.contains("Insurance")) {
-            dbHandler.addCategory(CategoryModel(0,"Insurance","-16774657"))
+            dbHandler.addCategory(CategoryModel(0, "Insurance", "-16774657"))
         }
         if (!allCategories.contains("Travel")) {
-            dbHandler.addCategory(CategoryModel(0,"Travel","-65497"))
+            dbHandler.addCategory(CategoryModel(0, "Travel", "-65497"))
         }
         if (!allCategories.contains("Eating Out")) {
-            dbHandler.addCategory(CategoryModel(0,"Eating Out","-29696"))
+            dbHandler.addCategory(CategoryModel(0, "Eating Out", "-29696"))
         }
         if (!allCategories.contains("Other")) {
-            dbHandler.addCategory(CategoryModel(0,"Other","-65281"))
+            dbHandler.addCategory(CategoryModel(0, "Other", "-65281"))
         }
 
 

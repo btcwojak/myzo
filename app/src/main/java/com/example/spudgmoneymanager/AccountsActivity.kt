@@ -48,7 +48,7 @@ class AccountsActivity : AppCompatActivity() {
         val addDialog = Dialog(this, R.style.Theme_Dialog)
         addDialog.setCancelable(false)
         addDialog.setContentView(R.layout.dialog_add_account)
-        addDialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT));
+        addDialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
         addDialog.tvAdd.setOnClickListener {
             val name = addDialog.etNameLayout.etName.text.toString()
@@ -88,7 +88,7 @@ class AccountsActivity : AppCompatActivity() {
         val updateDialog = Dialog(this, R.style.Theme_Dialog)
         updateDialog.setCancelable(false)
         updateDialog.setContentView(R.layout.dialog_update_account)
-        updateDialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT));
+        updateDialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
         updateDialog.etNameLayout.etName.setText(account.name)
 
