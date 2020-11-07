@@ -57,6 +57,10 @@ class TransactionAdapter(val context: Context, val items: ArrayList<TransactionM
             true
         }
 
+        if(items.size-1==position){
+            holder.transactionItem.setPadding(0,0,0,200);
+        }
+
 
     }
 

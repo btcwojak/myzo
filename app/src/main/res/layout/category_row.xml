@@ -1,18 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/category_row_layout"
     android:layout_width="match_parent"
+    android:layout_height="wrap_content" >
+
+<LinearLayout
+    android:background="@drawable/dialog_background_solid"
+    android:elevation="5dp"
+    android:id="@+id/category_inner_row_layout"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:gravity="center"
+    android:orientation="horizontal"
+    android:padding="10dp"
     android:layout_marginLeft="40dp"
     android:layout_marginTop="15dp"
     android:layout_marginRight="40dp"
-    android:layout_marginBottom="15dp"
-    android:background="@drawable/dialog_background_solid"
-    android:elevation="5dp"
-    android:gravity="center"
-    android:orientation="horizontal"
-    android:padding="10dp">
+    android:layout_marginBottom="15dp">
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/update_category"
@@ -74,5 +80,7 @@
         android:layout_marginLeft="30dp"
         android:background="@drawable/delete_btn"
         tools:visibility="gone" />
+
+</LinearLayout>
 
 </LinearLayout>
