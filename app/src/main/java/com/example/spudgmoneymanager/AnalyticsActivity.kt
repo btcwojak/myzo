@@ -4,11 +4,12 @@ import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import com.github.mikephil.charting.charts.BarChart
 import com.github.mikephil.charting.charts.PieChart
 import com.github.mikephil.charting.components.Legend
-import com.github.mikephil.charting.data.PieData
-import com.github.mikephil.charting.data.PieDataSet
-import com.github.mikephil.charting.data.PieEntry
+import com.github.mikephil.charting.components.XAxis
+import com.github.mikephil.charting.components.YAxis
+import com.github.mikephil.charting.data.*
 import com.github.mikephil.charting.formatter.PercentFormatter
 import kotlinx.android.synthetic.main.activity_analytics.*
 
@@ -17,6 +18,7 @@ class AnalyticsActivity : AppCompatActivity() {
 
     var entriesInc: ArrayList<PieEntry> = ArrayList()
     var entriesExp: ArrayList<PieEntry> = ArrayList()
+    var entriesBar: ArrayList<BarEntry> = ArrayList()
 
     var categoryTitlesInc: ArrayList<String> = ArrayList()
     var categoryTitlesExp: ArrayList<String> = ArrayList()
@@ -26,6 +28,9 @@ class AnalyticsActivity : AppCompatActivity() {
 
     var categoryTotalsInc: ArrayList<Float> = ArrayList()
     var categoryTotalsExp: ArrayList<Float> = ArrayList()
+
+    var categoryTransactions: ArrayList<Float> = ArrayList()
+    var categoryDates: ArrayList<Float> = ArrayList()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -68,16 +73,22 @@ class AnalyticsActivity : AppCompatActivity() {
             }
         }
 
+        categoryTransactions = dbHandlerTransaction.getTransactionsForCategory(1)
+        categoryDates = dbHandlerTransaction.getTransactionDatesForCategory(1)
+
         setupPieChartIncome()
         setupPieChartExpenditure()
+        setupBarChart()
 
     }
 
 
     private fun setupPieChartIncome() {
 
-        for (i in 0 until categoryTotalsInc.size) {
-            entriesInc.add(PieEntry(categoryTotalsInc[i], categoryTitlesInc[i]))
+        if (categoryTotalsInc.size > 0) {
+            for (i in 0 until categoryTotalsInc.size) {
+                entriesInc.add(PieEntry(categoryTotalsInc[i], categoryTitlesInc[i]))
+            }
         }
 
         var dataSetInc: PieDataSet = PieDataSet(entriesInc, "")
@@ -85,9 +96,12 @@ class AnalyticsActivity : AppCompatActivity() {
         var dataInc: PieData = PieData(dataSetInc)
 
         var chartInc: PieChart = chartInc
-        chartInc.data = dataInc
+        if (entriesInc.size > 0) {
+            chartInc.data = dataInc
+        }
         chartInc.animateY(800)
         chartInc.setNoDataText("There aren't any income categories with data yet.")
+        chartInc.setNoDataTextColor(0xff000000.toInt())
         chartInc.dragDecelerationFrictionCoef = .95f
         chartInc.setDrawEntryLabels(false)
 
@@ -115,8 +129,10 @@ class AnalyticsActivity : AppCompatActivity() {
 
     private fun setupPieChartExpenditure() {
 
-        for (i in 0 until categoryTotalsExp.size) {
-            entriesExp.add(PieEntry(categoryTotalsExp[i], categoryTitlesExp[i]))
+        if (categoryTotalsExp.size > 0) {
+            for (i in 0 until categoryTotalsExp.size) {
+                entriesExp.add(PieEntry(categoryTotalsExp[i], categoryTitlesExp[i]))
+            }
         }
 
         var dataSetExp: PieDataSet = PieDataSet(entriesExp, "")
@@ -124,9 +140,12 @@ class AnalyticsActivity : AppCompatActivity() {
         var dataExp: PieData = PieData(dataSetExp)
 
         var chartExp: PieChart = chartExp
-        chartExp.data = dataExp
+        if (entriesExp.size > 0) {
+            chartExp.data = dataExp
+        }
         chartExp.animateY(800)
         chartExp.setNoDataText("There aren't any expenditure categories with data yet.")
+        chartExp.setNoDataTextColor(0xff000000.toInt())
         chartExp.dragDecelerationFrictionCoef = .95f
         chartExp.setDrawEntryLabels(false)
 
@@ -148,6 +167,35 @@ class AnalyticsActivity : AppCompatActivity() {
         dataExp.setValueTextColor(Color.BLACK)
 
         chartExp.invalidate()
+
+    }
+
+    private fun setupBarChart() {
+
+        for (i in 0 until categoryTransactions.size) {
+            entriesBar.add(BarEntry(categoryDates[i], categoryTransactions[i]))
+        }
+
+        var dataSetBar: BarDataSet = BarDataSet(entriesBar, "")
+
+        var dataBar: BarData = BarData(dataSetBar)
+
+        var chartBar: BarChart = chartBar
+        chartBar.data = dataBar
+
+        var xAxis: XAxis = chartBar.xAxis
+        xAxis.granularity = 1f
+        xAxis.labelCount = 7
+
+        var leftAxis: YAxis = chartBar.axisLeft
+        leftAxis.setLabelCount(8, false)
+
+        var rightAxis: YAxis = chartBar.axisRight
+        rightAxis.isEnabled = false
+
+
+
+
 
     }
 

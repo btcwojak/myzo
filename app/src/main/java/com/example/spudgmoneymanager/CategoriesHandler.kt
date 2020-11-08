@@ -46,7 +46,7 @@ class CategoriesHandler(context: Context, factory: SQLiteDatabase.CursorFactory?
             }
         }
 
-        if (alreadyExists == false) {
+        if (!alreadyExists) {
             db.insert(TABLE_CATEGORIES, null, values)
             db.close()
             Constants.CAT_UNIQUE_TITLE = 1

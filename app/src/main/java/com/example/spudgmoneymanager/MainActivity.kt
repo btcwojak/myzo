@@ -5,9 +5,13 @@ import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.text.Editable
+import android.text.InputFilter
+import android.text.TextWatcher
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -92,6 +96,19 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
         addDialog.setContentView(R.layout.dialog_add_transaction)
         addDialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
+        addDialog.etAmountLayout.etAmount.addTextChangedListener(object : TextWatcher {
+            override fun onTextChanged(arg0: CharSequence, arg1: Int, arg2: Int, arg3: Int) {}
+            override fun beforeTextChanged(arg0: CharSequence, arg1: Int, arg2: Int, arg3: Int) {}
+            override fun afterTextChanged(arg0: Editable) {
+                val str = addDialog.etAmountLayout.etAmount.text.toString()
+                if (str.isEmpty()) return
+                val str2: String = currencyInputFilter(str, 6, 2)
+                if (str2 != str) {
+                    addDialog.etAmountLayout.etAmount.setText(str2)
+                    addDialog.etAmountLayout.etAmount.setSelection(str2.length)
+                }
+            }
+        })
 
         val categoryListHandler = CategoriesHandler(this, null)
         val items = categoryListHandler.getAllCategoryTitles()
@@ -121,7 +138,7 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
             val amount = addDialog.etAmountLayout.etAmount.text.toString()
             val note = addDialog.etNoteLayoutAdd.etNoteAdd.text.toString()
             val account = Constants.CURRENT_ACCOUNT
-            val date_created = java.util.Calendar.getInstance().time.time.toInt()
+            val date_created = 3
 
 
             if (selectedCategory.isNotEmpty() && amount.isNotEmpty() && note.isNotEmpty()) {
@@ -173,6 +190,20 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
         updateDialog.setCancelable(false)
         updateDialog.setContentView(R.layout.dialog_update_transaction)
         updateDialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+
+        updateDialog.etAmountLayout.etAmount.addTextChangedListener(object : TextWatcher {
+            override fun onTextChanged(arg0: CharSequence, arg1: Int, arg2: Int, arg3: Int) {}
+            override fun beforeTextChanged(arg0: CharSequence, arg1: Int, arg2: Int, arg3: Int) {}
+            override fun afterTextChanged(arg0: Editable) {
+                val str = updateDialog.etAmountLayout.etAmount.text.toString()
+                if (str.isEmpty()) return
+                val str2: String = currencyInputFilter(str, 6, 2)
+                if (str2 != str) {
+                    updateDialog.etAmountLayout.etAmount.setText(str2)
+                    updateDialog.etAmountLayout.etAmount.setSelection(str2.length)
+                }
+            }
+        })
 
         val categoryListHandler = CategoriesHandler(this, null)
         val items = categoryListHandler.getAllCategoryTitles()
@@ -309,7 +340,7 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
         return dbHandler.getCategoryColour(categoryId)
     }
 
-    fun checkDefaultCategories() {
+    private fun checkDefaultCategories() {
         val dbHandler = CategoriesHandler(this, null)
         val allCategories = dbHandler.getAllCategoryTitles()
 
@@ -329,12 +360,37 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
             dbHandler.addCategory(CategoryModel(0, "Other", "-65281"))
         }
 
+    }
 
+    fun currencyInputFilter(str: String, MAX_BEFORE_POINT: Int, MAX_DECIMAL: Int): String {
+        var str = str
+        if (str[0] == '.') str = "0$str"
+        val max = str.length
+        var rFinal = ""
+        var after = false
+        var i = 0
+        var up = 0
+        var decimal = 0
+        var t: Char
+        while (i < max) {
+            t = str[i]
+            if (t != '.' && !after) {
+                up++
+                if (up > MAX_BEFORE_POINT) return rFinal
+            } else if (t == '.') {
+                after = true
+            } else {
+                decimal++
+                if (decimal > MAX_DECIMAL) return rFinal
+            }
+            rFinal += t
+            i++
+        }
+        return rFinal
     }
 
     fun getTransactionCategoryTitle(CategoryId: Int): String {
         val dbHandlerCat = CategoriesHandler(this, null)
-
         return dbHandlerCat.getCategoryTitle(CategoryId)
     }
 

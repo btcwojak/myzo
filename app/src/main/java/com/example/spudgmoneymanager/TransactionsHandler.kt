@@ -238,7 +238,7 @@ class TransactionsHandler(context: Context, factory: SQLiteDatabase.CursorFactor
 
     }
 
-    fun getTransactionsForCategory(categoryId: Int): Array<Any> {
+    fun getTransactionsForCategory(categoryId: Int): ArrayList<Float> {
         var amount: String
         var list: ArrayList<Float> = ArrayList()
         val db = this.readableDatabase
@@ -254,7 +254,27 @@ class TransactionsHandler(context: Context, factory: SQLiteDatabase.CursorFactor
             } while (cursor.moveToNext())
         }
 
-        return list.toArray()
+        return list
+
+    }
+
+    fun getTransactionDatesForCategory(categoryId: Int): ArrayList<Float> {
+        var amount: String
+        var list: ArrayList<Float> = ArrayList()
+        val db = this.readableDatabase
+        val cursor = db.rawQuery(
+            "SELECT * FROM $TABLE_TRANSACTIONS WHERE $KEY_CATEGORY = $categoryId",
+            null
+        )
+
+        if (cursor.moveToFirst()) {
+            do {
+                amount = cursor.getString(cursor.getColumnIndex(KEY_DATE_CREATED))
+                list.add(amount.toFloat())
+            } while (cursor.moveToNext())
+        }
+
+        return list
 
     }
 
