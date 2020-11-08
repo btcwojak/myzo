@@ -10,6 +10,8 @@ import com.github.mikephil.charting.components.Legend
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.components.YAxis
 import com.github.mikephil.charting.data.*
+import com.github.mikephil.charting.formatter.DefaultValueFormatter
+import com.github.mikephil.charting.formatter.IndexAxisValueFormatter
 import com.github.mikephil.charting.formatter.PercentFormatter
 import kotlinx.android.synthetic.main.activity_analytics.*
 
@@ -73,9 +75,6 @@ class AnalyticsActivity : AppCompatActivity() {
             }
         }
 
-        categoryTransactions = dbHandlerTransaction.getTransactionsForCategory(1)
-        categoryDates = dbHandlerTransaction.getTransactionDatesForCategory(1)
-
         setupPieChartIncome()
         setupPieChartExpenditure()
         setupBarChart()
@@ -94,6 +93,7 @@ class AnalyticsActivity : AppCompatActivity() {
         var dataSetInc: PieDataSet = PieDataSet(entriesInc, "")
         dataSetInc.colors = categoryColoursInc.toMutableList()
         var dataInc: PieData = PieData(dataSetInc)
+        dataSetInc.valueFormatter = PercentFormatter()
 
         var chartInc: PieChart = chartInc
         if (entriesInc.size > 0) {
@@ -172,6 +172,8 @@ class AnalyticsActivity : AppCompatActivity() {
 
     private fun setupBarChart() {
 
+        var labels = arrayListOf<String>("Jan","Feb","March","April")
+
         for (i in 0 until categoryTransactions.size) {
             entriesBar.add(BarEntry(categoryDates[i], categoryTransactions[i]))
         }
@@ -182,6 +184,9 @@ class AnalyticsActivity : AppCompatActivity() {
 
         var chartBar: BarChart = chartBar
         chartBar.data = dataBar
+
+        chartBar.xAxis.valueFormatter = IndexAxisValueFormatter(labels)
+        chartBar.xAxis.position = XAxis.XAxisPosition.BOTTOM
 
         var xAxis: XAxis = chartBar.xAxis
         xAxis.granularity = 1f
