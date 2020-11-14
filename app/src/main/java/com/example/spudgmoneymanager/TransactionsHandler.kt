@@ -45,7 +45,7 @@ class TransactionsHandler(context: Context, factory: SQLiteDatabase.CursorFactor
         values.put(KEY_ACCOUNT, trans.account)
         values.put(KEY_MONTH, trans.month)
         values.put(KEY_DAY, trans.day)
-        values.put(KEY_YEAR,trans.year)
+        values.put(KEY_YEAR, trans.year)
         val db = this.writableDatabase
         val success = db.insert(TABLE_TRANSACTIONS, null, values)
         db.close()

@@ -1,88 +1,87 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/category_row_layout"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content" >
-
-<LinearLayout
-    android:background="@drawable/dialog_background_solid"
-    android:elevation="5dp"
-    android:id="@+id/category_inner_row_layout"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:gravity="center"
-    android:orientation="horizontal"
-    android:padding="10dp"
-    android:layout_marginLeft="40dp"
-    android:layout_marginTop="15dp"
-    android:layout_marginRight="40dp"
-    android:layout_marginBottom="15dp">
-
-    <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/update_category"
-        android:layout_width="25dp"
-        android:foreground="?attr/selectableItemBackground"
-        android:layout_height="25dp"
-        android:layout_marginRight="30dp"
-        android:background="@drawable/edit_btn"
-        tools:visibility="gone" />
-
-    <TextView
-        android:id="@+id/default_category"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginRight="50dp"
-        android:fontFamily="@font/open_sans_light"
-        android:gravity="left"
-        android:text="Default \ncategory"
-        android:textColor="#212121"
-        android:textSize="16sp"
-        tools:visibility="visible" />
+    android:layout_height="wrap_content">
 
     <LinearLayout
-        android:layout_width="150dp"
+        android:id="@+id/category_inner_row_layout"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="40dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginRight="40dp"
+        android:layout_marginBottom="15dp"
+        android:background="@drawable/dialog_background_solid"
+        android:elevation="5dp"
         android:gravity="center"
-        android:orientation="vertical">
+        android:orientation="horizontal"
+        android:padding="10dp">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/update_category"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_marginRight="30dp"
+            android:background="@drawable/edit_btn"
+            android:foreground="?attr/selectableItemBackground"
+            tools:visibility="gone" />
 
         <TextView
-            android:id="@+id/title_category"
-            android:layout_width="match_parent"
+            android:id="@+id/default_category"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:layout_marginRight="50dp"
             android:fontFamily="@font/open_sans_light"
-            android:gravity="center"
+            android:gravity="left"
+            android:text="Default \ncategory"
             android:textColor="#212121"
-            android:textSize="18sp"
-            tools:text="Category title" />
+            android:textSize="16sp"
+            tools:visibility="visible" />
 
-        <TextView
-            android:id="@+id/colour_category"
-            android:layout_width="match_parent"
-            android:layout_height="20dp"
-            android:layout_gravity="center"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="5dp"
-            android:layout_marginRight="10dp"
-            android:background="@drawable/rounded_corner"
-            android:fontFamily="@font/open_sans_light"
-            android:textColor="#212121"
-            android:textSize="18sp" />
+        <LinearLayout
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/title_category"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:fontFamily="@font/open_sans_light"
+                android:gravity="center"
+                android:textColor="#212121"
+                android:textSize="18sp"
+                tools:text="Category title" />
+
+            <TextView
+                android:id="@+id/colour_category"
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:layout_gravity="center"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/rounded_corner"
+                android:fontFamily="@font/open_sans_light"
+                android:textColor="#212121"
+                android:textSize="18sp" />
+
+        </LinearLayout>
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/delete_category"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_marginLeft="30dp"
+            android:background="@drawable/delete_btn"
+            android:foreground="?attr/selectableItemBackground"
+            tools:visibility="gone" />
 
     </LinearLayout>
-
-    <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/delete_category"
-        android:layout_width="25dp"
-        android:foreground="?attr/selectableItemBackground"
-        android:layout_height="25dp"
-        android:layout_marginLeft="30dp"
-        android:background="@drawable/delete_btn"
-        tools:visibility="gone" />
-
-</LinearLayout>
 
 </LinearLayout>

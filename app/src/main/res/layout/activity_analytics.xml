@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".AnalyticsActivity"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    tools:context=".AnalyticsActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -13,209 +13,208 @@
         android:layout_weight="1"
         android:orientation="vertical">
 
-    <LinearLayout
-        android:id="@+id/llHeader"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginRight="10dp"
-        android:gravity="center"
-        android:orientation="horizontal"
-        app:layout_constraintBottom_toTopOf="@id/svgraphs"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="#FFFFFF">
-
-            <Button
-                android:id="@+id/back_to_trans_from_analytics"
-                android:layout_width="wrap_content"
-                android:layout_height="50dp"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="20dp"
-                android:layout_marginBottom="30dp"
-                android:background="#FFFFFF"
-                android:fontFamily="@font/open_sans_light"
-                android:text="back"
-                android:textColor="@color/colorAccent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
-                android:id="@+id/analytics_heading"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="20dp"
-                android:fontFamily="@font/open_sans_light"
-                android:text="Analytics"
-                android:textColor="#000000"
-                android:textSize="24sp"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="@id/back_to_trans_from_analytics"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="@id/back_to_trans_from_analytics" />
-
-            <TextView
-                android:id="@+id/viewing_header"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="5dp"
-                android:layout_marginTop="2dp"
-                android:fontFamily="@font/open_sans_light"
-                android:text="Viewing:"
-                android:textColor="#000000"
-                android:textSize="16sp"
-                app:layout_constraintRight_toLeftOf="@id/month_selected_header"
-                app:layout_constraintTop_toBottomOf="@id/analytics_heading" />
-
-            <TextView
-                android:id="@+id/month_selected_header"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="2dp"
-                android:fontFamily="@font/open_sans_light"
-                android:text="Nov 2020"
-                android:textColor="#000000"
-                android:textSize="16sp"
-                app:layout_constraintRight_toLeftOf="@id/change_month_left_bracket"
-                app:layout_constraintTop_toBottomOf="@id/analytics_heading" />
-
-            <TextView
-                android:id="@+id/change_month_left_bracket"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/open_sans_light"
-                android:text="("
-                android:layout_marginLeft="5dp"
-                android:textColor="@android:color/black"
-                android:textSize="16sp"
-                app:layout_constraintLeft_toRightOf="@id/month_selected_header"
-                app:layout_constraintTop_toTopOf="@id/month_selected_header" />
-
-            <TextView
-                android:id="@+id/select_new_month_header"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="2dp"
-                android:fontFamily="@font/open_sans_light"
-                android:text="change"
-                android:foreground="?attr/selectableItemBackground"
-                android:textColor="@color/colorAccent"
-                android:textSize="16sp"
-                app:layout_constraintLeft_toRightOf="@id/change_month_left_bracket"
-                app:layout_constraintTop_toBottomOf="@id/analytics_heading" />
-
-            <TextView
-                android:id="@+id/change_month_right_bracket"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="20dp"
-                android:layout_marginTop="2dp"
-                android:fontFamily="@font/open_sans_light"
-                android:text=")"
-                android:textColor="@android:color/black"
-                android:textSize="16sp"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintLeft_toRightOf="@id/select_new_month_header"
-                app:layout_constraintTop_toBottomOf="@id/analytics_heading" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-    </LinearLayout>
-    </LinearLayout>
-
-
-
-<LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="0dp"
-    android:layout_weight="100"
-    android:orientation="vertical">
-
-    <ScrollView
-        android:id="@+id/svgraphs"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_constraintTop_toBottomOf="@id/llHeader"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent">
-
         <LinearLayout
-            android:id="@+id/llgraphs"
+            android:id="@+id/llHeader"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/income_heading"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/open_sans_light"
-                android:text="Income"
-                android:textColor="#000000"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toTopOf="@id/chartInc"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toTopOf="@id/llgraphs"
-                android:layout_gravity="center"
-                android:layout_marginBottom="20dp"/>
-
-    <com.github.mikephil.charting.charts.PieChart
-        android:id="@+id/chartInc"
-        android:layout_width="match_parent"
-        android:layout_height="200dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/llHeader" />
-
-            <TextView
-                android:id="@+id/expenditure_heading"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/open_sans_light"
-                android:text="Expenditure"
-                android:textColor="#000000"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/chartInc"
-                android:layout_gravity="center"
-                android:layout_marginTop="20dp"
-                android:layout_marginBottom="20dp"/>
-
-    <com.github.mikephil.charting.charts.PieChart
-        android:id="@+id/chartExp"
-        android:layout_width="match_parent"
-        android:layout_height="200dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/chartInc" />
-
-        <com.github.mikephil.charting.charts.BarChart
-            android:id="@+id/chartBar"
-            android:layout_width="match_parent"
-            android:layout_height="200dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginRight="10dp"
+            android:gravity="center"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toTopOf="@id/svgraphs"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/chartExp" />
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#FFFFFF">
+
+                <Button
+                    android:id="@+id/back_to_trans_from_analytics"
+                    android:layout_width="wrap_content"
+                    android:layout_height="50dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="30dp"
+                    android:background="#FFFFFF"
+                    android:fontFamily="@font/open_sans_light"
+                    android:text="back"
+                    android:textColor="@color/colorAccent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/analytics_heading"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="20dp"
+                    android:fontFamily="@font/open_sans_light"
+                    android:text="Analytics"
+                    android:textColor="#000000"
+                    android:textSize="24sp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="@id/back_to_trans_from_analytics"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/back_to_trans_from_analytics" />
+
+                <TextView
+                    android:id="@+id/viewing_header"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:layout_marginRight="5dp"
+                    android:fontFamily="@font/open_sans_light"
+                    android:text="Viewing:"
+                    android:textColor="#000000"
+                    android:textSize="16sp"
+                    app:layout_constraintRight_toLeftOf="@id/month_selected_header"
+                    app:layout_constraintTop_toBottomOf="@id/analytics_heading" />
+
+                <TextView
+                    android:id="@+id/month_selected_header"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:fontFamily="@font/open_sans_light"
+                    android:text="Nov 2020"
+                    android:textColor="#000000"
+                    android:textSize="16sp"
+                    app:layout_constraintRight_toLeftOf="@id/change_month_left_bracket"
+                    app:layout_constraintTop_toBottomOf="@id/analytics_heading" />
+
+                <TextView
+                    android:id="@+id/change_month_left_bracket"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:fontFamily="@font/open_sans_light"
+                    android:text="("
+                    android:textColor="@android:color/black"
+                    android:textSize="16sp"
+                    app:layout_constraintLeft_toRightOf="@id/month_selected_header"
+                    app:layout_constraintTop_toTopOf="@id/month_selected_header" />
+
+                <TextView
+                    android:id="@+id/select_new_month_header"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:fontFamily="@font/open_sans_light"
+                    android:foreground="?attr/selectableItemBackground"
+                    android:text="change"
+                    android:textColor="@color/colorAccent"
+                    android:textSize="16sp"
+                    app:layout_constraintLeft_toRightOf="@id/change_month_left_bracket"
+                    app:layout_constraintTop_toBottomOf="@id/analytics_heading" />
+
+                <TextView
+                    android:id="@+id/change_month_right_bracket"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:layout_marginRight="20dp"
+                    android:fontFamily="@font/open_sans_light"
+                    android:text=")"
+                    android:textColor="@android:color/black"
+                    android:textSize="16sp"
+                    app:layout_constraintLeft_toRightOf="@id/select_new_month_header"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/analytics_heading" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
 
         </LinearLayout>
+    </LinearLayout>
 
-    </ScrollView>
 
-</LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="100"
+        android:orientation="vertical">
+
+        <ScrollView
+            android:id="@+id/svgraphs"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/llHeader">
+
+            <LinearLayout
+                android:id="@+id/llgraphs"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/income_heading"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginBottom="20dp"
+                    android:fontFamily="@font/open_sans_light"
+                    android:text="Income"
+                    android:textColor="#000000"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toTopOf="@id/chartInc"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/llgraphs" />
+
+                <com.github.mikephil.charting.charts.PieChart
+                    android:id="@+id/chartInc"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/llHeader" />
+
+                <TextView
+                    android:id="@+id/expenditure_heading"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="20dp"
+                    android:fontFamily="@font/open_sans_light"
+                    android:text="Expenditure"
+                    android:textColor="#000000"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/chartInc" />
+
+                <com.github.mikephil.charting.charts.PieChart
+                    android:id="@+id/chartExp"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/chartInc" />
+
+                <com.github.mikephil.charting.charts.BarChart
+                    android:id="@+id/chartBar"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/chartExp" />
+
+
+            </LinearLayout>
+
+        </ScrollView>
+
+    </LinearLayout>
 
 </LinearLayout>

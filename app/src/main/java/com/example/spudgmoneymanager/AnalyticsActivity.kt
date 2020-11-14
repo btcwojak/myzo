@@ -5,12 +5,8 @@ import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import android.util.Log
-import android.widget.NumberPicker
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.res.ResourcesCompat
-import com.github.dewinjm.monthyearpicker.MonthYearPickerDialog
-import com.github.dewinjm.monthyearpicker.MonthYearPickerDialogFragment
 import com.github.mikephil.charting.charts.BarChart
 import com.github.mikephil.charting.charts.PieChart
 import com.github.mikephil.charting.components.Legend
@@ -20,7 +16,6 @@ import com.github.mikephil.charting.data.*
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter
 import com.github.mikephil.charting.formatter.PercentFormatter
 import kotlinx.android.synthetic.main.activity_analytics.*
-import kotlinx.android.synthetic.main.dialog_add_transaction.*
 import kotlinx.android.synthetic.main.month_year_picker.*
 import java.util.*
 import kotlin.collections.ArrayList
@@ -54,7 +49,10 @@ class AnalyticsActivity : AppCompatActivity() {
             Calendar.getInstance()[Calendar.YEAR]
         )
 
-        setMonthHeader(Calendar.getInstance()[Calendar.MONTH] + 1, Calendar.getInstance()[Calendar.YEAR])
+        setMonthHeader(
+            Calendar.getInstance()[Calendar.MONTH] + 1,
+            Calendar.getInstance()[Calendar.YEAR]
+        )
         setupPieChartIncome()
         setupPieChartExpenditure()
         setupBarChart()
@@ -72,12 +70,25 @@ class AnalyticsActivity : AppCompatActivity() {
             filterDialog.myp_year.maxValue = 2999
             filterDialog.myp_month.minValue = 1
             filterDialog.myp_month.maxValue = 12
-            filterDialog.myp_month.displayedValues = arrayOf("Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec")
+            filterDialog.myp_month.displayedValues = arrayOf(
+                "Jan",
+                "Feb",
+                "Mar",
+                "Apr",
+                "May",
+                "Jun",
+                "Jul",
+                "Aug",
+                "Sep",
+                "Oct",
+                "Nov",
+                "Dec"
+            )
             filterDialog.myp_year.wrapSelectorWheel = true
             filterDialog.myp_month.wrapSelectorWheel = true
             filterDialog.myp_year.value = calendar[Calendar.YEAR]
             filterDialog.myp_month.value = calendar[Calendar.MONTH] + 1
-            
+
             filterDialog.myp_month.setOnValueChangedListener { NumberPicker, oldVal, newVal ->
                 monthSelected = newVal
             }
@@ -214,7 +225,6 @@ class AnalyticsActivity : AppCompatActivity() {
         }
 
 
-
     }
 
 
@@ -249,7 +259,6 @@ class AnalyticsActivity : AppCompatActivity() {
     }
 
 
-
     private fun makeData(monthFilter: Int, yearFilter: Int) {
 
         resetData()
@@ -264,13 +273,15 @@ class AnalyticsActivity : AppCompatActivity() {
                     category.id,
                     monthFilter,
                     yearFilter
-                ) > 0F) {
+                ) > 0F
+            ) {
                 categoryTitlesInc.add(category.title)
             } else if (dbHandlerTransaction.getTransactionTotalForCategory(
                     category.id,
                     monthFilter,
                     yearFilter
-                ) < 0F) {
+                ) < 0F
+            ) {
                 categoryTitlesExp.add(category.title)
             }
         }
@@ -295,13 +306,15 @@ class AnalyticsActivity : AppCompatActivity() {
                     category.id,
                     monthFilter,
                     yearFilter
-                ) > 0F) {
+                ) > 0F
+            ) {
                 categoryColoursInc.add(intColor)
             } else if (dbHandlerTransaction.getTransactionTotalForCategory(
                     category.id,
                     monthFilter,
                     yearFilter
-                ) < 0F) {
+                ) < 0F
+            ) {
                 categoryColoursExp.add(intColor)
             }
         }
@@ -346,10 +359,6 @@ class AnalyticsActivity : AppCompatActivity() {
         month_selected_header.text = "$monthText $year"
 
     }
-
-
-
-
 
 
 }
