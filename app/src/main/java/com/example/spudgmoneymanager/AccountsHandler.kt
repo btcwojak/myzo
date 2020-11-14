@@ -96,11 +96,18 @@ class AccountsHandler(context: Context, factory: SQLiteDatabase.CursorFactory?) 
         val db = this.readableDatabase
         val cursor = db.rawQuery("SELECT * FROM $TABLE_ACCOUNTS WHERE $KEY_ID = $accountId", null)
 
-        return if (cursor.moveToFirst()) {
+        val name: String
+
+        name = if (cursor.moveToFirst()) {
             cursor.getString(cursor.getColumnIndex(KEY_NAME))
         } else {
             "Error"
         }
+
+        cursor.close()
+        db.close()
+
+        return name
 
     }
 

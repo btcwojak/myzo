@@ -89,7 +89,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/open_sans_light"
-                        android:text="test"
+                        android:text="@string/category_note"
                         android:textColor="#212121"
                         android:textSize="14sp"
                         android:textStyle="italic" />

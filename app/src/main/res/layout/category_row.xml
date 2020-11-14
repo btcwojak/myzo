@@ -36,7 +36,7 @@
             android:layout_marginEnd="50dp"
             android:fontFamily="@font/open_sans_light"
             android:gravity="start"
-            android:text="Default \ncategory"
+            android:text="@string/default_category"
             android:textColor="#212121"
             android:textSize="16sp"
             tools:visibility="visible" />

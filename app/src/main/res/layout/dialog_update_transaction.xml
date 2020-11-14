@@ -18,7 +18,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="5dp"
         android:fontFamily="@font/open_sans_light"
-        android:text="Update Transaction for"
+        android:text="@string/update_transaction_for"
         android:textColor="@android:color/black"
         android:textSize="18sp" />
 
@@ -29,7 +29,7 @@
         android:layout_marginStart="5dp"
         android:layout_marginTop="5dp"
         android:fontFamily="@font/open_sans_light"
-        android:text="today"
+        android:text="@string/today"
         android:textColor="@color/colorAccent"
         android:textSize="18sp" />
 
@@ -54,7 +54,7 @@
             android:background="@drawable/radio_selector"
             android:fontFamily="@font/open_sans_light"
             android:gravity="center"
-            android:text="Income"
+            android:text="@string/income"
             android:textSize="16sp" />
 
 
@@ -68,7 +68,7 @@
             android:checked="false"
             android:fontFamily="@font/open_sans_light"
             android:gravity="center"
-            android:text="Expenditure"
+            android:text="@string/expenditure"
             android:textSize="16sp" />
 
     </RadioGroup>
@@ -115,7 +115,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:fontFamily="@font/open_sans_light"
-                android:hint="Amount"
+                android:hint="@string/amount"
                 android:inputType="numberDecimal" />
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -133,7 +133,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:fontFamily="@font/open_sans_light"
-            android:hint="Note"
+            android:hint="@string/note"
             android:inputType="numberDecimal" />
 
     </com.google.android.material.textfield.TextInputLayout>
@@ -153,7 +153,7 @@
             android:foreground="?attr/selectableItemBackground"
             android:gravity="center"
             android:padding="10dp"
-            android:text="Update"
+            android:text="@string/update"
             android:textColor="#673AB7" />
 
         <TextView
@@ -164,7 +164,7 @@
             android:foreground="?attr/selectableItemBackground"
             android:gravity="center"
             android:padding="10dp"
-            android:text="Cancel"
+            android:text="@string/cancel"
             android:textColor="@android:color/black" />
 
     </LinearLayout>

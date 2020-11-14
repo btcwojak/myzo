@@ -6,8 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.account_row.view.*
-import java.text.DecimalFormat
-import java.text.NumberFormat
 
 class AccountAdapter(private val context: Context, private val items: ArrayList<AccountModel>) :
     RecyclerView.Adapter<AccountAdapter.ViewHolder>() {

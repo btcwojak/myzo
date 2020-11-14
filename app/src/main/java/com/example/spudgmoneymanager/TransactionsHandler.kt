@@ -88,51 +88,6 @@ class TransactionsHandler(context: Context, factory: SQLiteDatabase.CursorFactor
         db.close()
     }
 
-    fun getAllTransactions(): ArrayList<TransactionModel> {
-        val list = ArrayList<TransactionModel>()
-        val db = this.readableDatabase
-        val cursor = db.rawQuery("SELECT * FROM $TABLE_TRANSACTIONS", null)
-
-        var id: Int
-        var category: Int
-        var amount: String
-        var account: Int
-        var note: String
-        var month: Int
-        var day: Int
-        var year: Int
-
-        if (cursor.moveToFirst()) {
-            do {
-                id = cursor.getInt(cursor.getColumnIndex(KEY_ID))
-                category = cursor.getInt(cursor.getColumnIndex(KEY_CATEGORY))
-                amount = cursor.getString(cursor.getColumnIndex(KEY_AMOUNT))
-                account = cursor.getInt(cursor.getColumnIndex(KEY_ACCOUNT))
-                note = cursor.getString(cursor.getColumnIndex(KEY_NOTE))
-                month = cursor.getInt(cursor.getColumnIndex(KEY_MONTH))
-                day = cursor.getInt(cursor.getColumnIndex(KEY_DAY))
-                year = cursor.getInt(cursor.getColumnIndex(KEY_YEAR))
-                val transaction = TransactionModel(
-                    id = id,
-                    category = category,
-                    amount = amount,
-                    account = account,
-                    note = note,
-                    month = month,
-                    day = day,
-                    year = year
-                )
-                list.add(transaction)
-            } while (cursor.moveToNext())
-        }
-
-        cursor.close()
-        db.close()
-
-        return list
-
-    }
-
     fun getBalanceForAccount(accountFilter: Int): String {
         val list = ArrayList<Double>()
         val db = this.readableDatabase
@@ -236,7 +191,9 @@ class TransactionsHandler(context: Context, factory: SQLiteDatabase.CursorFactor
             } while (cursor.moveToNext())
         }
 
+        cursor.close()
         db.close()
+
         return list
 
     }
@@ -257,11 +214,14 @@ class TransactionsHandler(context: Context, factory: SQLiteDatabase.CursorFactor
             } while (cursor.moveToNext())
         }
 
+        cursor.close()
         dbTrans.close()
+
         return runningTotal
 
     }
 
+/*
     fun getTransactionsForCategory(categoryId: Int): ArrayList<Float> {
         var amount: String
         val list: ArrayList<Float> = ArrayList()
@@ -278,9 +238,58 @@ class TransactionsHandler(context: Context, factory: SQLiteDatabase.CursorFactor
             } while (cursor.moveToNext())
         }
 
+        cursor.close()
         db.close()
         return list
 
     }
+*/
+
+/*
+    fun getAllTransactions(): ArrayList<TransactionModel> {
+        val list = ArrayList<TransactionModel>()
+        val db = this.readableDatabase
+        val cursor = db.rawQuery("SELECT * FROM $TABLE_TRANSACTIONS", null)
+
+        var id: Int
+        var category: Int
+        var amount: String
+        var account: Int
+        var note: String
+        var month: Int
+        var day: Int
+        var year: Int
+
+        if (cursor.moveToFirst()) {
+            do {
+                id = cursor.getInt(cursor.getColumnIndex(KEY_ID))
+                category = cursor.getInt(cursor.getColumnIndex(KEY_CATEGORY))
+                amount = cursor.getString(cursor.getColumnIndex(KEY_AMOUNT))
+                account = cursor.getInt(cursor.getColumnIndex(KEY_ACCOUNT))
+                note = cursor.getString(cursor.getColumnIndex(KEY_NOTE))
+                month = cursor.getInt(cursor.getColumnIndex(KEY_MONTH))
+                day = cursor.getInt(cursor.getColumnIndex(KEY_DAY))
+                year = cursor.getInt(cursor.getColumnIndex(KEY_YEAR))
+                val transaction = TransactionModel(
+                    id = id,
+                    category = category,
+                    amount = amount,
+                    account = account,
+                    note = note,
+                    month = month,
+                    day = day,
+                    year = year
+                )
+                list.add(transaction)
+            } while (cursor.moveToNext())
+        }
+
+        cursor.close()
+        db.close()
+
+        return list
+
+    }
+*/
 
 }

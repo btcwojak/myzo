@@ -93,6 +93,10 @@ class CategoriesHandler(context: Context, factory: SQLiteDatabase.CursorFactory?
                 }
             }
 
+            cursor.close()
+            dbForSearch.close()
+            dbForUpdate.close()
+
         }
 
     }
@@ -125,6 +129,7 @@ class CategoriesHandler(context: Context, factory: SQLiteDatabase.CursorFactory?
                 )
                 list.add(category)
             } while (cursor.moveToNext())
+            cursor.close()
         }
 
         return list
@@ -143,6 +148,7 @@ class CategoriesHandler(context: Context, factory: SQLiteDatabase.CursorFactory?
                 title = cursor.getString(cursor.getColumnIndex(KEY_TITLE))
                 list.add(title)
             } while (cursor.moveToNext())
+            cursor.close()
         }
 
         return list
@@ -155,11 +161,18 @@ class CategoriesHandler(context: Context, factory: SQLiteDatabase.CursorFactory?
         val cursor =
             db.rawQuery("SELECT * FROM $TABLE_CATEGORIES WHERE $KEY_ID = '$categoryId'", null)
 
-        return if (cursor.moveToFirst()) {
+        val colour: Int
+
+        colour = if (cursor.moveToFirst()) {
             cursor.getString(cursor.getColumnIndex(KEY_COLOUR)).toInt()
         } else {
             0
         }
+
+        cursor.close()
+        db.close()
+
+        return colour
 
     }
 
@@ -169,13 +182,18 @@ class CategoriesHandler(context: Context, factory: SQLiteDatabase.CursorFactory?
         val cursor =
             db.rawQuery("SELECT * FROM $TABLE_CATEGORIES WHERE $KEY_TITLE = '$categoryTitle'", null)
 
-        return if (cursor.moveToFirst()) {
+        val id: Int
+
+        id = if (cursor.moveToFirst()) {
             cursor.getInt(cursor.getColumnIndex(KEY_ID))
         } else {
             0
         }
 
+        cursor.close()
+        db.close()
 
+        return id
 
     }
 
@@ -185,11 +203,18 @@ class CategoriesHandler(context: Context, factory: SQLiteDatabase.CursorFactory?
         val cursor =
             db.rawQuery("SELECT * FROM $TABLE_CATEGORIES WHERE $KEY_ID = $categoryId", null)
 
-        return if (cursor.moveToFirst()) {
+        val title : String
+
+        title = if (cursor.moveToFirst()) {
             cursor.getString(cursor.getColumnIndex(KEY_TITLE))
         } else {
             "Error"
         }
+
+        cursor.close()
+        db.close()
+
+        return title
 
 
 

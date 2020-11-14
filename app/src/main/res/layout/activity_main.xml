@@ -28,7 +28,7 @@
             android:foreground="?attr/selectableItemBackground"
             android:gravity="center"
             android:padding="10dp"
-            android:text="Analysis"
+            android:text="@string/analysis"
             android:textColor="@color/colorAccent"
             android:textSize="16sp" />
 
@@ -43,7 +43,7 @@
             android:foreground="?attr/selectableItemBackground"
             android:gravity="center"
             android:padding="10dp"
-            android:text="Categories"
+            android:text="@string/categories"
             android:textColor="@color/colorAccent"
             android:textSize="16sp" />
 
@@ -60,7 +60,7 @@
             android:foreground="?attr/selectableItemBackground"
             android:gravity="center"
             android:padding="10dp"
-            android:text="Export"
+            android:text="@string/export"
             android:textColor="@color/colorAccent"
             android:textSize="16sp" />
 
@@ -84,7 +84,7 @@
                 android:layout_marginStart="20dp"
                 android:background="#FFFFFF"
                 android:fontFamily="@font/open_sans_light"
-                android:text="Switch accounts"
+                android:text="@string/switch_accounts"
                 android:textColor="@color/colorAccent"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
@@ -97,7 +97,7 @@
                 android:layout_marginTop="35dp"
                 android:layout_marginEnd="20dp"
                 android:fontFamily="@font/open_sans_light"
-                android:text="Main Account"
+                android:text="@string/main_account"
                 android:textColor="#000000"
                 android:textSize="24sp"
                 android:textStyle="bold"
@@ -109,7 +109,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/open_sans_light"
-                android:text="Balance: 0.00"
+                android:text="@string/balance_0_00"
                 android:textSize="16sp"
                 app:layout_constraintRight_toRightOf="@id/account_heading"
                 app:layout_constraintTop_toBottomOf="@id/account_heading" />
@@ -136,7 +136,7 @@
                 android:layout_marginBottom="25dp"
                 android:background="#99FFFFFF"
                 android:fontFamily="@font/open_sans_light"
-                android:text="+ Transaction"
+                android:text="@string/add_transaction"
                 android:textColor="@color/colorAccent"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
