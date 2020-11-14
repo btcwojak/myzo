@@ -79,7 +79,7 @@ class AccountsActivity : AppCompatActivity() {
 
     fun selectAccount(account: AccountModel) {
         Constants.CURRENT_ACCOUNT = account.id
-        var intent = Intent(this, MainActivity::class.java)
+        val intent = Intent(this, MainActivity::class.java)
         startActivity(intent)
         finish()
     }
@@ -149,7 +149,7 @@ class AccountsActivity : AppCompatActivity() {
         return TransactionsHandler(this, null)
     }
 
-    fun setTotalBalance() {
+    private fun setTotalBalance() {
         val dbHandler = TransactionsHandler(this, null)
         balance_heading.text = "Total balance: ${dbHandler.getBalanceForAllAccounts()}"
     }

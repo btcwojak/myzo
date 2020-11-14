@@ -18,9 +18,9 @@ class AccountsHandler(context: Context, factory: SQLiteDatabase.CursorFactory?) 
     }
 
     override fun onCreate(db: SQLiteDatabase?) {
-        val CREATE_ACCOUNTS_TABLE =
+        val createAccountsTable =
             ("CREATE TABLE $TABLE_ACCOUNTS($KEY_ID INTEGER PRIMARY KEY,$KEY_NAME TEXT)")
-        db?.execSQL(CREATE_ACCOUNTS_TABLE)
+        db?.execSQL(createAccountsTable)
     }
 
     override fun onUpgrade(db: SQLiteDatabase?, oldVersion: Int, newVersion: Int) {
@@ -41,7 +41,7 @@ class AccountsHandler(context: Context, factory: SQLiteDatabase.CursorFactory?) 
             }
         }
 
-        if (alreadyExists == false) {
+        if (!alreadyExists) {
             db.insert(TABLE_ACCOUNTS, null, values)
             db.close()
             Constants.CAT_UNIQUE_TITLE = 1
@@ -73,7 +73,7 @@ class AccountsHandler(context: Context, factory: SQLiteDatabase.CursorFactory?) 
 
     }
 
-    fun getAllAccountNames(): ArrayList<String> {
+    private fun getAllAccountNames(): ArrayList<String> {
         val list = ArrayList<String>()
         val db = this.readableDatabase
         val cursor = db.rawQuery("SELECT * FROM $TABLE_ACCOUNTS", null)
@@ -96,10 +96,10 @@ class AccountsHandler(context: Context, factory: SQLiteDatabase.CursorFactory?) 
         val db = this.readableDatabase
         val cursor = db.rawQuery("SELECT * FROM $TABLE_ACCOUNTS WHERE $KEY_ID = $accountId", null)
 
-        if (cursor.moveToFirst()) {
-            return cursor.getString(cursor.getColumnIndex(KEY_NAME))
+        return if (cursor.moveToFirst()) {
+            cursor.getString(cursor.getColumnIndex(KEY_NAME))
         } else {
-            return "Error"
+            "Error"
         }
 
     }
@@ -115,7 +115,6 @@ class AccountsHandler(context: Context, factory: SQLiteDatabase.CursorFactory?) 
         if (existingNames.contains(account.name)) {
             Constants.CAT_UNIQUE_TITLE = 0
         } else {
-            val dbForUpdate = this.writableDatabase
             dbForUpdate.update(TABLE_ACCOUNTS, values, KEY_ID + "=" + account.id, null)
             Constants.CAT_UNIQUE_TITLE = 1
         }
@@ -127,8 +126,8 @@ class AccountsHandler(context: Context, factory: SQLiteDatabase.CursorFactory?) 
                     null
                 )
             if (cursor.moveToFirst()) {
-                var oldName = cursor.getString(cursor.getColumnIndex(KEY_NAME))
-                var newName = account.name
+                val oldName = cursor.getString(cursor.getColumnIndex(KEY_NAME))
+                val newName = account.name
                 if (oldName == newName) {
                     dbForUpdate.update(
                         TABLE_ACCOUNTS,
@@ -141,6 +140,11 @@ class AccountsHandler(context: Context, factory: SQLiteDatabase.CursorFactory?) 
                     Constants.CAT_UNIQUE_TITLE = 0
                 }
             }
+
+            cursor.close()
+            dbForSearch.close()
+            dbForUpdate.close()
+
         }
     }
 

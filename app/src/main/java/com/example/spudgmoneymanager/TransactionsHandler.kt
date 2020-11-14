@@ -27,9 +27,9 @@ class TransactionsHandler(context: Context, factory: SQLiteDatabase.CursorFactor
     }
 
     override fun onCreate(db: SQLiteDatabase?) {
-        val CREATE_TRANSACTIONS_TABLE =
+        val createTransactionsTable =
             ("CREATE TABLE $TABLE_TRANSACTIONS($KEY_ID INTEGER PRIMARY KEY,$KEY_NOTE TEXT,$KEY_CATEGORY INTEGER,$KEY_AMOUNT TEXT,$KEY_ACCOUNT INTEGER,$KEY_MONTH INTEGER,$KEY_DAY INTEGER,$KEY_YEAR INTEGER)")
-        db?.execSQL(CREATE_TRANSACTIONS_TABLE)
+        db?.execSQL(createTransactionsTable)
     }
 
     override fun onUpgrade(db: SQLiteDatabase?, oldVersion: Int, newVersion: Int) {
@@ -127,6 +127,8 @@ class TransactionsHandler(context: Context, factory: SQLiteDatabase.CursorFactor
         }
 
         cursor.close()
+        db.close()
+
         return list
 
     }
@@ -140,12 +142,12 @@ class TransactionsHandler(context: Context, factory: SQLiteDatabase.CursorFactor
         )
 
         var amount: String
-        var runningBalance: Double = 0.00
+        var runningBalance = 0.00
 
         if (cursor.moveToFirst()) {
             do {
                 amount = cursor.getString(cursor.getColumnIndex(KEY_AMOUNT))
-                var freshAmount = amount.toDouble()
+                val freshAmount = amount.toDouble()
                 list.add(freshAmount)
             } while (cursor.moveToNext())
         }
@@ -155,6 +157,7 @@ class TransactionsHandler(context: Context, factory: SQLiteDatabase.CursorFactor
         }
 
         cursor.close()
+        db.close()
 
         val formatter: NumberFormat = DecimalFormat("#,##0.00")
         return formatter.format(runningBalance).toString()
@@ -170,12 +173,12 @@ class TransactionsHandler(context: Context, factory: SQLiteDatabase.CursorFactor
         )
 
         var amount: String
-        var runningBalance: Double = 0.00
+        var runningBalance = 0.00
 
         if (cursor.moveToFirst()) {
             do {
                 amount = cursor.getString(cursor.getColumnIndex(KEY_AMOUNT))
-                var freshAmount = amount.toDouble()
+                val freshAmount = amount.toDouble()
                 list.add(freshAmount)
             } while (cursor.moveToNext())
         }
@@ -185,6 +188,7 @@ class TransactionsHandler(context: Context, factory: SQLiteDatabase.CursorFactor
         }
 
         cursor.close()
+        db.close()
 
         val formatter: NumberFormat = DecimalFormat("#,##0.00")
         return formatter.format(runningBalance).toString()
@@ -233,13 +237,14 @@ class TransactionsHandler(context: Context, factory: SQLiteDatabase.CursorFactor
         }
 
         cursor.close()
+        db.close()
         return list
 
     }
 
     fun getTransactionTotalForCategory(categoryId: Int, month: Int, year: Int): Float {
         var amount: String
-        var runningTotal: Float = 0.00F
+        var runningTotal = 0.00F
         val dbTrans = this.readableDatabase
         val cursor = dbTrans.rawQuery(
             "SELECT * FROM $TABLE_TRANSACTIONS WHERE $KEY_CATEGORY = $categoryId AND $KEY_MONTH = $month AND $KEY_YEAR = $year",
@@ -253,13 +258,15 @@ class TransactionsHandler(context: Context, factory: SQLiteDatabase.CursorFactor
             } while (cursor.moveToNext())
         }
 
+        cursor.close()
+        dbTrans.close()
         return runningTotal
 
     }
 
     fun getTransactionsForCategory(categoryId: Int): ArrayList<Float> {
         var amount: String
-        var list: ArrayList<Float> = ArrayList()
+        val list: ArrayList<Float> = ArrayList()
         val db = this.readableDatabase
         val cursor = db.rawQuery(
             "SELECT * FROM $TABLE_TRANSACTIONS WHERE $KEY_CATEGORY = $categoryId",
@@ -273,6 +280,8 @@ class TransactionsHandler(context: Context, factory: SQLiteDatabase.CursorFactor
             } while (cursor.moveToNext())
         }
 
+        cursor.close()
+        db.close()
         return list
 
     }

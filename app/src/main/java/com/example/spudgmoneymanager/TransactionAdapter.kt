@@ -10,7 +10,7 @@ import java.text.DecimalFormat
 import java.text.NumberFormat
 
 
-class TransactionAdapter(val context: Context, val items: ArrayList<TransactionModel>) :
+class TransactionAdapter(val context: Context, private val items: ArrayList<TransactionModel>) :
     RecyclerView.Adapter<TransactionAdapter.ViewHolder>() {
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
@@ -41,7 +41,7 @@ class TransactionAdapter(val context: Context, val items: ArrayList<TransactionM
         holder.noteView.text = transaction.note
 
         if (context is MainActivity) {
-            var colour = context.getTransactionCategoryColour(transaction.category)
+            val colour = context.getTransactionCategoryColour(transaction.category)
             holder.colourView.setBackgroundColor(colour)
         }
 
@@ -59,7 +59,7 @@ class TransactionAdapter(val context: Context, val items: ArrayList<TransactionM
         }
 
         if (items.size - 1 == position) {
-            var transactionItemForHighlight =
+            val transactionItemForHighlight =
                 holder.transactionItem.layoutParams as RecyclerView.LayoutParams
             transactionItemForHighlight.setMargins(0, 0, 0, 220)
         }

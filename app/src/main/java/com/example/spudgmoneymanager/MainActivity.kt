@@ -7,7 +7,6 @@ import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
@@ -31,8 +30,8 @@ import java.util.*
 
 class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
 
-    var isIncome = true
-    var selectedCategory = ""
+    private var isIncome = true
+    private var selectedCategory = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -150,11 +149,11 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
                 "Dec"
             )
 
-            changeDateDialog.dmyp_day.setOnValueChangedListener { picker, oldVal, newVal ->
+            changeDateDialog.dmyp_day.setOnValueChangedListener { _, _, newVal ->
                 dayPicked = newVal
             }
 
-            changeDateDialog.dmyp_month.setOnValueChangedListener { picker, oldVal, newVal ->
+            changeDateDialog.dmyp_month.setOnValueChangedListener { _, _, newVal ->
                 if (newVal == 4 || newVal == 6 || newVal == 9 || newVal == 11) {
                     changeDateDialog.dmyp_day.maxValue = 30
                     changeDateDialog.dmyp_day.minValue = 1
@@ -171,7 +170,7 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
                 monthPicked = newVal
             }
 
-            changeDateDialog.dmyp_year.setOnValueChangedListener { picker, oldVal, newVal ->
+            changeDateDialog.dmyp_year.setOnValueChangedListener { _, _, newVal ->
                 if (newVal % 4 == 0 && changeDateDialog.dmyp_month.value == 2) {
                     changeDateDialog.dmyp_day.maxValue = 29
                     changeDateDialog.dmyp_day.minValue = 1
@@ -224,7 +223,7 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
         addDialog.category_spinner_add_trans.adapter = categoryAdapter
         addDialog.category_spinner_add_trans.onItemSelectedListener = this
 
-        addDialog.inc_exp_radio_group.setOnCheckedChangeListener { group, checkedId ->
+        addDialog.inc_exp_radio_group.setOnCheckedChangeListener { _, checkedId ->
             if (checkedId == R.id.income_radio) {
                 isIncome = true
             } else if (checkedId == R.id.expenditure_radio) {
@@ -357,11 +356,11 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
                 "Dec"
             )
 
-            changeDateDialog.dmyp_day.setOnValueChangedListener { picker, oldVal, newVal ->
+            changeDateDialog.dmyp_day.setOnValueChangedListener { _, _, newVal ->
                 dayPicked = newVal
             }
 
-            changeDateDialog.dmyp_month.setOnValueChangedListener { picker, oldVal, newVal ->
+            changeDateDialog.dmyp_month.setOnValueChangedListener { _, _, newVal ->
                 if (newVal == 4 || newVal == 6 || newVal == 9 || newVal == 11) {
                     changeDateDialog.dmyp_day.maxValue = 30
                     changeDateDialog.dmyp_day.minValue = 1
@@ -378,7 +377,7 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
                 monthPicked = newVal
             }
 
-            changeDateDialog.dmyp_year.setOnValueChangedListener { picker, oldVal, newVal ->
+            changeDateDialog.dmyp_year.setOnValueChangedListener { _, _, newVal ->
                 if (newVal % 4 == 0 && changeDateDialog.dmyp_month.value == 2) {
                     changeDateDialog.dmyp_day.maxValue = 29
                     changeDateDialog.dmyp_day.minValue = 1
@@ -443,17 +442,21 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
             updateDialog.etAmountLayout.etAmount.setText((transaction.amount.toFloat() * -1).toString())
         }
 
-        updateDialog.inc_exp_radio_group.setOnCheckedChangeListener { group, checkedId ->
-            if (checkedId == R.id.income_radio) {
-                isIncome = true
-            } else if (checkedId == R.id.expenditure_radio) {
-                isIncome = false
-            } else {
-                Toast.makeText(
-                    this,
-                    "An error has occurred. Please try restarting the app.",
-                    Toast.LENGTH_LONG
-                ).show()
+        updateDialog.inc_exp_radio_group.setOnCheckedChangeListener { _, checkedId ->
+            when (checkedId) {
+                R.id.income_radio -> {
+                    isIncome = true
+                }
+                R.id.expenditure_radio -> {
+                    isIncome = false
+                }
+                else -> {
+                    Toast.makeText(
+                        this,
+                        "An error has occurred. Please try restarting the app.",
+                        Toast.LENGTH_LONG
+                    ).show()
+                }
             }
         }
 

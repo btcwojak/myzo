@@ -29,7 +29,6 @@
             android:gravity="center"
             android:padding="10dp"
             android:text="Analysis"
-
             android:textColor="@color/colorAccent"
             android:textSize="16sp" />
 
@@ -82,7 +81,7 @@
                 android:id="@+id/switch_accounts"
                 android:layout_width="wrap_content"
                 android:layout_height="50dp"
-                android:layout_marginLeft="20dp"
+                android:layout_marginStart="20dp"
                 android:background="#FFFFFF"
                 android:fontFamily="@font/open_sans_light"
                 android:text="Switch accounts"
@@ -96,7 +95,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="35dp"
-                android:layout_marginRight="20dp"
+                android:layout_marginEnd="20dp"
                 android:fontFamily="@font/open_sans_light"
                 android:text="Main Account"
                 android:textColor="#000000"

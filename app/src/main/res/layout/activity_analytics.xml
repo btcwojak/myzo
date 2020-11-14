@@ -37,7 +37,7 @@
                     android:id="@+id/back_to_trans_from_analytics"
                     android:layout_width="wrap_content"
                     android:layout_height="50dp"
-                    android:layout_marginLeft="20dp"
+                    android:layout_marginStart="20dp"
                     android:layout_marginTop="20dp"
                     android:layout_marginBottom="30dp"
                     android:background="#FFFFFF"
@@ -52,7 +52,7 @@
                     android:id="@+id/analytics_heading"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="20dp"
+                    android:layout_marginEnd="20dp"
                     android:fontFamily="@font/open_sans_light"
                     android:text="Analytics"
                     android:textColor="#000000"
@@ -67,7 +67,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="2dp"
-                    android:layout_marginRight="5dp"
+                    android:layout_marginEnd="5dp"
                     android:fontFamily="@font/open_sans_light"
                     android:text="Viewing:"
                     android:textColor="#000000"
@@ -91,7 +91,7 @@
                     android:id="@+id/change_month_left_bracket"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="5dp"
+                    android:layout_marginStart="5dp"
                     android:fontFamily="@font/open_sans_light"
                     android:text="("
                     android:textColor="@android:color/black"
@@ -117,7 +117,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="2dp"
-                    android:layout_marginRight="20dp"
+                    android:layout_marginEnd="20dp"
                     android:fontFamily="@font/open_sans_light"
                     android:text=")"
                     android:textColor="@android:color/black"
@@ -150,7 +150,7 @@
             <LinearLayout
                 android:id="@+id/llgraphs"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:orientation="vertical">
 
                 <TextView

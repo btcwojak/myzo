@@ -21,9 +21,9 @@ class CategoriesHandler(context: Context, factory: SQLiteDatabase.CursorFactory?
 
 
     override fun onCreate(db: SQLiteDatabase?) {
-        val CREATE_CATEGORIES_TABLE =
+        val createCategoriesTable =
             ("CREATE TABLE $TABLE_CATEGORIES($KEY_ID INTEGER PRIMARY KEY,$KEY_TITLE TEXT,$KEY_COLOUR TEXT)")
-        db?.execSQL(CREATE_CATEGORIES_TABLE)
+        db?.execSQL(createCategoriesTable)
     }
 
     override fun onUpgrade(db: SQLiteDatabase?, oldVersion: Int, newVersion: Int) {
@@ -67,7 +67,6 @@ class CategoriesHandler(context: Context, factory: SQLiteDatabase.CursorFactory?
         if (existingTitles.contains(category.title)) {
             Constants.CAT_UNIQUE_TITLE = 0
         } else {
-            val dbForUpdate = this.writableDatabase
             dbForUpdate.update(TABLE_CATEGORIES, values, KEY_ID + "=" + category.id, null)
             Constants.CAT_UNIQUE_TITLE = 1
         }
@@ -79,8 +78,8 @@ class CategoriesHandler(context: Context, factory: SQLiteDatabase.CursorFactory?
                     null
                 )
             if (cursor.moveToFirst()) {
-                var oldTitle = cursor.getString(cursor.getColumnIndex(KEY_TITLE))
-                var newTitle = category.title
+                val oldTitle = cursor.getString(cursor.getColumnIndex(KEY_TITLE))
+                val newTitle = category.title
                 if (oldTitle == newTitle) {
                     dbForUpdate.update(
                         TABLE_CATEGORIES,
@@ -93,7 +92,13 @@ class CategoriesHandler(context: Context, factory: SQLiteDatabase.CursorFactory?
                     Constants.CAT_UNIQUE_TITLE = 0
                 }
             }
+
+            cursor.close()
+
         }
+
+        dbForSearch.close()
+        dbForUpdate.close()
 
     }
 
@@ -107,7 +112,7 @@ class CategoriesHandler(context: Context, factory: SQLiteDatabase.CursorFactory?
     fun getAllCategories(): ArrayList<CategoryModel> {
         val list = ArrayList<CategoryModel>()
         val db = this.readableDatabase
-        val cursor = db.rawQuery("SELECT * FROM ${TABLE_CATEGORIES}", null)
+        val cursor = db.rawQuery("SELECT * FROM $TABLE_CATEGORIES", null)
 
         var id: Int
         var title: String
@@ -128,6 +133,7 @@ class CategoriesHandler(context: Context, factory: SQLiteDatabase.CursorFactory?
         }
 
         cursor.close()
+        db.close()
         return list
 
     }
@@ -147,6 +153,7 @@ class CategoriesHandler(context: Context, factory: SQLiteDatabase.CursorFactory?
         }
 
         cursor.close()
+        db.close()
         return list
 
     }
@@ -157,11 +164,10 @@ class CategoriesHandler(context: Context, factory: SQLiteDatabase.CursorFactory?
         val cursor =
             db.rawQuery("SELECT * FROM $TABLE_CATEGORIES WHERE $KEY_ID = '$categoryId'", null)
 
-
-        if (cursor.moveToFirst()) {
-            return cursor.getString(cursor.getColumnIndex(KEY_COLOUR)).toInt()
+        return if (cursor.moveToFirst()) {
+            cursor.getString(cursor.getColumnIndex(KEY_COLOUR)).toInt()
         } else {
-            return 0
+            0
         }
 
     }
@@ -172,12 +178,13 @@ class CategoriesHandler(context: Context, factory: SQLiteDatabase.CursorFactory?
         val cursor =
             db.rawQuery("SELECT * FROM $TABLE_CATEGORIES WHERE $KEY_TITLE = '$categoryTitle'", null)
 
-
-        if (cursor.moveToFirst()) {
-            return cursor.getInt(cursor.getColumnIndex(KEY_ID))
+        return if (cursor.moveToFirst()) {
+            cursor.getInt(cursor.getColumnIndex(KEY_ID))
         } else {
-            return 0
+            0
         }
+
+
 
     }
 
@@ -187,12 +194,13 @@ class CategoriesHandler(context: Context, factory: SQLiteDatabase.CursorFactory?
         val cursor =
             db.rawQuery("SELECT * FROM $TABLE_CATEGORIES WHERE $KEY_ID = $categoryId", null)
 
-
-        if (cursor.moveToFirst()) {
-            return cursor.getString(cursor.getColumnIndex(KEY_TITLE))
+        return if (cursor.moveToFirst()) {
+            cursor.getString(cursor.getColumnIndex(KEY_TITLE))
         } else {
-            return "Error"
+            "Error"
         }
+
+
 
     }
 

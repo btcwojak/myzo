@@ -2,7 +2,6 @@ package com.example.spudgmoneymanager
 
 import android.app.Dialog
 import android.content.Intent
-import android.graphics.Color
 import android.graphics.Color.TRANSPARENT
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
@@ -22,8 +21,6 @@ class CategoriesActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_categories)
-
-        var selectedColour: Int
 
         setUpCategoryList()
 
@@ -102,7 +99,7 @@ class CategoriesActivity : AppCompatActivity() {
         val updateDialog = Dialog(this, R.style.Theme_Dialog)
         updateDialog.setCancelable(false)
         updateDialog.setContentView(R.layout.dialog_update_category)
-        updateDialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        updateDialog.window!!.setBackgroundDrawable(ColorDrawable(TRANSPARENT))
 
         updateDialog.etTitleLayout.etTitle.setText(category.title)
 
@@ -146,7 +143,7 @@ class CategoriesActivity : AppCompatActivity() {
         val deleteDialog = Dialog(this, R.style.Theme_Dialog)
         deleteDialog.setCancelable(false)
         deleteDialog.setContentView(R.layout.dialog_delete_category)
-        deleteDialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        deleteDialog.window!!.setBackgroundDrawable(ColorDrawable(TRANSPARENT))
 
         deleteDialog.tvDelete.setOnClickListener {
             val dbHandlerCat = CategoriesHandler(this, null)

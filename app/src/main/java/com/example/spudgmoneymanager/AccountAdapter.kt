@@ -29,39 +29,37 @@ class AccountAdapter(private val context: Context, private val items: ArrayList<
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 
-        val formatter: NumberFormat = DecimalFormat("#,##0.00")
-
         val account = items[position]
         holder.nameView.text = account.name
 
         if (context is AccountsActivity) {
-            var db = context.getBalance()
-            var bal = db.getBalanceForAccount(account.id)
+            val db = context.getBalance()
+            val bal = db.getBalanceForAccount(account.id)
             holder.balanceView.text = "Balance: $bal"
         }
 
 
 
-        holder.accountItem.setOnClickListener { view ->
+        holder.accountItem.setOnClickListener {
             if (context is AccountsActivity) {
                 context.selectAccount(account)
             }
         }
 
-        holder.updateView.setOnClickListener { view ->
+        holder.updateView.setOnClickListener {
             if (context is AccountsActivity) {
                 context.updateAccount(account)
             }
         }
 
-        holder.deleteView.setOnClickListener { view ->
+        holder.deleteView.setOnClickListener {
             if (context is AccountsActivity) {
                 context.deleteAccount(account)
             }
         }
 
         if (items.size - 1 == position) {
-            holder.accountItem.setPadding(0, 0, 0, 250);
+            holder.accountItem.setPadding(0, 0, 0, 250)
         }
 
 

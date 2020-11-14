@@ -23,21 +23,21 @@ import kotlin.collections.ArrayList
 
 class AnalyticsActivity : AppCompatActivity() {
 
-    var entriesInc: ArrayList<PieEntry> = ArrayList()
-    var entriesExp: ArrayList<PieEntry> = ArrayList()
-    var entriesBar: ArrayList<BarEntry> = ArrayList()
+    private var entriesInc: ArrayList<PieEntry> = ArrayList()
+    private var entriesExp: ArrayList<PieEntry> = ArrayList()
+    private var entriesBar: ArrayList<BarEntry> = ArrayList()
 
-    var categoryTitlesInc: ArrayList<String> = ArrayList()
-    var categoryTitlesExp: ArrayList<String> = ArrayList()
+    private var categoryTitlesInc: ArrayList<String> = ArrayList()
+    private var categoryTitlesExp: ArrayList<String> = ArrayList()
 
-    var categoryColoursInc: ArrayList<Int> = ArrayList()
-    var categoryColoursExp: ArrayList<Int> = ArrayList()
+    private var categoryColoursInc: ArrayList<Int> = ArrayList()
+    private var categoryColoursExp: ArrayList<Int> = ArrayList()
 
-    var categoryTotalsInc: ArrayList<Float> = ArrayList()
-    var categoryTotalsExp: ArrayList<Float> = ArrayList()
+    private var categoryTotalsInc: ArrayList<Float> = ArrayList()
+    private var categoryTotalsExp: ArrayList<Float> = ArrayList()
 
-    var categoryTransactions: ArrayList<Float> = ArrayList()
-    var categoryDates: ArrayList<Float> = ArrayList()
+    private var categoryTransactions: ArrayList<Float> = ArrayList()
+    private var categoryDates: ArrayList<Float> = ArrayList()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -90,11 +90,11 @@ class AnalyticsActivity : AppCompatActivity() {
             filterDialog.myp_year.value = calendar[Calendar.YEAR]
             filterDialog.myp_month.value = calendar[Calendar.MONTH] + 1
 
-            filterDialog.myp_month.setOnValueChangedListener { NumberPicker, oldVal, newVal ->
+            filterDialog.myp_month.setOnValueChangedListener { _, _, newVal ->
                 monthSelected = newVal
             }
 
-            filterDialog.myp_year.setOnValueChangedListener { NumberPicker, oldVal, newVal ->
+            filterDialog.myp_year.setOnValueChangedListener { _, _, newVal ->
                 yearSelected = newVal
             }
 
@@ -130,12 +130,12 @@ class AnalyticsActivity : AppCompatActivity() {
                 entriesInc.add(PieEntry(categoryTotalsInc[i], categoryTitlesInc[i]))
             }
 
-            var dataSetInc: PieDataSet = PieDataSet(entriesInc, "")
+            val dataSetInc = PieDataSet(entriesInc, "")
             dataSetInc.colors = categoryColoursInc.toMutableList()
-            var dataInc: PieData = PieData(dataSetInc)
+            val dataInc = PieData(dataSetInc)
             dataSetInc.valueFormatter = PercentFormatter()
 
-            var chartInc: PieChart = chartInc
+            val chartInc: PieChart = chartInc
             if (entriesInc.size > 0) {
                 chartInc.data = dataInc
             }
@@ -183,11 +183,11 @@ class AnalyticsActivity : AppCompatActivity() {
                 entriesExp.add(PieEntry(categoryTotalsExp[i], categoryTitlesExp[i]))
             }
 
-            var dataSetExp: PieDataSet = PieDataSet(entriesExp, "")
+            val dataSetExp = PieDataSet(entriesExp, "")
             dataSetExp.colors = categoryColoursExp.toMutableList()
-            var dataExp: PieData = PieData(dataSetExp)
+            val dataExp = PieData(dataSetExp)
 
-            var chartExp: PieChart = chartExp
+            val chartExp: PieChart = chartExp
             if (entriesExp.size > 0) {
                 chartExp.data = dataExp
             }
@@ -231,30 +231,30 @@ class AnalyticsActivity : AppCompatActivity() {
 
     private fun setupBarChart() {
 
-        var labels = arrayListOf<String>("Jan", "Feb", "March", "April")
+        val labels = arrayListOf("Jan", "Feb", "March", "April")
 
         for (i in 0 until categoryTransactions.size) {
             entriesBar.add(BarEntry(categoryDates[i], categoryTransactions[i]))
         }
 
-        var dataSetBar: BarDataSet = BarDataSet(entriesBar, "")
+        val dataSetBar = BarDataSet(entriesBar, "")
 
-        var dataBar: BarData = BarData(dataSetBar)
+        val dataBar = BarData(dataSetBar)
 
-        var chartBar: BarChart = chartBar
+        val chartBar: BarChart = chartBar
         chartBar.data = dataBar
 
         chartBar.xAxis.valueFormatter = IndexAxisValueFormatter(labels)
         chartBar.xAxis.position = XAxis.XAxisPosition.BOTTOM
 
-        var xAxis: XAxis = chartBar.xAxis
+        val xAxis: XAxis = chartBar.xAxis
         xAxis.granularity = 1f
         xAxis.labelCount = 7
 
-        var leftAxis: YAxis = chartBar.axisLeft
+        val leftAxis: YAxis = chartBar.axisLeft
         leftAxis.setLabelCount(8, false)
 
-        var rightAxis: YAxis = chartBar.axisRight
+        val rightAxis: YAxis = chartBar.axisRight
         rightAxis.isEnabled = false
 
     }
@@ -267,7 +267,7 @@ class AnalyticsActivity : AppCompatActivity() {
         val dbHandlerCategory = CategoriesHandler(this, null)
         val dbHandlerTransaction = TransactionsHandler(this, null)
 
-        var categories = dbHandlerCategory.getAllCategories()
+        val categories = dbHandlerCategory.getAllCategories()
 
         for (category in categories) {
             if (dbHandlerTransaction.getTransactionTotalForCategory(
@@ -288,7 +288,7 @@ class AnalyticsActivity : AppCompatActivity() {
         }
 
         for (category in categories) {
-            var total = dbHandlerTransaction.getTransactionTotalForCategory(
+            val total = dbHandlerTransaction.getTransactionTotalForCategory(
                 category.id,
                 monthFilter,
                 yearFilter
@@ -301,7 +301,7 @@ class AnalyticsActivity : AppCompatActivity() {
         }
 
         for (category in categories) {
-            var intColor = category.colour.toInt()
+            val intColor = category.colour.toInt()
             //categoryColours.add(java.lang.String.format("#%06X", 0xFFFFFF and intColor))
             if (dbHandlerTransaction.getTransactionTotalForCategory(
                     category.id,
@@ -342,7 +342,7 @@ class AnalyticsActivity : AppCompatActivity() {
     }
 
     private fun setMonthHeader(month: Int, year: Int) {
-        var monthText: String = ""
+        var monthText = ""
         when (month) {
             1 -> monthText = "Jan"
             2 -> monthText = "Feb"

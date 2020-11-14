@@ -21,13 +21,13 @@ class CategoryAdapter(private val context: Context, private val items: ArrayList
 
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CategoryAdapter.ViewHolder {
-        return CategoryAdapter.ViewHolder(
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+        return ViewHolder(
             LayoutInflater.from(context).inflate(R.layout.category_row, parent, false)
         )
     }
 
-    override fun onBindViewHolder(holder: CategoryAdapter.ViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val category = items[position]
         holder.titleView.text = category.title
         holder.colourView.setBackgroundColor(category.colour.toInt())
@@ -41,13 +41,13 @@ class CategoryAdapter(private val context: Context, private val items: ArrayList
             holder.deleteView.visibility = View.VISIBLE
             holder.defaultView.visibility = View.GONE
 
-            holder.updateView.setOnClickListener { view ->
+            holder.updateView.setOnClickListener {
                 if (context is CategoriesActivity) {
                     context.updateCategory(category)
                 }
             }
 
-            holder.deleteView.setOnClickListener { view ->
+            holder.deleteView.setOnClickListener {
                 if (context is CategoriesActivity) {
                     context.deleteCategory(category)
                 }
@@ -55,7 +55,7 @@ class CategoryAdapter(private val context: Context, private val items: ArrayList
         }
 
         if (items.size - 1 == position) {
-            holder.categoryItem.setPadding(0, 0, 0, 250);
+            holder.categoryItem.setPadding(0, 0, 0, 250)
         }
 
     }
