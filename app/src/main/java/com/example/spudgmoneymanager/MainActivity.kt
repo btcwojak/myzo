@@ -1,5 +1,6 @@
 package com.example.spudgmoneymanager
 
+import android.app.DatePickerDialog
 import android.app.Dialog
 import android.content.Intent
 import android.graphics.Color
@@ -7,13 +8,17 @@ import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.DatePicker
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
+import kotlinx.android.synthetic.main.activity_analytics.*
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.day_month_year_picker.*
 import kotlinx.android.synthetic.main.dialog_add_transaction.*
 import kotlinx.android.synthetic.main.dialog_add_transaction.etAmountLayout
 import kotlinx.android.synthetic.main.dialog_add_transaction.inc_exp_radio_group
@@ -25,7 +30,10 @@ import kotlinx.android.synthetic.main.dialog_add_transaction.view.income_radio
 import kotlinx.android.synthetic.main.dialog_delete_transaction.*
 import kotlinx.android.synthetic.main.dialog_update_transaction.*
 import kotlinx.android.synthetic.main.dialog_update_transaction.view.*
+import kotlinx.android.synthetic.main.month_year_picker.*
+import java.text.SimpleDateFormat
 import java.util.*
+import javax.xml.datatype.DatatypeConstants.MONTHS
 
 class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
 
@@ -95,6 +103,113 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
         addDialog.setContentView(R.layout.dialog_add_transaction)
         addDialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
+        var dayPicked = Calendar.getInstance()[Calendar.DAY_OF_MONTH]
+        var monthPicked = Calendar.getInstance()[Calendar.MONTH] + 1
+        var yearPicked = Calendar.getInstance()[Calendar.YEAR]
+
+        addDialog.change_date.text = "$dayPicked $monthPicked $yearPicked"
+
+        addDialog.change_date.setOnClickListener {
+            val changeDateDialog = Dialog(this, R.style.Theme_Dialog)
+            changeDateDialog.setCancelable(false)
+            changeDateDialog.setContentView(R.layout.day_month_year_picker)
+            changeDateDialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+
+            if (Calendar.getInstance()[Calendar.DAY_OF_MONTH] == 4 || Calendar.getInstance()[Calendar.DAY_OF_MONTH] == 6 || Calendar.getInstance()[Calendar.DAY_OF_MONTH] == 9 || Calendar.getInstance()[Calendar.DAY_OF_MONTH] == 11) {
+                changeDateDialog.dmyp_day.maxValue = 30
+                changeDateDialog.dmyp_day.minValue = 1
+            } else if (Calendar.getInstance()[Calendar.DAY_OF_MONTH] == 2 && (Calendar.getInstance()[Calendar.DAY_OF_MONTH] % 4 == 0)) {
+                changeDateDialog.dmyp_day.maxValue = 29
+                changeDateDialog.dmyp_day.minValue = 1
+            } else if (Calendar.getInstance()[Calendar.DAY_OF_MONTH] == 2 && (Calendar.getInstance()[Calendar.DAY_OF_MONTH] % 4 != 0)) {
+                changeDateDialog.dmyp_day.maxValue = 28
+                changeDateDialog.dmyp_day.minValue = 1
+            } else {
+                changeDateDialog.dmyp_day.maxValue = 31
+                changeDateDialog.dmyp_day.minValue = 1
+            }
+
+            changeDateDialog.dmyp_month.maxValue = 12
+            changeDateDialog.dmyp_month.minValue = 1
+            changeDateDialog.dmyp_year.maxValue = 2999
+            changeDateDialog.dmyp_year.minValue = 1000
+
+            changeDateDialog.dmyp_day.value = Calendar.getInstance()[Calendar.DAY_OF_MONTH]
+            changeDateDialog.dmyp_month.value = Calendar.getInstance()[Calendar.MONTH] + 1
+            changeDateDialog.dmyp_year.value = Calendar.getInstance()[Calendar.YEAR]
+            dayPicked = Calendar.getInstance()[Calendar.DAY_OF_MONTH]
+            monthPicked = Calendar.getInstance()[Calendar.MONTH] + 1
+            yearPicked = Calendar.getInstance()[Calendar.YEAR]
+
+            changeDateDialog.dmyp_month.displayedValues = arrayOf(
+                "Jan",
+                "Feb",
+                "Mar",
+                "Apr",
+                "May",
+                "Jun",
+                "Jul",
+                "Aug",
+                "Sep",
+                "Oct",
+                "Nov",
+                "Dec"
+            )
+
+            changeDateDialog.dmyp_day.setOnValueChangedListener { picker, oldVal, newVal ->
+                dayPicked = newVal
+            }
+
+            changeDateDialog.dmyp_month.setOnValueChangedListener { picker, oldVal, newVal ->
+                if (newVal == 4 || newVal == 6 || newVal == 9 || newVal == 11) {
+                    changeDateDialog.dmyp_day.maxValue = 30
+                    changeDateDialog.dmyp_day.minValue = 1
+                } else if (newVal == 2 && (changeDateDialog.dmyp_year.value % 4 == 0)) {
+                    changeDateDialog.dmyp_day.maxValue = 29
+                    changeDateDialog.dmyp_day.minValue = 1
+                } else if (newVal == 2 && (changeDateDialog.dmyp_year.value % 4 != 0)) {
+                    changeDateDialog.dmyp_day.maxValue = 28
+                    changeDateDialog.dmyp_day.minValue = 1
+                } else {
+                    changeDateDialog.dmyp_day.maxValue = 31
+                    changeDateDialog.dmyp_day.minValue = 1
+                }
+                monthPicked = newVal
+            }
+
+            changeDateDialog.dmyp_year.setOnValueChangedListener { picker, oldVal, newVal ->
+                if (newVal % 4 == 0 && changeDateDialog.dmyp_month.value == 2) {
+                    changeDateDialog.dmyp_day.maxValue = 29
+                    changeDateDialog.dmyp_day.minValue = 1
+                } else if (newVal % 4 != 0 && changeDateDialog.dmyp_month.value == 2) {
+                    changeDateDialog.dmyp_day.maxValue = 28
+                    changeDateDialog.dmyp_day.minValue = 1
+                }
+                yearPicked = newVal
+            }
+            
+            changeDateDialog.submit_dmy.setOnClickListener {
+                addDialog.change_date.text = "$dayPicked $monthPicked $yearPicked"
+                changeDateDialog.dismiss()
+            }
+
+            changeDateDialog.dmyp_day.wrapSelectorWheel = true
+            changeDateDialog.dmyp_month.wrapSelectorWheel = true
+            changeDateDialog.dmyp_year.wrapSelectorWheel = true
+
+            changeDateDialog.cancel_dmy.setOnClickListener {
+                dayPicked = Calendar.getInstance()[Calendar.DAY_OF_MONTH]
+                monthPicked = Calendar.getInstance()[Calendar.MONTH] + 1
+                yearPicked = Calendar.getInstance()[Calendar.YEAR]
+                addDialog.change_date.text = "$dayPicked $monthPicked $yearPicked"
+                changeDateDialog.dismiss()
+            }
+
+            changeDateDialog.show()
+
+        }
+
+
         addDialog.etAmountLayout.etAmount.addTextChangedListener(object : TextWatcher {
             override fun onTextChanged(arg0: CharSequence, arg1: Int, arg2: Int, arg3: Int) {}
             override fun beforeTextChanged(arg0: CharSequence, arg1: Int, arg2: Int, arg3: Int) {}
@@ -137,11 +252,9 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
             val amount = addDialog.etAmountLayout.etAmount.text.toString()
             val note = addDialog.etNoteLayoutAdd.etNoteAdd.text.toString()
             val account = Constants.CURRENT_ACCOUNT
-            val calendar = Calendar.getInstance()
-            val month = calendar[Calendar.MONTH] + 1
-            val day = calendar[Calendar.DAY_OF_MONTH]
-            val year = calendar[Calendar.YEAR]
-
+            val month = monthPicked
+            val day = dayPicked
+            val year = yearPicked
 
             if (selectedCategory.isNotEmpty() && amount.isNotEmpty() && note.isNotEmpty()) {
                 if (isIncome) {

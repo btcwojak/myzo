@@ -84,6 +84,7 @@ class AnalyticsActivity : AppCompatActivity() {
                 "Nov",
                 "Dec"
             )
+
             filterDialog.myp_year.wrapSelectorWheel = true
             filterDialog.myp_month.wrapSelectorWheel = true
             filterDialog.myp_year.value = calendar[Calendar.YEAR]
@@ -97,7 +98,7 @@ class AnalyticsActivity : AppCompatActivity() {
                 yearSelected = newVal
             }
 
-            filterDialog.submit.setOnClickListener {
+            filterDialog.submit_my.setOnClickListener {
                 makeData(monthSelected, yearSelected)
                 setMonthHeader(monthSelected, yearSelected)
                 setupPieChartIncome()
@@ -106,7 +107,7 @@ class AnalyticsActivity : AppCompatActivity() {
                 filterDialog.dismiss()
             }
 
-            filterDialog.cancel.setOnClickListener {
+            filterDialog.cancel_my.setOnClickListener {
                 filterDialog.dismiss()
             }
 
