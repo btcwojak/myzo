@@ -429,14 +429,17 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
         val categoryAdapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, items)
         updateDialog.category_spinner_update_trans.adapter = categoryAdapter
         updateDialog.category_spinner_update_trans.onItemSelectedListener = this
+        updateDialog.category_spinner_update_trans.setSelection(transaction.category-1)
 
         updateDialog.etNoteLayoutUpdate.etNoteUpdate.setText(transaction.note)
 
         if (transaction.amount.toFloat() >= 0) {
-            updateDialog.inc_exp_radio_group.income_radio.isChecked
+            updateDialog.inc_exp_radio_group.income_radio.isChecked = true
+            updateDialog.inc_exp_radio_group.expenditure_radio.isChecked = false
             updateDialog.etAmountLayout.etAmount.setText(transaction.amount)
         } else {
-            updateDialog.inc_exp_radio_group.expenditure_radio.isChecked
+            updateDialog.inc_exp_radio_group.expenditure_radio.isChecked = true
+            updateDialog.inc_exp_radio_group.income_radio.isChecked = false
             updateDialog.etAmountLayout.etAmount.setText((transaction.amount.toFloat() * -1).toString())
         }
 
