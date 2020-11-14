@@ -58,6 +58,9 @@ class TransactionsHandler(context: Context, factory: SQLiteDatabase.CursorFactor
         values.put(KEY_CATEGORY, trans.category)
         values.put(KEY_AMOUNT, trans.amount)
         values.put(KEY_ACCOUNT, trans.account)
+        values.put(KEY_MONTH, trans.month)
+        values.put(KEY_DAY, trans.day)
+        values.put(KEY_YEAR, trans.year)
         val db = this.writableDatabase
         val success = db.update(TABLE_TRANSACTIONS, values, KEY_ID + "=" + trans.id, null)
         db.close()

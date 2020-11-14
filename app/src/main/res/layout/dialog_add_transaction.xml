@@ -23,7 +23,7 @@
         android:textSize="18sp" />
 
     <TextView
-        android:id="@+id/change_date"
+        android:id="@+id/change_date_add"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="5dp"

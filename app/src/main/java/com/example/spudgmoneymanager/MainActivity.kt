@@ -1,6 +1,5 @@
 package com.example.spudgmoneymanager
 
-import android.app.DatePickerDialog
 import android.app.Dialog
 import android.content.Intent
 import android.graphics.Color
@@ -12,11 +11,9 @@ import android.util.Log
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
-import android.widget.DatePicker
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
-import kotlinx.android.synthetic.main.activity_analytics.*
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.day_month_year_picker.*
 import kotlinx.android.synthetic.main.dialog_add_transaction.*
@@ -30,10 +27,7 @@ import kotlinx.android.synthetic.main.dialog_add_transaction.view.income_radio
 import kotlinx.android.synthetic.main.dialog_delete_transaction.*
 import kotlinx.android.synthetic.main.dialog_update_transaction.*
 import kotlinx.android.synthetic.main.dialog_update_transaction.view.*
-import kotlinx.android.synthetic.main.month_year_picker.*
-import java.text.SimpleDateFormat
 import java.util.*
-import javax.xml.datatype.DatatypeConstants.MONTHS
 
 class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
 
@@ -107,9 +101,9 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
         var monthPicked = Calendar.getInstance()[Calendar.MONTH] + 1
         var yearPicked = Calendar.getInstance()[Calendar.YEAR]
 
-        addDialog.change_date.text = "$dayPicked $monthPicked $yearPicked"
+        addDialog.change_date_add.text = "$dayPicked $monthPicked $yearPicked"
 
-        addDialog.change_date.setOnClickListener {
+        addDialog.change_date_add.setOnClickListener {
             val changeDateDialog = Dialog(this, R.style.Theme_Dialog)
             changeDateDialog.setCancelable(false)
             changeDateDialog.setContentView(R.layout.day_month_year_picker)
@@ -189,7 +183,7 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
             }
             
             changeDateDialog.submit_dmy.setOnClickListener {
-                addDialog.change_date.text = "$dayPicked $monthPicked $yearPicked"
+                addDialog.change_date_add.text = "$dayPicked $monthPicked $yearPicked"
                 changeDateDialog.dismiss()
             }
 
@@ -201,7 +195,7 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
                 dayPicked = Calendar.getInstance()[Calendar.DAY_OF_MONTH]
                 monthPicked = Calendar.getInstance()[Calendar.MONTH] + 1
                 yearPicked = Calendar.getInstance()[Calendar.YEAR]
-                addDialog.change_date.text = "$dayPicked $monthPicked $yearPicked"
+                addDialog.change_date_add.text = "$dayPicked $monthPicked $yearPicked"
                 changeDateDialog.dismiss()
             }
 
@@ -310,6 +304,112 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
         updateDialog.setContentView(R.layout.dialog_update_transaction)
         updateDialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
+        var dayPicked = transaction.day
+        var monthPicked = transaction.month
+        var yearPicked = transaction.year
+
+        updateDialog.change_date_update.text = "$dayPicked $monthPicked $yearPicked"
+
+        updateDialog.change_date_update.setOnClickListener {
+            val changeDateDialog = Dialog(this, R.style.Theme_Dialog)
+            changeDateDialog.setCancelable(false)
+            changeDateDialog.setContentView(R.layout.day_month_year_picker)
+            changeDateDialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+
+            if (transaction.day == 4 || transaction.day == 6 || transaction.day == 9 || transaction.day == 11) {
+                changeDateDialog.dmyp_day.maxValue = 30
+                changeDateDialog.dmyp_day.minValue = 1
+            } else if (transaction.day == 2 && transaction.day % 4 == 0) {
+                changeDateDialog.dmyp_day.maxValue = 29
+                changeDateDialog.dmyp_day.minValue = 1
+            } else if (transaction.day == 2 && transaction.day % 4 != 0) {
+                changeDateDialog.dmyp_day.maxValue = 28
+                changeDateDialog.dmyp_day.minValue = 1
+            } else {
+                changeDateDialog.dmyp_day.maxValue = 31
+                changeDateDialog.dmyp_day.minValue = 1
+            }
+
+            changeDateDialog.dmyp_month.maxValue = 12
+            changeDateDialog.dmyp_month.minValue = 1
+            changeDateDialog.dmyp_year.maxValue = 2999
+            changeDateDialog.dmyp_year.minValue = 1000
+
+            changeDateDialog.dmyp_day.value = transaction.day
+            changeDateDialog.dmyp_month.value = transaction.month
+            changeDateDialog.dmyp_year.value = transaction.year
+            dayPicked = transaction.day
+            monthPicked = transaction.month
+            yearPicked = transaction.year
+
+            changeDateDialog.dmyp_month.displayedValues = arrayOf(
+                "Jan",
+                "Feb",
+                "Mar",
+                "Apr",
+                "May",
+                "Jun",
+                "Jul",
+                "Aug",
+                "Sep",
+                "Oct",
+                "Nov",
+                "Dec"
+            )
+
+            changeDateDialog.dmyp_day.setOnValueChangedListener { picker, oldVal, newVal ->
+                dayPicked = newVal
+            }
+
+            changeDateDialog.dmyp_month.setOnValueChangedListener { picker, oldVal, newVal ->
+                if (newVal == 4 || newVal == 6 || newVal == 9 || newVal == 11) {
+                    changeDateDialog.dmyp_day.maxValue = 30
+                    changeDateDialog.dmyp_day.minValue = 1
+                } else if (newVal == 2 && (changeDateDialog.dmyp_year.value % 4 == 0)) {
+                    changeDateDialog.dmyp_day.maxValue = 29
+                    changeDateDialog.dmyp_day.minValue = 1
+                } else if (newVal == 2 && (changeDateDialog.dmyp_year.value % 4 != 0)) {
+                    changeDateDialog.dmyp_day.maxValue = 28
+                    changeDateDialog.dmyp_day.minValue = 1
+                } else {
+                    changeDateDialog.dmyp_day.maxValue = 31
+                    changeDateDialog.dmyp_day.minValue = 1
+                }
+                monthPicked = newVal
+            }
+
+            changeDateDialog.dmyp_year.setOnValueChangedListener { picker, oldVal, newVal ->
+                if (newVal % 4 == 0 && changeDateDialog.dmyp_month.value == 2) {
+                    changeDateDialog.dmyp_day.maxValue = 29
+                    changeDateDialog.dmyp_day.minValue = 1
+                } else if (newVal % 4 != 0 && changeDateDialog.dmyp_month.value == 2) {
+                    changeDateDialog.dmyp_day.maxValue = 28
+                    changeDateDialog.dmyp_day.minValue = 1
+                }
+                yearPicked = newVal
+            }
+
+            changeDateDialog.submit_dmy.setOnClickListener {
+                updateDialog.change_date_update.text = "$dayPicked $monthPicked $yearPicked"
+                changeDateDialog.dismiss()
+            }
+
+            changeDateDialog.dmyp_day.wrapSelectorWheel = true
+            changeDateDialog.dmyp_month.wrapSelectorWheel = true
+            changeDateDialog.dmyp_year.wrapSelectorWheel = true
+
+            changeDateDialog.cancel_dmy.setOnClickListener {
+                dayPicked = transaction.day
+                monthPicked = transaction.month
+                yearPicked = transaction.year
+                updateDialog.change_date_update.text = "$dayPicked $monthPicked $yearPicked"
+                changeDateDialog.dismiss()
+            }
+
+            changeDateDialog.show()
+
+        }
+
         updateDialog.etAmountLayout.etAmount.addTextChangedListener(object : TextWatcher {
             override fun onTextChanged(arg0: CharSequence, arg1: Int, arg2: Int, arg3: Int) {}
             override fun beforeTextChanged(arg0: CharSequence, arg1: Int, arg2: Int, arg3: Int) {}
@@ -362,6 +462,9 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
             val amount = updateDialog.etAmountLayout.etAmount.text.toString()
             val account = Constants.CURRENT_ACCOUNT
             val note = updateDialog.etNoteLayoutUpdate.etNoteUpdate.text.toString()
+            val month = monthPicked
+            val day = dayPicked
+            val year = yearPicked
 
             if (selectedCategory.isNotEmpty() && amount.isNotEmpty() && note.isNotEmpty()) {
                 if (isIncome) {
@@ -372,9 +475,9 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
                             category,
                             amount,
                             account,
-                            transaction.month,
-                            transaction.day,
-                            transaction.year
+                            month,
+                            day,
+                            year
                         )
                     )
                 } else if (!isIncome) {
@@ -385,9 +488,9 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
                             category,
                             (amount.toDouble() * -1).toString(),
                             account,
-                            transaction.month,
-                            transaction.day,
-                            transaction.year
+                            month,
+                            day,
+                            year
                         )
                     )
                 }
