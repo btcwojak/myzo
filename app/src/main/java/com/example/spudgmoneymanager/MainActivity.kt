@@ -134,20 +134,7 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
             monthPicked = Calendar.getInstance()[Calendar.MONTH] + 1
             yearPicked = Calendar.getInstance()[Calendar.YEAR]
 
-            changeDateDialog.dmyp_month.displayedValues = arrayOf(
-                "Jan",
-                "Feb",
-                "Mar",
-                "Apr",
-                "May",
-                "Jun",
-                "Jul",
-                "Aug",
-                "Sep",
-                "Oct",
-                "Nov",
-                "Dec"
-            )
+            changeDateDialog.dmyp_month.displayedValues = Constants.MONTHS_SHORT_ARRAY
 
             changeDateDialog.dmyp_day.setOnValueChangedListener { _, _, newVal ->
                 dayPicked = newVal
@@ -224,16 +211,20 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
         addDialog.category_spinner_add_trans.onItemSelectedListener = this
 
         addDialog.inc_exp_radio_group.setOnCheckedChangeListener { _, checkedId ->
-            if (checkedId == R.id.income_radio) {
-                isIncome = true
-            } else if (checkedId == R.id.expenditure_radio) {
-                isIncome = false
-            } else {
-                Toast.makeText(
-                    this,
-                    "An error has occurred. Please try restarting the app.",
-                    Toast.LENGTH_LONG
-                ).show()
+            when (checkedId) {
+                R.id.income_radio -> {
+                    isIncome = true
+                }
+                R.id.expenditure_radio -> {
+                    isIncome = false
+                }
+                else -> {
+                    Toast.makeText(
+                        this,
+                        "An error has occurred. Please try restarting the app.",
+                        Toast.LENGTH_LONG
+                    ).show()
+                }
             }
         }
 
@@ -341,20 +332,7 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
             monthPicked = transaction.month
             yearPicked = transaction.year
 
-            changeDateDialog.dmyp_month.displayedValues = arrayOf(
-                "Jan",
-                "Feb",
-                "Mar",
-                "Apr",
-                "May",
-                "Jun",
-                "Jul",
-                "Aug",
-                "Sep",
-                "Oct",
-                "Nov",
-                "Dec"
-            )
+            changeDateDialog.dmyp_month.displayedValues = Constants.MONTHS_SHORT_ARRAY
 
             changeDateDialog.dmyp_day.setOnValueChangedListener { _, _, newVal ->
                 dayPicked = newVal

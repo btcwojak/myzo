@@ -6,6 +6,7 @@ class Constants {
         var CURRENT_ACCOUNT: Int = 1
         var CAT_COL_SELECTED: Int = 0
         var CAT_UNIQUE_TITLE: Int = 0
+        var MONTHS_SHORT_ARRAY: Array<String> = arrayOf("Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec")
 
         fun getShortMonth(month: Int): String {
             return when (month) {
