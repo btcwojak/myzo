@@ -4,10 +4,14 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
+import android.widget.RelativeLayout
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.transaction_row.view.*
 import java.text.DecimalFormat
 import java.text.NumberFormat
+
 
 class TransactionAdapter(val context: Context, val items: ArrayList<TransactionModel>) :
     RecyclerView.Adapter<TransactionAdapter.ViewHolder>() {
@@ -58,7 +62,8 @@ class TransactionAdapter(val context: Context, val items: ArrayList<TransactionM
         }
 
         if(items.size-1==position){
-            holder.transactionItem.setPadding(0,0,0,200);
+            var transactionItemForHighlight = holder.transactionItem.layoutParams as RecyclerView.LayoutParams
+            transactionItemForHighlight.setMargins(0,0,0,220)
         }
 
 

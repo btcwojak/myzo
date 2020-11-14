@@ -62,6 +62,69 @@
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toTopOf="@id/back_to_trans_from_analytics" />
 
+            <TextView
+                android:id="@+id/viewing_header"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="5dp"
+                android:layout_marginTop="2dp"
+                android:fontFamily="@font/open_sans_light"
+                android:text="Viewing:"
+                android:textColor="#000000"
+                android:textSize="16sp"
+                app:layout_constraintRight_toLeftOf="@id/month_selected_header"
+                app:layout_constraintTop_toBottomOf="@id/analytics_heading" />
+
+            <TextView
+                android:id="@+id/month_selected_header"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:fontFamily="@font/open_sans_light"
+                android:text="Nov 2020"
+                android:textColor="#000000"
+                android:textSize="16sp"
+                app:layout_constraintRight_toLeftOf="@id/change_month_left_bracket"
+                app:layout_constraintTop_toBottomOf="@id/analytics_heading" />
+
+            <TextView
+                android:id="@+id/change_month_left_bracket"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/open_sans_light"
+                android:text="("
+                android:layout_marginLeft="5dp"
+                android:textColor="@android:color/black"
+                android:textSize="16sp"
+                app:layout_constraintLeft_toRightOf="@id/month_selected_header"
+                app:layout_constraintTop_toTopOf="@id/month_selected_header" />
+
+            <TextView
+                android:id="@+id/select_new_month_header"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:fontFamily="@font/open_sans_light"
+                android:text="change"
+                android:foreground="?attr/selectableItemBackground"
+                android:textColor="@color/colorAccent"
+                android:textSize="16sp"
+                app:layout_constraintLeft_toRightOf="@id/change_month_left_bracket"
+                app:layout_constraintTop_toBottomOf="@id/analytics_heading" />
+
+            <TextView
+                android:id="@+id/change_month_right_bracket"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="20dp"
+                android:layout_marginTop="2dp"
+                android:fontFamily="@font/open_sans_light"
+                android:text=")"
+                android:textColor="@android:color/black"
+                android:textSize="16sp"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintLeft_toRightOf="@id/select_new_month_header"
+                app:layout_constraintTop_toBottomOf="@id/analytics_heading" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

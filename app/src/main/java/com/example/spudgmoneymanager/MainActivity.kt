@@ -6,12 +6,10 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.text.Editable
-import android.text.InputFilter
 import android.text.TextWatcher
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
-import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -27,10 +25,7 @@ import kotlinx.android.synthetic.main.dialog_add_transaction.view.income_radio
 import kotlinx.android.synthetic.main.dialog_delete_transaction.*
 import kotlinx.android.synthetic.main.dialog_update_transaction.*
 import kotlinx.android.synthetic.main.dialog_update_transaction.view.*
-import java.time.LocalDate
-import java.time.Month
 import java.util.*
-import kotlin.collections.ArrayList
 
 class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
 
@@ -142,9 +137,10 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
             val amount = addDialog.etAmountLayout.etAmount.text.toString()
             val note = addDialog.etNoteLayoutAdd.etNoteAdd.text.toString()
             val account = Constants.CURRENT_ACCOUNT
-            val month = Calendar.MONTH + 9
-            val day = Calendar.DAY_OF_MONTH + 3
-            val year = Calendar.YEAR + 2019
+            val calendar = Calendar.getInstance()
+            val month = calendar[Calendar.MONTH] + 1
+            val day = calendar[Calendar.DAY_OF_MONTH]
+            val year = calendar[Calendar.YEAR]
 
 
             if (selectedCategory.isNotEmpty() && amount.isNotEmpty() && note.isNotEmpty()) {
@@ -310,7 +306,7 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
 
         deleteDialog.tvDelete.setOnClickListener {
             val dbHandler = TransactionsHandler(this, null)
-            dbHandler.deleteTransaction(TransactionModel(transaction.id, "", 0, "", 0, 0,0,0))
+            dbHandler.deleteTransaction(TransactionModel(transaction.id, "", 0, "", 0, 0, 0, 0))
 
             Toast.makeText(this, "Transaction deleted.", Toast.LENGTH_LONG).show()
             setBalanceText()

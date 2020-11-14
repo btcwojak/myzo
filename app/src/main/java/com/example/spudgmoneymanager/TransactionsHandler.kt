@@ -234,12 +234,12 @@ class TransactionsHandler(context: Context, factory: SQLiteDatabase.CursorFactor
 
     }
 
-    fun getTransactionTotalForCategory(categoryId: Int): Float {
+    fun getTransactionTotalForCategory(categoryId: Int, month: Int, year: Int): Float {
         var amount: String
         var runningTotal: Float = 0.00F
         val dbTrans = this.readableDatabase
         val cursor = dbTrans.rawQuery(
-            "SELECT * FROM $TABLE_TRANSACTIONS WHERE $KEY_CATEGORY = $categoryId",
+            "SELECT * FROM $TABLE_TRANSACTIONS WHERE $KEY_CATEGORY = $categoryId AND $KEY_MONTH = $month AND $KEY_YEAR = $year",
             null
         )
 

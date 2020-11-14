@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/transaction_row_layout"
     android:layout_width="match_parent"
+    android:foreground="?attr/selectableItemBackground"
     android:layout_height="wrap_content"
     android:orientation="vertical">
 

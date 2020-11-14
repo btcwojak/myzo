@@ -134,7 +134,7 @@
             android:gravity="center"
             android:padding="10dp"
             android:text="Add"
-            android:textColor="#673AB7" />
+            android:textColor="@color/colorAccent" />
 
         <TextView
             android:id="@+id/tvCancel"
