@@ -58,13 +58,6 @@ class TransactionAdapter(val context: Context, private val items: ArrayList<Tran
             true
         }
 
-        if (items.size - 1 == position) {
-            val transactionItemForHighlight =
-                holder.transactionItem.layoutParams as RecyclerView.LayoutParams
-            transactionItemForHighlight.setMargins(0, 0, 0, 220)
-        }
-
-
     }
 
     override fun getItemCount(): Int {

@@ -93,12 +93,7 @@ class CategoriesHandler(context: Context, factory: SQLiteDatabase.CursorFactory?
                 }
             }
 
-            cursor.close()
-
         }
-
-        dbForSearch.close()
-        dbForUpdate.close()
 
     }
 
@@ -132,8 +127,6 @@ class CategoriesHandler(context: Context, factory: SQLiteDatabase.CursorFactory?
             } while (cursor.moveToNext())
         }
 
-        cursor.close()
-        db.close()
         return list
 
     }
@@ -152,8 +145,6 @@ class CategoriesHandler(context: Context, factory: SQLiteDatabase.CursorFactory?
             } while (cursor.moveToNext())
         }
 
-        cursor.close()
-        db.close()
         return list
 
     }

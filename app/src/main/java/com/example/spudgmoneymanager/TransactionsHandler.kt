@@ -236,7 +236,6 @@ class TransactionsHandler(context: Context, factory: SQLiteDatabase.CursorFactor
             } while (cursor.moveToNext())
         }
 
-        cursor.close()
         db.close()
         return list
 
@@ -258,7 +257,6 @@ class TransactionsHandler(context: Context, factory: SQLiteDatabase.CursorFactor
             } while (cursor.moveToNext())
         }
 
-        cursor.close()
         dbTrans.close()
         return runningTotal
 
@@ -280,7 +278,6 @@ class TransactionsHandler(context: Context, factory: SQLiteDatabase.CursorFactor
             } while (cursor.moveToNext())
         }
 
-        cursor.close()
         db.close()
         return list
 

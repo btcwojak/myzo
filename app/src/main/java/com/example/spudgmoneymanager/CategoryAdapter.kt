@@ -54,10 +54,6 @@ class CategoryAdapter(private val context: Context, private val items: ArrayList
             }
         }
 
-        if (items.size - 1 == position) {
-            holder.categoryItem.setPadding(0, 0, 0, 250)
-        }
-
     }
 
     override fun getItemCount(): Int {
