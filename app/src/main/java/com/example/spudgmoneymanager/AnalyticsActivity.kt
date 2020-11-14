@@ -55,7 +55,7 @@ class AnalyticsActivity : AppCompatActivity() {
         )
         setupPieChartIncome()
         setupPieChartExpenditure()
-        setupBarChart()
+        //setupBarChart()
 
         select_new_month_header.setOnClickListener {
             val calendar = Calendar.getInstance()
@@ -70,20 +70,7 @@ class AnalyticsActivity : AppCompatActivity() {
             filterDialog.myp_year.maxValue = 2999
             filterDialog.myp_month.minValue = 1
             filterDialog.myp_month.maxValue = 12
-            filterDialog.myp_month.displayedValues = arrayOf(
-                "Jan",
-                "Feb",
-                "Mar",
-                "Apr",
-                "May",
-                "Jun",
-                "Jul",
-                "Aug",
-                "Sep",
-                "Oct",
-                "Nov",
-                "Dec"
-            )
+            filterDialog.myp_month.displayedValues = Constants.MONTHS_SHORT_ARRAY
 
             filterDialog.myp_year.wrapSelectorWheel = true
             filterDialog.myp_month.wrapSelectorWheel = true
@@ -103,7 +90,7 @@ class AnalyticsActivity : AppCompatActivity() {
                 setMonthHeader(monthSelected, yearSelected)
                 setupPieChartIncome()
                 setupPieChartExpenditure()
-                setupBarChart()
+                //setupBarChart()
                 filterDialog.dismiss()
             }
 
@@ -228,7 +215,7 @@ class AnalyticsActivity : AppCompatActivity() {
 
     }
 
-
+/*
     private fun setupBarChart() {
 
         val labels = arrayListOf("Jan", "Feb", "March", "April")
@@ -258,7 +245,7 @@ class AnalyticsActivity : AppCompatActivity() {
         rightAxis.isEnabled = false
 
     }
-
+*/
 
     private fun makeData(monthFilter: Int, yearFilter: Int) {
 
@@ -342,23 +329,7 @@ class AnalyticsActivity : AppCompatActivity() {
     }
 
     private fun setMonthHeader(month: Int, year: Int) {
-        var monthText = ""
-        when (month) {
-            1 -> monthText = "Jan"
-            2 -> monthText = "Feb"
-            3 -> monthText = "Mar"
-            4 -> monthText = "Apr"
-            5 -> monthText = "May"
-            6 -> monthText = "Jun"
-            7 -> monthText = "Jul"
-            8 -> monthText = "Aug"
-            9 -> monthText = "Sep"
-            10 -> monthText = "Oct"
-            11 -> monthText = "Nov"
-            12 -> monthText = "Dec"
-        }
-        month_selected_header.text = "$monthText $year"
-
+        month_selected_header.text = "${Constants.MONTHS_SHORT_ARRAY[month-1]} $year"
     }
 
 

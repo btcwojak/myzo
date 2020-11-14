@@ -202,6 +202,7 @@
                     app:layout_constraintRight_toRightOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/chartInc" />
 
+                <!--
                 <com.github.mikephil.charting.charts.BarChart
                     android:id="@+id/chartBar"
                     android:layout_width="match_parent"
@@ -209,7 +210,7 @@
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/chartExp" />
-
+                -->
 
             </LinearLayout>
 
