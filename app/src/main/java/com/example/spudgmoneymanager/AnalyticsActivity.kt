@@ -5,23 +5,27 @@ import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.util.Log
+import android.view.View
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.res.ResourcesCompat
 import com.github.mikephil.charting.charts.BarChart
 import com.github.mikephil.charting.charts.PieChart
 import com.github.mikephil.charting.components.Legend
-import com.github.mikephil.charting.components.XAxis
-import com.github.mikephil.charting.components.YAxis
 import com.github.mikephil.charting.data.*
-import com.github.mikephil.charting.formatter.IndexAxisValueFormatter
 import com.github.mikephil.charting.formatter.PercentFormatter
 import kotlinx.android.synthetic.main.activity_analytics.*
+import kotlinx.android.synthetic.main.activity_analytics.view.*
 import kotlinx.android.synthetic.main.month_year_picker.*
+import kotlinx.android.synthetic.main.transaction_row.*
 import java.util.*
 import kotlin.collections.ArrayList
 
 
-class AnalyticsActivity : AppCompatActivity() {
+class AnalyticsActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
 
     private var entriesInc: ArrayList<PieEntry> = ArrayList()
     private var entriesExp: ArrayList<PieEntry> = ArrayList()
@@ -36,26 +40,38 @@ class AnalyticsActivity : AppCompatActivity() {
     private var categoryTotalsInc: ArrayList<Float> = ArrayList()
     private var categoryTotalsExp: ArrayList<Float> = ArrayList()
 
-    private var categoryTransactions: ArrayList<Float> = ArrayList()
-    private var categoryDates: ArrayList<Float> = ArrayList()
+    private var daysInMonth: ArrayList<Int> = ArrayList()
+    private var transactionTotalsPerDay: ArrayList<Float> = ArrayList()
+
+    private var barChartCategorySelection: Int = 1
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_analytics)
 
-        makeData(
+        makePieData(
             (Calendar.getInstance()[Calendar.MONTH] + 1),
             Calendar.getInstance()[Calendar.YEAR]
         )
+
+        makeBarData(Calendar.getInstance()[Calendar.MONTH] + 1, Calendar.getInstance()[Calendar.YEAR], barChartCategorySelection)
 
         setMonthHeader(
             Calendar.getInstance()[Calendar.MONTH] + 1,
             Calendar.getInstance()[Calendar.YEAR]
         )
+
+        val dbCategories = CategoriesHandler(this,null)
+        category_spinner_bar_chart_layout.category_spinner_bar_chart
+        val items = dbCategories.getAllCategoryTitles()
+        val categoryAdapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, items)
+        category_spinner_bar_chart_layout.category_spinner_bar_chart.adapter = categoryAdapter
+        category_spinner_bar_chart_layout.category_spinner_bar_chart.onItemSelectedListener = this
+
         setupPieChartIncome()
         setupPieChartExpenditure()
-        //setupBarChart()
+        setupBarChart()
 
         select_new_month_header.setOnClickListener {
             val calendar = Calendar.getInstance()
@@ -86,11 +102,12 @@ class AnalyticsActivity : AppCompatActivity() {
             }
 
             filterDialog.submit_my.setOnClickListener {
-                makeData(monthSelected, yearSelected)
+                makePieData(monthSelected, yearSelected)
+                makeBarData(monthSelected, yearSelected, barChartCategorySelection)
                 setMonthHeader(monthSelected, yearSelected)
                 setupPieChartIncome()
                 setupPieChartExpenditure()
-                //setupBarChart()
+                setupBarChart()
                 filterDialog.dismiss()
             }
 
@@ -126,6 +143,7 @@ class AnalyticsActivity : AppCompatActivity() {
             if (entriesInc.size > 0) {
                 chartInc.data = dataInc
             }
+
             chartInc.animateY(800)
             chartInc.setNoDataText("No net income categories for the month selected.")
             chartInc.setNoDataTextColor(0xff000000.toInt())
@@ -178,6 +196,7 @@ class AnalyticsActivity : AppCompatActivity() {
             if (entriesExp.size > 0) {
                 chartExp.data = dataExp
             }
+
             chartExp.animateY(800)
             chartExp.setNoDataText("No net expenditure categories for the month selected.")
             chartExp.setNoDataTextColor(0xff000000.toInt())
@@ -215,39 +234,47 @@ class AnalyticsActivity : AppCompatActivity() {
 
     }
 
-/*
     private fun setupBarChart() {
 
-        val labels = arrayListOf("Jan", "Feb", "March", "April")
+        if (daysInMonth.size > 0) {
+            for (i in 0 until daysInMonth.size) {
+                entriesBar.add(BarEntry(daysInMonth[i].toFloat(), transactionTotalsPerDay[i]))
+            }
 
-        for (i in 0 until categoryTransactions.size) {
-            entriesBar.add(BarEntry(categoryDates[i], categoryTransactions[i]))
+            val dataSetBar = BarDataSet(entriesBar, "")
+            val dataBar = BarData(dataSetBar)
+
+            val chartBar: BarChart = chartBar
+            if (entriesBar.size > 0) {
+                chartBar.data = dataBar
+            }
+
+            chartBar.animateY(800)
+            chartBar.setNoDataText("No net expenditure categories for the month selected.")
+            chartBar.setNoDataTextColor(0xff000000.toInt())
+            chartBar.setNoDataTextTypeface(ResourcesCompat.getFont(this, R.font.open_sans_light))
+
+            chartBar.description.isEnabled = false
+
+            val l: Legend = chartBar.legend
+            l.verticalAlignment = Legend.LegendVerticalAlignment.BOTTOM
+            l.horizontalAlignment = Legend.LegendHorizontalAlignment.CENTER
+            l.orientation = Legend.LegendOrientation.HORIZONTAL
+            l.setDrawInside(false)
+
+            chartBar.invalidate()
+
+        } else {
+            chartBar.clear()
+            chartBar.setNoDataText("No net expenditure categories for the month selected.")
+            chartBar.setNoDataTextColor(0xff000000.toInt())
+            chartBar.setNoDataTextTypeface(ResourcesCompat.getFont(this, R.font.open_sans_light))
         }
 
-        val dataSetBar = BarDataSet(entriesBar, "")
-
-        val dataBar = BarData(dataSetBar)
-
-        val chartBar: BarChart = chartBar
-        chartBar.data = dataBar
-
-        chartBar.xAxis.valueFormatter = IndexAxisValueFormatter(labels)
-        chartBar.xAxis.position = XAxis.XAxisPosition.BOTTOM
-
-        val xAxis: XAxis = chartBar.xAxis
-        xAxis.granularity = 1f
-        xAxis.labelCount = 7
-
-        val leftAxis: YAxis = chartBar.axisLeft
-        leftAxis.setLabelCount(8, false)
-
-        val rightAxis: YAxis = chartBar.axisRight
-        rightAxis.isEnabled = false
 
     }
-*/
 
-    private fun makeData(monthFilter: Int, yearFilter: Int) {
+    private fun makePieData(monthFilter: Int, yearFilter: Int) {
 
         resetData()
 
@@ -257,14 +284,14 @@ class AnalyticsActivity : AppCompatActivity() {
         val categories = dbHandlerCategory.getAllCategories()
 
         for (category in categories) {
-            if (dbHandlerTransaction.getTransactionTotalForCategory(
+            if (dbHandlerTransaction.getTransactionTotalForCategoryMonthYear(
                     category.id,
                     monthFilter,
                     yearFilter
                 ) > 0F
             ) {
                 categoryTitlesInc.add(category.title)
-            } else if (dbHandlerTransaction.getTransactionTotalForCategory(
+            } else if (dbHandlerTransaction.getTransactionTotalForCategoryMonthYear(
                     category.id,
                     monthFilter,
                     yearFilter
@@ -275,7 +302,7 @@ class AnalyticsActivity : AppCompatActivity() {
         }
 
         for (category in categories) {
-            val total = dbHandlerTransaction.getTransactionTotalForCategory(
+            val total = dbHandlerTransaction.getTransactionTotalForCategoryMonthYear(
                 category.id,
                 monthFilter,
                 yearFilter
@@ -290,14 +317,14 @@ class AnalyticsActivity : AppCompatActivity() {
         for (category in categories) {
             val intColor = category.colour.toInt()
             //categoryColours.add(java.lang.String.format("#%06X", 0xFFFFFF and intColor))
-            if (dbHandlerTransaction.getTransactionTotalForCategory(
+            if (dbHandlerTransaction.getTransactionTotalForCategoryMonthYear(
                     category.id,
                     monthFilter,
                     yearFilter
                 ) > 0F
             ) {
                 categoryColoursInc.add(intColor)
-            } else if (dbHandlerTransaction.getTransactionTotalForCategory(
+            } else if (dbHandlerTransaction.getTransactionTotalForCategoryMonthYear(
                     category.id,
                     monthFilter,
                     yearFilter
@@ -305,6 +332,33 @@ class AnalyticsActivity : AppCompatActivity() {
             ) {
                 categoryColoursExp.add(intColor)
             }
+        }
+
+    }
+
+    private fun makeBarData(monthFilter: Int, yearFilter: Int, categoryFilter: Int) {
+
+        val dbHandlerTransaction = TransactionsHandler(this, null)
+
+        daysInMonth = if (yearFilter % 4 == 0) {
+            when (monthFilter) {
+                1,3,5,7,8,10,12 -> Constants.DAYS31
+                4,6,9,11 -> Constants.DAYS30
+                2 -> Constants.DAYS29
+                else -> arrayListOf(0)
+            }
+        } else {
+            when (monthFilter) {
+                1, 3, 5, 7, 8, 10, 12 -> Constants.DAYS31
+                4, 6, 9, 11 -> Constants.DAYS30
+                2 -> Constants.DAYS28
+                else -> arrayListOf(0)
+            }
+        }
+
+        for (day in daysInMonth) {
+            var totalForDay: Float = dbHandlerTransaction.getTransactionTotalForCategoryDayMonthYear(categoryFilter, day, monthFilter, yearFilter)
+            transactionTotalsPerDay.add(totalForDay)
         }
 
     }
@@ -323,8 +377,8 @@ class AnalyticsActivity : AppCompatActivity() {
         categoryTotalsInc = arrayListOf()
         categoryTotalsExp = arrayListOf()
 
-        categoryTransactions = arrayListOf()
-        categoryDates = arrayListOf()
+        daysInMonth = arrayListOf()
+        transactionTotalsPerDay = arrayListOf()
 
     }
 
@@ -332,9 +386,14 @@ class AnalyticsActivity : AppCompatActivity() {
         month_selected_header.text = "${Constants.MONTHS_SHORT_ARRAY[month-1]} $year"
     }
 
+    override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+        barChartCategorySelection = position + 1
+        setupBarChart()
+    }
+
+    override fun onNothingSelected(parent: AdapterView<*>?) {
+        Toast.makeText(this, "Nothing's selected in category dropdown.", Toast.LENGTH_SHORT).show()
+    }
+
 
 }
-
-
-
-

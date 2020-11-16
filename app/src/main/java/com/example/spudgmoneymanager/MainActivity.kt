@@ -604,7 +604,6 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
         return dbHandlerCat.getCategoryTitle(CategoryId)
     }
 
-
     override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
         selectedCategory = parent?.getItemAtPosition(position).toString()
     }

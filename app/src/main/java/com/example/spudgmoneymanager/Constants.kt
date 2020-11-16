@@ -7,6 +7,10 @@ class Constants {
         var CAT_COL_SELECTED: Int = 0
         var CAT_UNIQUE_TITLE: Int = 0
         var MONTHS_SHORT_ARRAY: Array<String> = arrayOf("Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec")
+        var DAYS31: ArrayList<Int> = arrayListOf(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31)
+        var DAYS30: ArrayList<Int> = arrayListOf(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30)
+        var DAYS29: ArrayList<Int> = arrayListOf(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29)
+        var DAYS28: ArrayList<Int> = arrayListOf(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28)
 
         fun getShortMonth(month: Int): String {
             return when (month) {

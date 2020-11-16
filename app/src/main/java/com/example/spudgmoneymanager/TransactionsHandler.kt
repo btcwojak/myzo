@@ -198,12 +198,35 @@ class TransactionsHandler(context: Context, factory: SQLiteDatabase.CursorFactor
 
     }
 
-    fun getTransactionTotalForCategory(categoryId: Int, month: Int, year: Int): Float {
+    fun getTransactionTotalForCategoryMonthYear(categoryId: Int, month: Int, year: Int): Float {
         var amount: String
         var runningTotal = 0.00F
         val dbTrans = this.readableDatabase
         val cursor = dbTrans.rawQuery(
             "SELECT * FROM $TABLE_TRANSACTIONS WHERE $KEY_CATEGORY = $categoryId AND $KEY_MONTH = $month AND $KEY_YEAR = $year",
+            null
+        )
+
+        if (cursor.moveToFirst()) {
+            do {
+                amount = cursor.getString(cursor.getColumnIndex(KEY_AMOUNT))
+                runningTotal += amount.toFloat()
+            } while (cursor.moveToNext())
+        }
+
+        cursor.close()
+        dbTrans.close()
+
+        return runningTotal
+
+    }
+
+    fun getTransactionTotalForCategoryDayMonthYear(categoryId: Int, day: Int, month: Int, year: Int): Float {
+        var amount: String
+        var runningTotal = 0.00F
+        val dbTrans = this.readableDatabase
+        val cursor = dbTrans.rawQuery(
+            "SELECT * FROM $TABLE_TRANSACTIONS WHERE $KEY_CATEGORY = $categoryId AND $KEY_DAY = $day AND $KEY_MONTH = $month AND $KEY_YEAR = $year",
             null
         )
 
