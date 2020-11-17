@@ -20,7 +20,6 @@ import com.github.mikephil.charting.formatter.PercentFormatter
 import kotlinx.android.synthetic.main.activity_analytics.*
 import kotlinx.android.synthetic.main.activity_analytics.view.*
 import kotlinx.android.synthetic.main.month_year_picker.*
-import kotlinx.android.synthetic.main.transaction_row.*
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -50,16 +49,19 @@ class AnalyticsActivity : AppCompatActivity(), AdapterView.OnItemSelectedListene
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_analytics)
 
+        Constants.MONTH_FILTER = Calendar.getInstance()[Calendar.MONTH] + 1
+        Constants.YEAR_FILTER = Calendar.getInstance()[Calendar.YEAR]
+
         makePieData(
-            (Calendar.getInstance()[Calendar.MONTH] + 1),
-            Calendar.getInstance()[Calendar.YEAR]
+            (Constants.MONTH_FILTER),
+            Constants.YEAR_FILTER
         )
 
-        makeBarData(Calendar.getInstance()[Calendar.MONTH] + 1, Calendar.getInstance()[Calendar.YEAR], barChartCategorySelection)
+        makeBarData(Constants.MONTH_FILTER, Constants.YEAR_FILTER, barChartCategorySelection)
 
         setMonthHeader(
-            Calendar.getInstance()[Calendar.MONTH] + 1,
-            Calendar.getInstance()[Calendar.YEAR]
+            Constants.MONTH_FILTER,
+            Constants.YEAR_FILTER
         )
 
         val dbCategories = CategoriesHandler(this,null)
@@ -75,8 +77,6 @@ class AnalyticsActivity : AppCompatActivity(), AdapterView.OnItemSelectedListene
 
         select_new_month_header.setOnClickListener {
             val calendar = Calendar.getInstance()
-            var yearSelected = calendar[Calendar.YEAR]
-            var monthSelected = calendar[Calendar.MONTH] + 1
 
             val filterDialog = Dialog(this, R.style.Theme_Dialog)
             filterDialog.setCancelable(false)
@@ -90,21 +90,22 @@ class AnalyticsActivity : AppCompatActivity(), AdapterView.OnItemSelectedListene
 
             filterDialog.myp_year.wrapSelectorWheel = true
             filterDialog.myp_month.wrapSelectorWheel = true
-            filterDialog.myp_year.value = calendar[Calendar.YEAR]
-            filterDialog.myp_month.value = calendar[Calendar.MONTH] + 1
+            filterDialog.myp_year.value = Constants.YEAR_FILTER
+            filterDialog.myp_month.value = Constants.MONTH_FILTER
 
             filterDialog.myp_month.setOnValueChangedListener { _, _, newVal ->
-                monthSelected = newVal
+                Constants.MONTH_FILTER = newVal
             }
 
             filterDialog.myp_year.setOnValueChangedListener { _, _, newVal ->
-                yearSelected = newVal
+                Constants.YEAR_FILTER = newVal
             }
 
             filterDialog.submit_my.setOnClickListener {
-                makePieData(monthSelected, yearSelected)
-                makeBarData(monthSelected, yearSelected, barChartCategorySelection)
-                setMonthHeader(monthSelected, yearSelected)
+                makePieData(Constants.MONTH_FILTER, Constants.YEAR_FILTER)
+                makeBarData(Constants.MONTH_FILTER, Constants.YEAR_FILTER, 1)
+                setMonthHeader(Constants.MONTH_FILTER, Constants.YEAR_FILTER)
+                category_spinner_bar_chart.setSelection(0)
                 setupPieChartIncome()
                 setupPieChartExpenditure()
                 setupBarChart()
@@ -276,7 +277,7 @@ class AnalyticsActivity : AppCompatActivity(), AdapterView.OnItemSelectedListene
 
     private fun makePieData(monthFilter: Int, yearFilter: Int) {
 
-        resetData()
+        resetPieData()
 
         val dbHandlerCategory = CategoriesHandler(this, null)
         val dbHandlerTransaction = TransactionsHandler(this, null)
@@ -338,6 +339,8 @@ class AnalyticsActivity : AppCompatActivity(), AdapterView.OnItemSelectedListene
 
     private fun makeBarData(monthFilter: Int, yearFilter: Int, categoryFilter: Int) {
 
+        resetBarData()
+
         val dbHandlerTransaction = TransactionsHandler(this, null)
 
         daysInMonth = if (yearFilter % 4 == 0) {
@@ -363,7 +366,27 @@ class AnalyticsActivity : AppCompatActivity(), AdapterView.OnItemSelectedListene
 
     }
 
-    private fun resetData() {
+    private fun resetPieData() {
+        entriesInc = arrayListOf()
+        entriesExp = arrayListOf()
+
+        categoryTitlesInc = arrayListOf()
+        categoryTitlesExp = arrayListOf()
+
+        categoryColoursInc = arrayListOf()
+        categoryColoursExp = arrayListOf()
+
+        categoryTotalsInc = arrayListOf()
+        categoryTotalsExp = arrayListOf()
+    }
+
+    private fun resetBarData() {
+        entriesBar = arrayListOf()
+        daysInMonth = arrayListOf()
+        transactionTotalsPerDay = arrayListOf()
+    }
+
+    private fun resetAllData() {
         entriesInc = arrayListOf()
         entriesExp = arrayListOf()
         entriesBar = arrayListOf()
@@ -379,7 +402,6 @@ class AnalyticsActivity : AppCompatActivity(), AdapterView.OnItemSelectedListene
 
         daysInMonth = arrayListOf()
         transactionTotalsPerDay = arrayListOf()
-
     }
 
     private fun setMonthHeader(month: Int, year: Int) {
@@ -388,6 +410,8 @@ class AnalyticsActivity : AppCompatActivity(), AdapterView.OnItemSelectedListene
 
     override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
         barChartCategorySelection = position + 1
+        makeBarData(Constants.MONTH_FILTER, Constants.YEAR_FILTER, barChartCategorySelection)
+        Log.e("test",barChartCategorySelection.toString())
         setupBarChart()
     }
 
