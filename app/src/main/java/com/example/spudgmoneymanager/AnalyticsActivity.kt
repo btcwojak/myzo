@@ -15,8 +15,10 @@ import androidx.core.content.res.ResourcesCompat
 import com.github.mikephil.charting.charts.BarChart
 import com.github.mikephil.charting.charts.PieChart
 import com.github.mikephil.charting.components.Legend
+import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.*
 import com.github.mikephil.charting.formatter.PercentFormatter
+import com.github.mikephil.charting.formatter.ValueFormatter
 import kotlinx.android.synthetic.main.activity_analytics.*
 import kotlinx.android.synthetic.main.activity_analytics.view.*
 import kotlinx.android.synthetic.main.month_year_picker.*
@@ -42,7 +44,7 @@ class AnalyticsActivity : AppCompatActivity(), AdapterView.OnItemSelectedListene
     private var daysInMonth: ArrayList<Int> = ArrayList()
     private var transactionTotalsPerDay: ArrayList<Float> = ArrayList()
 
-    private var barChartCategorySelection: Int = 1
+    //private var barChartCategorySelection: Int = 1
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -51,20 +53,21 @@ class AnalyticsActivity : AppCompatActivity(), AdapterView.OnItemSelectedListene
 
         Constants.MONTH_FILTER = Calendar.getInstance()[Calendar.MONTH] + 1
         Constants.YEAR_FILTER = Calendar.getInstance()[Calendar.YEAR]
+        Constants.CATEGORY_FILTER_BAR = 1
 
         makePieData(
             (Constants.MONTH_FILTER),
             Constants.YEAR_FILTER
         )
 
-        makeBarData(Constants.MONTH_FILTER, Constants.YEAR_FILTER, barChartCategorySelection)
+        makeBarData(Constants.MONTH_FILTER, Constants.YEAR_FILTER, Constants.CATEGORY_FILTER_BAR)
 
         setMonthHeader(
             Constants.MONTH_FILTER,
             Constants.YEAR_FILTER
         )
 
-        val dbCategories = CategoriesHandler(this,null)
+        val dbCategories = CategoriesHandler(this, null)
         category_spinner_bar_chart_layout.category_spinner_bar_chart
         val items = dbCategories.getAllCategoryTitles()
         val categoryAdapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, items)
@@ -76,8 +79,7 @@ class AnalyticsActivity : AppCompatActivity(), AdapterView.OnItemSelectedListene
         setupBarChart()
 
         select_new_month_header.setOnClickListener {
-            val calendar = Calendar.getInstance()
-
+            
             val filterDialog = Dialog(this, R.style.Theme_Dialog)
             filterDialog.setCancelable(false)
             filterDialog.setContentView(R.layout.month_year_picker)
@@ -237,6 +239,10 @@ class AnalyticsActivity : AppCompatActivity(), AdapterView.OnItemSelectedListene
 
     private fun setupBarChart() {
 
+        val dbCategory = CategoriesHandler(this, null)
+        var categoryColour = dbCategory.getCategoryColour(Constants.CATEGORY_FILTER_BAR)
+        dbCategory.close()
+
         if (daysInMonth.size > 0) {
             for (i in 0 until daysInMonth.size) {
                 entriesBar.add(BarEntry(daysInMonth[i].toFloat(), transactionTotalsPerDay[i]))
@@ -244,6 +250,17 @@ class AnalyticsActivity : AppCompatActivity(), AdapterView.OnItemSelectedListene
 
             val dataSetBar = BarDataSet(entriesBar, "")
             val dataBar = BarData(dataSetBar)
+            dataSetBar.color = categoryColour
+
+            dataBar.setValueFormatter(object : ValueFormatter() {
+                override fun getFormattedValue(value: Float): String {
+                    return if (value > 0) {
+                        super.getFormattedValue(value)
+                    } else {
+                        ""
+                    }
+                }
+            })
 
             val chartBar: BarChart = chartBar
             if (entriesBar.size > 0) {
@@ -251,9 +268,13 @@ class AnalyticsActivity : AppCompatActivity(), AdapterView.OnItemSelectedListene
             }
 
             chartBar.animateY(800)
-            chartBar.setNoDataText("No net expenditure categories for the month selected.")
+            chartBar.setNoDataText("No data for the month selected.")
             chartBar.setNoDataTextColor(0xff000000.toInt())
             chartBar.setNoDataTextTypeface(ResourcesCompat.getFont(this, R.font.open_sans_light))
+            chartBar.xAxis.setDrawGridLines(false)
+            chartBar.axisRight.isEnabled = false
+            chartBar.xAxis.position = XAxis.XAxisPosition.BOTTOM
+            chartBar.legend.isEnabled = false
 
             chartBar.description.isEnabled = false
 
@@ -345,8 +366,8 @@ class AnalyticsActivity : AppCompatActivity(), AdapterView.OnItemSelectedListene
 
         daysInMonth = if (yearFilter % 4 == 0) {
             when (monthFilter) {
-                1,3,5,7,8,10,12 -> Constants.DAYS31
-                4,6,9,11 -> Constants.DAYS30
+                1, 3, 5, 7, 8, 10, 12 -> Constants.DAYS31
+                4, 6, 9, 11 -> Constants.DAYS30
                 2 -> Constants.DAYS29
                 else -> arrayListOf(0)
             }
@@ -360,7 +381,12 @@ class AnalyticsActivity : AppCompatActivity(), AdapterView.OnItemSelectedListene
         }
 
         for (day in daysInMonth) {
-            var totalForDay: Float = dbHandlerTransaction.getTransactionTotalForCategoryDayMonthYear(categoryFilter, day, monthFilter, yearFilter)
+            var totalForDay: Float = dbHandlerTransaction.getTransactionTotalForCategoryDayMonthYear(
+                categoryFilter,
+                day,
+                monthFilter,
+                yearFilter
+            )
             transactionTotalsPerDay.add(totalForDay)
         }
 
@@ -405,13 +431,12 @@ class AnalyticsActivity : AppCompatActivity(), AdapterView.OnItemSelectedListene
     }
 
     private fun setMonthHeader(month: Int, year: Int) {
-        month_selected_header.text = "${Constants.MONTHS_SHORT_ARRAY[month-1]} $year"
+        month_selected_header.text = "${Constants.MONTHS_SHORT_ARRAY[month - 1]} $year"
     }
 
     override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-        barChartCategorySelection = position + 1
-        makeBarData(Constants.MONTH_FILTER, Constants.YEAR_FILTER, barChartCategorySelection)
-        Log.e("test",barChartCategorySelection.toString())
+        Constants.CATEGORY_FILTER_BAR = position + 1
+        makeBarData(Constants.MONTH_FILTER, Constants.YEAR_FILTER, Constants.CATEGORY_FILTER_BAR)
         setupBarChart()
     }
 
