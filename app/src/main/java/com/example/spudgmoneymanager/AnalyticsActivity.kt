@@ -5,11 +5,9 @@ import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
-import android.widget.AutoCompleteTextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.res.ResourcesCompat
@@ -25,7 +23,6 @@ import kotlinx.android.synthetic.main.activity_analytics.view.*
 import kotlinx.android.synthetic.main.month_year_picker.*
 import java.util.*
 import kotlin.collections.ArrayList
-import kotlin.math.roundToInt
 
 
 class AnalyticsActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
@@ -79,7 +76,7 @@ class AnalyticsActivity : AppCompatActivity(), AdapterView.OnItemSelectedListene
         setupBarChart()
 
         select_new_month_header.setOnClickListener {
-            
+
             val filterDialog = Dialog(this, R.style.Theme_Dialog)
             filterDialog.setCancelable(false)
             filterDialog.setContentView(R.layout.month_year_picker)
@@ -388,12 +385,13 @@ class AnalyticsActivity : AppCompatActivity(), AdapterView.OnItemSelectedListene
         }
 
         for (day in daysInMonth) {
-            var totalForDay: Float = dbHandlerTransaction.getTransactionTotalForCategoryDayMonthYear(
-                categoryFilter,
-                day,
-                monthFilter,
-                yearFilter
-            )
+            var totalForDay: Float =
+                dbHandlerTransaction.getTransactionTotalForCategoryDayMonthYear(
+                    categoryFilter,
+                    day,
+                    monthFilter,
+                    yearFilter
+                )
             transactionTotalsPerDay.add(totalForDay)
         }
 

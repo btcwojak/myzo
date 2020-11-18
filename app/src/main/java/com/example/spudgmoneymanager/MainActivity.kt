@@ -100,7 +100,8 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
         var monthPicked = Calendar.getInstance()[Calendar.MONTH] + 1
         var yearPicked = Calendar.getInstance()[Calendar.YEAR]
 
-        addDialog.change_date_add.text = "$dayPicked ${Constants.getShortMonth(monthPicked)} $yearPicked"
+        addDialog.change_date_add.text =
+            "$dayPicked ${Constants.getShortMonth(monthPicked)} $yearPicked"
 
         addDialog.change_date_add.setOnClickListener {
             val changeDateDialog = Dialog(this, R.style.Theme_Dialog)
@@ -167,9 +168,10 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
                 }
                 yearPicked = newVal
             }
-            
+
             changeDateDialog.submit_dmy.setOnClickListener {
-                addDialog.change_date_add.text = "$dayPicked ${Constants.getShortMonth(monthPicked)} $yearPicked"
+                addDialog.change_date_add.text =
+                    "$dayPicked ${Constants.getShortMonth(monthPicked)} $yearPicked"
                 changeDateDialog.dismiss()
             }
 
@@ -181,7 +183,8 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
                 dayPicked = Calendar.getInstance()[Calendar.DAY_OF_MONTH]
                 monthPicked = Calendar.getInstance()[Calendar.MONTH] + 1
                 yearPicked = Calendar.getInstance()[Calendar.YEAR]
-                addDialog.change_date_add.text = "$dayPicked ${Constants.getShortMonth(monthPicked)} $yearPicked"
+                addDialog.change_date_add.text =
+                    "$dayPicked ${Constants.getShortMonth(monthPicked)} $yearPicked"
                 changeDateDialog.dismiss()
             }
 
@@ -298,7 +301,8 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
         var monthPicked = transaction.month
         var yearPicked = transaction.year
 
-        updateDialog.change_date_update.text = "$dayPicked ${Constants.getShortMonth(monthPicked)} $yearPicked"
+        updateDialog.change_date_update.text =
+            "$dayPicked ${Constants.getShortMonth(monthPicked)} $yearPicked"
 
         updateDialog.change_date_update.setOnClickListener {
             val changeDateDialog = Dialog(this, R.style.Theme_Dialog)
@@ -367,7 +371,8 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
             }
 
             changeDateDialog.submit_dmy.setOnClickListener {
-                updateDialog.change_date_update.text = "$dayPicked ${Constants.getShortMonth(monthPicked)} $yearPicked"
+                updateDialog.change_date_update.text =
+                    "$dayPicked ${Constants.getShortMonth(monthPicked)} $yearPicked"
                 changeDateDialog.dismiss()
             }
 
@@ -379,7 +384,8 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
                 dayPicked = transaction.day
                 monthPicked = transaction.month
                 yearPicked = transaction.year
-                updateDialog.change_date_update.text = "$dayPicked ${Constants.getShortMonth(monthPicked)} $yearPicked"
+                updateDialog.change_date_update.text =
+                    "$dayPicked ${Constants.getShortMonth(monthPicked)} $yearPicked"
                 changeDateDialog.dismiss()
             }
 
@@ -406,7 +412,7 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
         val categoryAdapter = ArrayAdapter(this, R.layout.custom_spinner, items)
         updateDialog.category_spinner_update_trans.adapter = categoryAdapter
         updateDialog.category_spinner_update_trans.onItemSelectedListener = this
-        updateDialog.category_spinner_update_trans.setSelection(transaction.category-1)
+        updateDialog.category_spinner_update_trans.setSelection(transaction.category - 1)
 
         updateDialog.etNoteLayoutUpdate.etNoteUpdate.setText(transaction.note)
 

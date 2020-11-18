@@ -3,7 +3,6 @@ package com.example.spudgmoneymanager
 import android.app.Dialog
 import android.content.Intent
 import android.graphics.Color.TRANSPARENT
-import android.graphics.PorterDuff
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.widget.Toast
@@ -12,13 +11,11 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.activity_categories.*
 import kotlinx.android.synthetic.main.dialog_add_category.*
 import kotlinx.android.synthetic.main.dialog_add_category.etTitleLayout
-import kotlinx.android.synthetic.main.dialog_add_category.view.*
 import kotlinx.android.synthetic.main.dialog_add_category.view.etTitle
 import kotlinx.android.synthetic.main.dialog_add_transaction.tvAdd
 import kotlinx.android.synthetic.main.dialog_add_transaction.tvCancel
 import kotlinx.android.synthetic.main.dialog_delete_transaction.*
 import kotlinx.android.synthetic.main.dialog_update_category.*
-import kotlinx.android.synthetic.main.dialog_update_transaction.*
 import kotlinx.android.synthetic.main.dialog_update_transaction.tvUpdate
 
 class CategoriesActivity : AppCompatActivity() {

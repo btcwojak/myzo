@@ -203,7 +203,7 @@ class CategoriesHandler(context: Context, factory: SQLiteDatabase.CursorFactory?
         val cursor =
             db.rawQuery("SELECT * FROM $TABLE_CATEGORIES WHERE $KEY_ID = $categoryId", null)
 
-        val title : String
+        val title: String
 
         title = if (cursor.moveToFirst()) {
             cursor.getString(cursor.getColumnIndex(KEY_TITLE))
@@ -215,7 +215,6 @@ class CategoriesHandler(context: Context, factory: SQLiteDatabase.CursorFactory?
         db.close()
 
         return title
-
 
 
     }
