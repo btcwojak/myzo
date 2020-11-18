@@ -206,7 +206,7 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
 
         val categoryListHandler = CategoriesHandler(this, null)
         val items = categoryListHandler.getAllCategoryTitles()
-        val categoryAdapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, items)
+        val categoryAdapter = ArrayAdapter(this, R.layout.custom_spinner, items)
         addDialog.category_spinner_add_trans.adapter = categoryAdapter
         addDialog.category_spinner_add_trans.onItemSelectedListener = this
 
@@ -403,7 +403,7 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
 
         val categoryListHandler = CategoriesHandler(this, null)
         val items = categoryListHandler.getAllCategoryTitles()
-        val categoryAdapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, items)
+        val categoryAdapter = ArrayAdapter(this, R.layout.custom_spinner, items)
         updateDialog.category_spinner_update_trans.adapter = categoryAdapter
         updateDialog.category_spinner_update_trans.onItemSelectedListener = this
         updateDialog.category_spinner_update_trans.setSelection(transaction.category-1)

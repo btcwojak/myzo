@@ -9,6 +9,7 @@ import android.util.Log
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.AutoCompleteTextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.res.ResourcesCompat
@@ -43,8 +44,6 @@ class AnalyticsActivity : AppCompatActivity(), AdapterView.OnItemSelectedListene
 
     private var daysInMonth: ArrayList<Int> = ArrayList()
     private var transactionTotalsPerDay: ArrayList<Float> = ArrayList()
-
-    //private var barChartCategorySelection: Int = 1
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -126,6 +125,7 @@ class AnalyticsActivity : AppCompatActivity(), AdapterView.OnItemSelectedListene
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
         }
+
 
     }
 

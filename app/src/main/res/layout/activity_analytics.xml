@@ -218,7 +218,8 @@
                         android:layout_height="match_parent"
                         android:backgroundTint="@color/colorPrimaryDark"
                         android:overlapAnchor="false"
-                        android:spinnerMode="dropdown" />
+                        android:spinnerMode="dropdown"
+                        android:padding="15dp"/>
 
                 </LinearLayout>
 
@@ -227,7 +228,7 @@
                     android:layout_width="match_parent"
                     android:layout_marginLeft="40dp"
                     android:layout_marginRight="40dp"
-                    android:layout_height="300dp"
+                    android:layout_height="200dp"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/chartExp" />
