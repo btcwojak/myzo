@@ -3,19 +3,23 @@ package com.example.spudgmoneymanager
 import android.app.Dialog
 import android.content.Intent
 import android.graphics.Color.TRANSPARENT
+import android.graphics.PorterDuff
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.madrapps.pikolo.listeners.SimpleColorSelectionListener
 import kotlinx.android.synthetic.main.activity_categories.*
 import kotlinx.android.synthetic.main.dialog_add_category.*
+import kotlinx.android.synthetic.main.dialog_add_category.etTitleLayout
 import kotlinx.android.synthetic.main.dialog_add_category.view.*
+import kotlinx.android.synthetic.main.dialog_add_category.view.etTitle
 import kotlinx.android.synthetic.main.dialog_add_transaction.tvAdd
 import kotlinx.android.synthetic.main.dialog_add_transaction.tvCancel
 import kotlinx.android.synthetic.main.dialog_delete_transaction.*
+import kotlinx.android.synthetic.main.dialog_update_category.*
 import kotlinx.android.synthetic.main.dialog_update_transaction.*
+import kotlinx.android.synthetic.main.dialog_update_transaction.tvUpdate
 
 class CategoriesActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -56,15 +60,11 @@ class CategoriesActivity : AppCompatActivity() {
         addDialog.setContentView(R.layout.dialog_add_category)
         addDialog.window!!.setBackgroundDrawable(ColorDrawable(TRANSPARENT))
 
-        val colorPicker = addDialog.colourPicker
-        colorPicker.setColorSelectionListener(object : SimpleColorSelectionListener() {
-            override fun onColorSelected(color: Int) {
-                Constants.CAT_COL_SELECTED = color
-            }
-        })
+        addDialog.colourPickerAdd.showOldCenterColor = false
 
         addDialog.tvAdd.setOnClickListener {
             val title = addDialog.etTitleLayout.etTitle.text.toString()
+            Constants.CAT_COL_SELECTED = addDialog.colourPickerAdd.color
             val colour = Constants.CAT_COL_SELECTED.toString()
 
             val dbHandler = CategoriesHandler(this, null)
@@ -103,15 +103,12 @@ class CategoriesActivity : AppCompatActivity() {
 
         updateDialog.etTitleLayout.etTitle.setText(category.title)
 
-        val colorPicker = updateDialog.colourPicker
-        colorPicker.setColorSelectionListener(object : SimpleColorSelectionListener() {
-            override fun onColorSelected(color: Int) {
-                Constants.CAT_COL_SELECTED = color
-            }
-        })
+        updateDialog.colourPickerUpdate.color = category.colour.toInt()
+        updateDialog.colourPickerUpdate.showOldCenterColor = false
 
         updateDialog.tvUpdate.setOnClickListener {
             val title = updateDialog.etTitleLayout.etTitle.text.toString()
+            Constants.CAT_COL_SELECTED = updateDialog.colourPickerUpdate.color
             val colour = Constants.CAT_COL_SELECTED.toString()
 
             val dbHandler = CategoriesHandler(this, null)

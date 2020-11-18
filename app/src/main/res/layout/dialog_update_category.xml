@@ -36,12 +36,13 @@
 
     </com.google.android.material.textfield.TextInputLayout>
 
-    <com.madrapps.pikolo.HSLColorPicker
-        android:id="@+id/colourPicker"
+    <com.larswerkman.holocolorpicker.ColorPicker
+        android:id="@+id/colourPickerUpdate"
         android:layout_width="wrap_content"
-        android:layout_height="300dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
         android:layout_marginTop="20dp"
-        android:layout_marginBottom="20dp" />
+        android:layout_marginBottom="10dp"/>
 
     <LinearLayout
         android:layout_width="match_parent"

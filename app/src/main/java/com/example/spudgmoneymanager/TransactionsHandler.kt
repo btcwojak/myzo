@@ -111,9 +111,6 @@ class TransactionsHandler(context: Context, factory: SQLiteDatabase.CursorFactor
             runningBalance += item
         }
 
-        cursor.close()
-        db.close()
-
         val formatter: NumberFormat = DecimalFormat("#,##0.00")
         return formatter.format(runningBalance).toString()
 
@@ -141,9 +138,6 @@ class TransactionsHandler(context: Context, factory: SQLiteDatabase.CursorFactor
         for (item in list) {
             runningBalance += item
         }
-
-        cursor.close()
-        db.close()
 
         val formatter: NumberFormat = DecimalFormat("#,##0.00")
         return formatter.format(runningBalance).toString()
@@ -191,9 +185,6 @@ class TransactionsHandler(context: Context, factory: SQLiteDatabase.CursorFactor
             } while (cursor.moveToNext())
         }
 
-        cursor.close()
-        db.close()
-
         return list
 
     }
@@ -214,9 +205,6 @@ class TransactionsHandler(context: Context, factory: SQLiteDatabase.CursorFactor
             } while (cursor.moveToNext())
         }
 
-        cursor.close()
-        dbTrans.close()
-
         return runningTotal
 
     }
@@ -236,9 +224,6 @@ class TransactionsHandler(context: Context, factory: SQLiteDatabase.CursorFactor
                 runningTotal += amount.toFloat()
             } while (cursor.moveToNext())
         }
-
-        cursor.close()
-        dbTrans.close()
 
         return runningTotal
 
@@ -261,8 +246,6 @@ class TransactionsHandler(context: Context, factory: SQLiteDatabase.CursorFactor
             } while (cursor.moveToNext())
         }
 
-        cursor.close()
-        db.close()
         return list
 
     }
@@ -306,9 +289,6 @@ class TransactionsHandler(context: Context, factory: SQLiteDatabase.CursorFactor
                 list.add(transaction)
             } while (cursor.moveToNext())
         }
-
-        cursor.close()
-        db.close()
 
         return list
 
