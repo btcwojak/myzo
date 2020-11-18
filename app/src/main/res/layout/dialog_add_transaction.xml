@@ -95,8 +95,7 @@
                 android:layout_height="match_parent"
                 android:backgroundTint="@color/colorPrimaryDark"
                 android:overlapAnchor="false"
-                android:spinnerMode="dropdown"
-                android:padding="16dp" />
+                android:spinnerMode="dropdown" />
 
         </LinearLayout>
 

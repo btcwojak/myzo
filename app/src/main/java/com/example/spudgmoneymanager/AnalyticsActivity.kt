@@ -25,6 +25,7 @@ import kotlinx.android.synthetic.main.activity_analytics.view.*
 import kotlinx.android.synthetic.main.month_year_picker.*
 import java.util.*
 import kotlin.collections.ArrayList
+import kotlin.math.roundToInt
 
 
 class AnalyticsActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
@@ -69,7 +70,7 @@ class AnalyticsActivity : AppCompatActivity(), AdapterView.OnItemSelectedListene
         val dbCategories = CategoriesHandler(this, null)
         category_spinner_bar_chart_layout.category_spinner_bar_chart
         val items = dbCategories.getAllCategoryTitles()
-        val categoryAdapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, items)
+        val categoryAdapter = ArrayAdapter(this, R.layout.custom_spinner, items)
         category_spinner_bar_chart_layout.category_spinner_bar_chart.adapter = categoryAdapter
         category_spinner_bar_chart_layout.category_spinner_bar_chart.onItemSelectedListener = this
 
@@ -243,7 +244,13 @@ class AnalyticsActivity : AppCompatActivity(), AdapterView.OnItemSelectedListene
         var categoryColour = dbCategory.getCategoryColour(Constants.CATEGORY_FILTER_BAR)
         dbCategory.close()
 
-        if (daysInMonth.size > 0) {
+        var runningTotal: Float = 0.00F
+
+        for (transaction in transactionTotalsPerDay) {
+            runningTotal += transaction
+        }
+
+        if (runningTotal > 0) {
             for (i in 0 until daysInMonth.size) {
                 entriesBar.add(BarEntry(daysInMonth[i].toFloat(), transactionTotalsPerDay[i]))
             }
@@ -268,7 +275,7 @@ class AnalyticsActivity : AppCompatActivity(), AdapterView.OnItemSelectedListene
             }
 
             chartBar.animateY(800)
-            chartBar.setNoDataText("No data for the month selected.")
+            chartBar.setNoDataText("No data for the month and category selected.")
             chartBar.setNoDataTextColor(0xff000000.toInt())
             chartBar.setNoDataTextTypeface(ResourcesCompat.getFont(this, R.font.open_sans_light))
             chartBar.xAxis.setDrawGridLines(false)
@@ -288,7 +295,7 @@ class AnalyticsActivity : AppCompatActivity(), AdapterView.OnItemSelectedListene
 
         } else {
             chartBar.clear()
-            chartBar.setNoDataText("No net expenditure categories for the month selected.")
+            chartBar.setNoDataText("No data for the month and category selected.")
             chartBar.setNoDataTextColor(0xff000000.toInt())
             chartBar.setNoDataTextTypeface(ResourcesCompat.getFont(this, R.font.open_sans_light))
         }
