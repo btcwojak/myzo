@@ -241,13 +241,13 @@ class AnalyticsActivity : AppCompatActivity(), AdapterView.OnItemSelectedListene
         var categoryColour = dbCategory.getCategoryColour(Constants.CATEGORY_FILTER_BAR)
         dbCategory.close()
 
-        var runningTotal: Float = 0.00F
+        var runningTotal = 0.00F
 
         for (transaction in transactionTotalsPerDay) {
             runningTotal += transaction
         }
 
-        if (runningTotal > 0) {
+        if (runningTotal != 0F) {
             for (i in 0 until daysInMonth.size) {
                 entriesBar.add(BarEntry(daysInMonth[i].toFloat(), transactionTotalsPerDay[i]))
             }
