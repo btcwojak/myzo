@@ -256,7 +256,6 @@ class TransactionsHandler(context: Context, factory: SQLiteDatabase.CursorFactor
     }
 */
 
-/*
     fun getAllTransactions(): ArrayList<TransactionModel> {
         val list = ArrayList<TransactionModel>()
         val db = this.readableDatabase
@@ -298,6 +297,5 @@ class TransactionsHandler(context: Context, factory: SQLiteDatabase.CursorFactor
         return list
 
     }
-*/
 
 }

@@ -2,14 +2,18 @@ package com.example.spudgmoneymanager
 
 import android.app.Dialog
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.os.Environment
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import com.github.mikephil.charting.charts.BarChart
 import com.github.mikephil.charting.charts.PieChart
@@ -18,9 +22,14 @@ import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.*
 import com.github.mikephil.charting.formatter.PercentFormatter
 import com.github.mikephil.charting.formatter.ValueFormatter
+import com.opencsv.CSVReader
 import kotlinx.android.synthetic.main.activity_analytics.*
 import kotlinx.android.synthetic.main.activity_analytics.view.*
 import kotlinx.android.synthetic.main.month_year_picker.*
+import java.io.File
+import java.io.FileReader
+import java.io.FileWriter
+import java.lang.Exception
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -43,10 +52,23 @@ class AnalyticsActivity : AppCompatActivity(), AdapterView.OnItemSelectedListene
     private var daysInMonth: ArrayList<Int> = ArrayList()
     private var transactionTotalsPerDay: ArrayList<Float> = ArrayList()
 
+    //For import/export stuff
+
+    private val STORAGE_REQUEST_CODE_IMPORT = 1
+    private val STORAGE_REQUEST_CODE_EXPORT = 2
+    private lateinit var storagePermission: Array<String>
+
+    // END
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_analytics)
+
+        //For import/export storage permission
+
+        storagePermission = arrayOf(android.Manifest.permission.WRITE_EXTERNAL_STORAGE)
+
+        // END
 
         Constants.MONTH_FILTER = Calendar.getInstance()[Calendar.MONTH] + 1
         Constants.YEAR_FILTER = Calendar.getInstance()[Calendar.YEAR]
@@ -124,8 +146,139 @@ class AnalyticsActivity : AppCompatActivity(), AdapterView.OnItemSelectedListene
             startActivity(intent)
         }
 
+        //Placeholder listeners for imports and exports
+
+        analytics_heading.setOnClickListener {
+            if (checkStoragePermission()) {
+                importCSV()
+            } else {
+                requestStoragePermissionImport()
+            }
+        }
+
+        analytics_heading.setOnClickListener {
+            if (checkStoragePermission()) {
+                exportCSV()
+            } else {
+                requestStoragePermissionExport()
+            }
+        }
+
+        // END
+
 
     }
+
+    //Various functions for imports and exports
+
+    private fun checkStoragePermission(): Boolean {
+        return ContextCompat.checkSelfPermission(this, android.Manifest.permission.WRITE_EXTERNAL_STORAGE) == (PackageManager.PERMISSION_GRANTED)
+    }
+
+    private fun requestStoragePermissionImport() {
+        ActivityCompat.requestPermissions(this, storagePermission, STORAGE_REQUEST_CODE_IMPORT)
+    }
+
+    private fun requestStoragePermissionExport() {
+        ActivityCompat.requestPermissions(this, storagePermission, STORAGE_REQUEST_CODE_EXPORT)
+    }
+
+    fun importCSV() {
+        val dbTrans = TransactionsHandler(this, null)
+        val fileNameAndPath = "${Environment.getExternalStorageDirectory()}/SMMBackups/SMM_Backup.csv"
+        val csvFile = File(fileNameAndPath)
+
+        if (csvFile.exists()) {
+            try {
+                val csvReader = CSVReader(FileReader(csvFile.absolutePath))
+                var nextLine: Array<String>
+                while (csvReader.readNext().also { nextLine = it } != null) {
+                    val id = nextLine[0]
+                    val note = nextLine[1]
+                    val category = nextLine[2]
+                    val amount = nextLine[3]
+                    val account = nextLine[4]
+                    val month = nextLine[5]
+                    val day = nextLine[6]
+                    val year = nextLine[7]
+
+                    val transToAdd = TransactionModel(id.toInt(), note, category.toInt(), amount, account.toInt(), month.toInt(), day.toInt(), year.toInt())
+                    dbTrans.addTransaction(transToAdd)
+                }
+            } catch (e: Exception) {
+                Toast.makeText(this, e.message, Toast.LENGTH_SHORT).show()
+            }
+        } else {
+            Toast.makeText(this, "Backup not found.", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    fun exportCSV() {
+        val dbTrans = TransactionsHandler(this, null)
+        val folder = File(Environment.getExternalStorageDirectory().toString() + "/" + "SMMBackups")
+        var isFolderCreated = false
+        if (!folder.exists()) {
+            isFolderCreated = folder.mkdir()
+        }
+        val csvFileName = "SMM_Backup.csv"
+        val fileNameAndPath = "$folder/$csvFileName"
+        var recordList = ArrayList<TransactionModel>()
+        recordList.clear()
+        recordList = dbTrans.getAllTransactions()
+
+        try {
+            val fw = FileWriter(fileNameAndPath)
+            for (i in recordList.indices) {
+                fw.append("" + recordList[i].id)
+                fw.append(",")
+                fw.append("" + recordList[i].note)
+                fw.append(",")
+                fw.append("" + recordList[i].category)
+                fw.append(",")
+                fw.append("" + recordList[i].amount)
+                fw.append(",")
+                fw.append("" + recordList[i].account)
+                fw.append(",")
+                fw.append("" + recordList[i].month)
+                fw.append(",")
+                fw.append("" + recordList[i].day)
+                fw.append(",")
+                fw.append("" + recordList[i].year)
+            }
+            fw.flush()
+            fw.close()
+            Toast.makeText(this, "Backup exported to $fileNameAndPath.", Toast.LENGTH_SHORT).show()
+        } catch (e: Exception) {
+            Toast.makeText(this, e.message, Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+
+        when (requestCode) {
+            STORAGE_REQUEST_CODE_IMPORT -> {
+                if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    importCSV()
+                } else {
+                    Toast.makeText(this, "Permission denied.", Toast.LENGTH_SHORT).show()
+                }
+            }
+            STORAGE_REQUEST_CODE_EXPORT -> {
+                if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    exportCSV()
+                } else {
+                    Toast.makeText(this, "Permission denied.", Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
+    }
+
+    // END
 
 
     private fun setupPieChartIncome() {
