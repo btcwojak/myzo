@@ -3,9 +3,9 @@
     <item>
         <color android:color="#FFFFFF" />
     </item>
-    <item>
-        <bitmap
-            android:gravity="center"
-            android:src="@drawable/splash_icon" />
-    </item>
+    <item android:drawable="@drawable/ic_launcher_foreground"
+        android:height="500dp"
+        android:width="500dp"
+        android:gravity="center" />
+
 </layer-list>
