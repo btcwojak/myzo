@@ -2,7 +2,6 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:tools="http://schemas.android.com/tools"
     android:background="@drawable/dialog_background_solid"
     android:orientation="vertical"
     android:padding="10dp">
@@ -24,29 +23,29 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="25dp"
         android:fontFamily="@font/open_sans_light"
+        android:padding="5dp"
         android:text="This will wipe the current backup data and replace with the current app data. Please ensure the current app data is correct, or make your own copies of the backup data before exporting."
         android:textColor="@android:color/black"
-        android:textSize="16sp"
-        android:padding="5dp" />
+        android:textSize="16sp" />
 
     <LinearLayout
-        android:gravity="center_horizontal"
         android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:padding="10dp"
-        android:layout_height="wrap_content">
+        android:gravity="center_horizontal"
+        android:padding="10dp">
 
         <Button
             android:id="@+id/export_confirm_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            android:fontFamily="@font/open_sans_light"
-            android:text="Confirm export"
             android:layout_marginEnd="30dp"
+            android:fontFamily="@font/open_sans_light"
+            android:padding="10dp"
+            android:text="Confirm export"
             android:textColor="@color/colorAccent"
-            android:textSize="16sp"
-            android:padding="10dp" />
+            android:textSize="16sp" />
 
     </LinearLayout>
 
@@ -57,10 +56,10 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:fontFamily="@font/open_sans_light"
+        android:padding="5dp"
         android:text="If permission is denied, it can be granted again in your phone settings."
         android:textColor="@android:color/black"
-        android:textSize="16sp"
-        android:padding="5dp" />
+        android:textSize="16sp" />
 
 
     <LinearLayout

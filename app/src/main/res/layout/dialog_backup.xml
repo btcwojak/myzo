@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:tools="http://schemas.android.com/tools"
     android:background="@drawable/dialog_background_solid"
     android:orientation="vertical"
     android:padding="10dp">
@@ -24,10 +24,10 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="25dp"
         android:fontFamily="@font/open_sans_light"
+        android:padding="5dp"
         android:text="Export to or import from a backup folder, containing CSV files for your transactions, categories and accounts."
         android:textColor="@android:color/black"
-        android:textSize="16sp"
-        android:padding="5dp" />
+        android:textSize="16sp" />
 
     <TextView
         android:id="@+id/import_text_export_location"
@@ -36,40 +36,40 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="5dp"
         android:fontFamily="@font/open_sans_light"
+        android:padding="5dp"
         android:textColor="@android:color/black"
         android:textSize="16sp"
-        android:padding="5dp"
-        tools:text="The backup will be exported to and imported from /storage/emulated/0/Android/data/com.example.spudgmoneymanager/cache."/>
+        tools:text="The backup will be exported to and imported from /storage/emulated/0/Android/data/com.example.spudgmoneymanager/cache." />
 
     <LinearLayout
-        android:gravity="center_horizontal"
         android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:padding="10dp"
-        android:layout_height="wrap_content">
+        android:gravity="center_horizontal"
+        android:padding="10dp">
 
-    <Button
-        android:id="@+id/import_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:fontFamily="@font/open_sans_light"
-        android:text="Import"
-        android:layout_marginEnd="30dp"
-        android:textColor="@color/colorAccent"
-        android:textSize="16sp"
-        android:padding="10dp" />
+        <Button
+            android:id="@+id/import_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="30dp"
+            android:fontFamily="@font/open_sans_light"
+            android:padding="10dp"
+            android:text="Import"
+            android:textColor="@color/colorAccent"
+            android:textSize="16sp" />
 
-    <Button
-        android:id="@+id/export_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="30dp"
-        android:fontFamily="@font/open_sans_light"
-        android:text="Export"
-        android:textColor="@color/colorAccent"
-        android:textSize="16sp"
-        android:padding="10dp" />
+        <Button
+            android:id="@+id/export_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="30dp"
+            android:fontFamily="@font/open_sans_light"
+            android:padding="10dp"
+            android:text="Export"
+            android:textColor="@color/colorAccent"
+            android:textSize="16sp" />
 
     </LinearLayout>
 

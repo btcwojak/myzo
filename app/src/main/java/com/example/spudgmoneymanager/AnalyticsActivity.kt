@@ -2,18 +2,14 @@ package com.example.spudgmoneymanager
 
 import android.app.Dialog
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import android.os.Environment
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import com.github.mikephil.charting.charts.BarChart
 import com.github.mikephil.charting.charts.PieChart
@@ -22,14 +18,9 @@ import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.*
 import com.github.mikephil.charting.formatter.PercentFormatter
 import com.github.mikephil.charting.formatter.ValueFormatter
-import com.opencsv.CSVReader
 import kotlinx.android.synthetic.main.activity_analytics.*
 import kotlinx.android.synthetic.main.activity_analytics.view.*
 import kotlinx.android.synthetic.main.month_year_picker.*
-import java.io.File
-import java.io.FileReader
-import java.io.FileWriter
-import java.lang.Exception
 import java.util.*
 import kotlin.collections.ArrayList
 

@@ -37,7 +37,6 @@ import kotlinx.android.synthetic.main.dialog_update_transaction.view.*
 import java.io.File
 import java.io.FileReader
 import java.io.FileWriter
-import java.lang.Exception
 import java.util.*
 
 class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
@@ -637,13 +636,7 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
     }
 
 
-
-
-
     // Import / export code below
-
-
-
 
 
     private fun backupDialog() {
@@ -656,7 +649,8 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
             backupDialog.dismiss()
         }
 
-        backupDialog.import_text_export_location.text = "Backups will be exported to and imported from ${this.getExternalFilesDir(null)!!.absolutePath}."
+        backupDialog.import_text_export_location.text =
+            "Backups will be exported to and imported from ${this.getExternalFilesDir(null)!!.absolutePath}."
 
         backupDialog.import_btn.setOnClickListener {
             if (checkStoragePermission()) {
@@ -713,24 +707,43 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
 
     private fun exportFullCSV() {
         if (exportCategoriesCSV() && exportAccountsCSV() && exportTransactionsCSV()) {
-            Toast.makeText(this, "Backup files successfully exported to ${this.getExternalFilesDir(null)!!.absolutePath}/SMMBackups", Toast.LENGTH_LONG).show()
+            Toast.makeText(
+                this,
+                "Backup files successfully exported to ${this.getExternalFilesDir(null)!!.absolutePath}/SMMBackups",
+                Toast.LENGTH_LONG
+            ).show()
         } else {
-            Toast.makeText(this, "An error occurred. Please try restarting the app.", Toast.LENGTH_SHORT).show()
+            Toast.makeText(
+                this,
+                "An error occurred. Please try restarting the app.",
+                Toast.LENGTH_SHORT
+            ).show()
         }
     }
 
     private fun importFullCSV() {
         if (importCategoriesCSV() && importAccountsCSV() && importTransactionsCSV()) {
-            Toast.makeText(this, "Backup files imported successfully from ${this.getExternalFilesDir(null)!!.absolutePath}/SMMBackups", Toast.LENGTH_LONG).show()
+            Toast.makeText(
+                this,
+                "Backup files imported successfully from ${this.getExternalFilesDir(null)!!.absolutePath}/SMMBackups",
+                Toast.LENGTH_LONG
+            ).show()
         } else {
-            Toast.makeText(this, "An error occurred. Please try restarting the app.", Toast.LENGTH_SHORT).show()
+            Toast.makeText(
+                this,
+                "An error occurred. Please try restarting the app.",
+                Toast.LENGTH_SHORT
+            ).show()
         }
         setUpTransactionList()
         setBalanceText()
     }
 
     private fun checkStoragePermission(): Boolean {
-        return ContextCompat.checkSelfPermission(this, android.Manifest.permission.WRITE_EXTERNAL_STORAGE) == (PackageManager.PERMISSION_GRANTED)
+        return ContextCompat.checkSelfPermission(
+            this,
+            android.Manifest.permission.WRITE_EXTERNAL_STORAGE
+        ) == (PackageManager.PERMISSION_GRANTED)
     }
 
     private fun requestStoragePermissionExport() {
@@ -852,7 +865,8 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
 
         var success = false
         val dbTrans = TransactionsHandler(this, null)
-        val fileNameAndPath = this.getExternalFilesDir(null)!!.absolutePath + "/SMMBackups/SMM_Transactions_Backup.csv"
+        val fileNameAndPath =
+            this.getExternalFilesDir(null)!!.absolutePath + "/SMMBackups/SMM_Transactions_Backup.csv"
         val csvFile = File(fileNameAndPath)
 
         if (csvFile.exists()) {
@@ -870,7 +884,16 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
                     val day = nextLine[6]
                     val year = nextLine[7]
 
-                    val transToAdd = TransactionModel(id.toInt(), note, category.toInt(), amount, account.toInt(), month.toInt(), day.toInt(), year.toInt())
+                    val transToAdd = TransactionModel(
+                        id.toInt(),
+                        note,
+                        category.toInt(),
+                        amount,
+                        account.toInt(),
+                        month.toInt(),
+                        day.toInt(),
+                        year.toInt()
+                    )
                     dbTrans.addTransaction(transToAdd)
                     success = true
                 }
@@ -887,7 +910,8 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
 
         var success = false
         val dbCats = CategoriesHandler(this, null)
-        val fileNameAndPath = this.getExternalFilesDir(null)!!.absolutePath + "/SMMBackups/SMM_Categories_Backup.csv"
+        val fileNameAndPath =
+            this.getExternalFilesDir(null)!!.absolutePath + "/SMMBackups/SMM_Categories_Backup.csv"
         val csvFile = File(fileNameAndPath)
 
         if (csvFile.exists()) {
@@ -918,7 +942,8 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
 
         var success = false
         val dbAccs = AccountsHandler(this, null)
-        val fileNameAndPath = this.getExternalFilesDir(null)!!.absolutePath + "/SMMBackups/SMM_Accounts_Backup.csv"
+        val fileNameAndPath =
+            this.getExternalFilesDir(null)!!.absolutePath + "/SMMBackups/SMM_Accounts_Backup.csv"
         val csvFile = File(fileNameAndPath)
 
         if (csvFile.exists()) {
@@ -948,7 +973,7 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
         return success
     }
 
-    override fun onRequestPermissionsResult (
+    override fun onRequestPermissionsResult(
         requestCode: Int,
         permissions: Array<out String>,
         grantResults: IntArray
