@@ -162,5 +162,11 @@ class AccountsHandler(context: Context, factory: SQLiteDatabase.CursorFactory?) 
         return success
     }
 
+    fun resetOnImport() {
+        val db = this.writableDatabase
+        db?.execSQL("DROP TABLE IF EXISTS $TABLE_ACCOUNTS")
+        onCreate(db)
+    }
+
 
 }

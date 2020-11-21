@@ -216,7 +216,12 @@ class CategoriesHandler(context: Context, factory: SQLiteDatabase.CursorFactory?
 
         return title
 
+    }
 
+    fun resetOnImport() {
+        val db = this.writableDatabase
+        db?.execSQL("DROP TABLE IF EXISTS $TABLE_CATEGORIES")
+        onCreate(db)
     }
 
 

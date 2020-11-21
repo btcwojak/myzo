@@ -2,17 +2,24 @@ package com.example.spudgmoneymanager
 
 import android.app.Dialog
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.os.Environment
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.opencsv.CSVReader
+import kotlinx.android.synthetic.main.activity_analytics.*
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.day_month_year_picker.*
 import kotlinx.android.synthetic.main.dialog_add_transaction.*
@@ -23,9 +30,14 @@ import kotlinx.android.synthetic.main.dialog_add_transaction.view.*
 import kotlinx.android.synthetic.main.dialog_add_transaction.view.etAmount
 import kotlinx.android.synthetic.main.dialog_add_transaction.view.expenditure_radio
 import kotlinx.android.synthetic.main.dialog_add_transaction.view.income_radio
+import kotlinx.android.synthetic.main.dialog_backup.*
 import kotlinx.android.synthetic.main.dialog_delete_transaction.*
 import kotlinx.android.synthetic.main.dialog_update_transaction.*
 import kotlinx.android.synthetic.main.dialog_update_transaction.view.*
+import java.io.File
+import java.io.FileReader
+import java.io.FileWriter
+import java.lang.Exception
 import java.util.*
 
 class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
@@ -33,9 +45,15 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
     private var isIncome = true
     private var selectedCategory = ""
 
+    private val STORAGE_REQUEST_CODE_IMPORT = 1
+    private val STORAGE_REQUEST_CODE_EXPORT = 2
+    private lateinit var storagePermission: Array<String>
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        storagePermission = arrayOf(android.Manifest.permission.WRITE_EXTERNAL_STORAGE)
 
         setUpTransactionList()
 
@@ -58,8 +76,8 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
             startActivity(intent)
         }
 
-        export_btn.setOnClickListener {
-            Toast.makeText(this, "To be added soon...", Toast.LENGTH_SHORT).show()
+        backup_btn.setOnClickListener {
+            backupDialog()
         }
 
         setBalanceText()
@@ -616,6 +634,298 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
 
     override fun onNothingSelected(parent: AdapterView<*>?) {
         Toast.makeText(this, "Nothing's selected in category dropdown.", Toast.LENGTH_SHORT).show()
+    }
+
+
+
+
+
+    // Import / export code below
+
+
+
+
+
+    private fun backupDialog() {
+        val backupDialog = Dialog(this, R.style.Theme_Dialog)
+        backupDialog.setCancelable(false)
+        backupDialog.setContentView(R.layout.dialog_backup)
+        backupDialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+
+        backupDialog.tvDone.setOnClickListener {
+            backupDialog.dismiss()
+        }
+
+        backupDialog.import_btn.setOnClickListener {
+            if (checkStoragePermission()) {
+                importFullCSV()
+            } else {
+                requestStoragePermissionImport()
+            }
+        }
+
+        backupDialog.export_btn.setOnClickListener {
+            if (checkStoragePermission()) {
+                exportFullCSV()
+            } else {
+                requestStoragePermissionExport()
+            }
+        }
+
+        backupDialog.show()
+
+    }
+
+
+    private fun exportFullCSV() {
+        if (exportTransactionsCSV() && exportCategoriesCSV() && exportAccountsCSV()) {
+            Toast.makeText(this, "Backup files successfully exported to root directory.", Toast.LENGTH_SHORT).show()
+        } else {
+            Toast.makeText(this, "An error occurred. Please try restarting the app.", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    private fun importFullCSV() {
+        if (importTransactionsCSV() && importCategoriesCSV() && importAccountsCSV()) {
+            Toast.makeText(this, "Backup files imported successfully.", Toast.LENGTH_SHORT).show()
+        } else {
+            Toast.makeText(this, "An error occurred. Please try restarting the app.", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    private fun checkStoragePermission(): Boolean {
+        return ContextCompat.checkSelfPermission(this, android.Manifest.permission.WRITE_EXTERNAL_STORAGE) == (PackageManager.PERMISSION_GRANTED)
+    }
+
+    private fun requestStoragePermissionExport() {
+        ActivityCompat.requestPermissions(this, storagePermission, STORAGE_REQUEST_CODE_EXPORT)
+    }
+
+    private fun requestStoragePermissionImport() {
+        ActivityCompat.requestPermissions(this, storagePermission, STORAGE_REQUEST_CODE_IMPORT)
+    }
+
+    private fun exportTransactionsCSV(): Boolean {
+
+        var success = false
+        val dbTrans = TransactionsHandler(this, null)
+        val folder = File(Environment.getExternalStorageDirectory().toString() + "/" + "SMMBackups")
+        if (!folder.exists()) {
+            folder.mkdir()
+        }
+        val csvFileName = "SMM_Transactions_Backup.csv"
+        val fileNameAndPath = "$folder/$csvFileName"
+        var recordList = ArrayList<TransactionModel>()
+        recordList.clear()
+        recordList = dbTrans.getAllTransactions()
+
+        try {
+            val fw = FileWriter(fileNameAndPath)
+            for (i in recordList.indices) {
+                fw.append("" + recordList[i].id)
+                fw.append(",")
+                fw.append("" + recordList[i].note)
+                fw.append(",")
+                fw.append("" + recordList[i].category)
+                fw.append(",")
+                fw.append("" + recordList[i].amount)
+                fw.append(",")
+                fw.append("" + recordList[i].account)
+                fw.append(",")
+                fw.append("" + recordList[i].month)
+                fw.append(",")
+                fw.append("" + recordList[i].day)
+                fw.append(",")
+                fw.append("" + recordList[i].year)
+                fw.append("\n")
+            }
+            fw.flush()
+            fw.close()
+            success = true
+        } catch (e: Exception) {
+            Toast.makeText(this, e.message, Toast.LENGTH_SHORT).show()
+        }
+        return success
+    }
+
+    private fun exportCategoriesCSV(): Boolean {
+
+        var success = false
+        val dbCats = CategoriesHandler(this, null)
+        val folder = File(Environment.getExternalStorageDirectory().toString() + "/" + "SMMBackups")
+        if (!folder.exists()) {
+            folder.mkdir()
+        }
+        val csvFileName = "SMM_Categories_Backup.csv"
+        val fileNameAndPath = "$folder/$csvFileName"
+        var recordList = ArrayList<CategoryModel>()
+        recordList.clear()
+        recordList = dbCats.getAllCategories()
+
+        try {
+            val fw = FileWriter(fileNameAndPath)
+            for (i in recordList.indices) {
+                fw.append("" + recordList[i].id)
+                fw.append(",")
+                fw.append("" + recordList[i].title)
+                fw.append(",")
+                fw.append("" + recordList[i].colour)
+                fw.append("\n")
+            }
+            fw.flush()
+            fw.close()
+            success = true
+        } catch (e: Exception) {
+            Toast.makeText(this, e.message, Toast.LENGTH_SHORT).show()
+        }
+        return success
+    }
+
+    private fun exportAccountsCSV(): Boolean {
+
+        var success = false
+        val dbAccs = AccountsHandler(this, null)
+        val folder = File(Environment.getExternalStorageDirectory().toString() + "/" + "SMMBackups")
+        if (!folder.exists()) {
+            folder.mkdir()
+        }
+        val csvFileName = "SMM_Accounts_Backup.csv"
+        val fileNameAndPath = "$folder/$csvFileName"
+        var recordList = ArrayList<AccountModel>()
+        recordList.clear()
+        recordList = dbAccs.getAllAccounts()
+
+        try {
+            val fw = FileWriter(fileNameAndPath)
+            for (i in recordList.indices) {
+                fw.append("" + recordList[i].id)
+                fw.append(",")
+                fw.append("" + recordList[i].name)
+                fw.append("\n")
+            }
+            fw.flush()
+            fw.close()
+            success = true
+        } catch (e: Exception) {
+            Toast.makeText(this, e.message, Toast.LENGTH_SHORT).show()
+        }
+        return success
+    }
+
+    private fun importTransactionsCSV(): Boolean {
+
+        var success = false
+        val dbTrans = TransactionsHandler(this, null)
+        val fileNameAndPath = "${Environment.getExternalStorageDirectory()}/SMMBackups/SMM_Transactions_Backup.csv"
+        val csvFile = File(fileNameAndPath)
+
+        if (csvFile.exists()) {
+            try {
+                val csvReader = CSVReader(FileReader(csvFile.absolutePath))
+                var nextLine: Array<String>
+                while (csvReader.readNext().also { nextLine = it } != null) {
+                    val id = nextLine[0]
+                    val note = nextLine[1]
+                    val category = nextLine[2]
+                    val amount = nextLine[3]
+                    val account = nextLine[4]
+                    val month = nextLine[5]
+                    val day = nextLine[6]
+                    val year = nextLine[7]
+
+                    val transToAdd = TransactionModel(id.toInt(), note, category.toInt(), amount, account.toInt(), month.toInt(), day.toInt(), year.toInt())
+                    dbTrans.addTransaction(transToAdd)
+                    success = true
+                }
+            } catch (e: Exception) {
+                Toast.makeText(this, e.message, Toast.LENGTH_SHORT).show()
+            }
+        } else {
+            Log.e("Import", "Transactions CSV file not found.")
+        }
+        return success
+    }
+
+    private fun importCategoriesCSV(): Boolean {
+
+        var success = false
+        val dbCats = CategoriesHandler(this, null)
+        val fileNameAndPath = "${Environment.getExternalStorageDirectory()}/SMMBackups/SMM_Categories_Backup.csv"
+        val csvFile = File(fileNameAndPath)
+
+        if (csvFile.exists()) {
+            try {
+                val csvReader = CSVReader(FileReader(csvFile.absolutePath))
+                var nextLine: Array<String>
+                while (csvReader.readNext().also { nextLine = it } != null) {
+                    val id = nextLine[0]
+                    val title = nextLine[1]
+                    val colour = nextLine[2]
+
+                    val catToAdd = CategoryModel(id.toInt(), title, colour)
+                    dbCats.addCategory(catToAdd)
+                    success = true
+                }
+            } catch (e: Exception) {
+                Toast.makeText(this, e.message, Toast.LENGTH_SHORT).show()
+            }
+        } else {
+            Log.e("Import", "Categories CSV file not found.")
+        }
+        return success
+    }
+
+    private fun importAccountsCSV(): Boolean {
+
+        var success = false
+        val dbAccs = AccountsHandler(this, null)
+        val fileNameAndPath = "${Environment.getExternalStorageDirectory()}/SMMBackups/SMM_Accounts_Backup.csv"
+        val csvFile = File(fileNameAndPath)
+
+        if (csvFile.exists()) {
+            try {
+                val csvReader = CSVReader(FileReader(csvFile.absolutePath))
+                var nextLine: Array<String>
+                while (csvReader.readNext().also { nextLine = it } != null) {
+                    val id = nextLine[0]
+                    val name = nextLine[1]
+
+                    val accToAdd = AccountModel(id.toInt(), name)
+                    dbAccs.addAccount(accToAdd)
+                    success = true
+                }
+            } catch (e: Exception) {
+                Toast.makeText(this, e.message, Toast.LENGTH_SHORT).show()
+            }
+        } else {
+            Log.e("Import", "Accounts CSV file not found.")
+        }
+        return success
+    }
+
+    override fun onRequestPermissionsResult (
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+
+        when (requestCode) {
+            STORAGE_REQUEST_CODE_IMPORT -> {
+                if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    importFullCSV()
+                } else {
+                    Toast.makeText(this, "Permission denied.", Toast.LENGTH_SHORT).show()
+                }
+            }
+            STORAGE_REQUEST_CODE_EXPORT -> {
+                if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    exportFullCSV()
+                } else {
+                    Toast.makeText(this, "Permission denied.", Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
     }
 
 }

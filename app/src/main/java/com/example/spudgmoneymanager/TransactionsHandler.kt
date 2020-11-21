@@ -298,4 +298,10 @@ class TransactionsHandler(context: Context, factory: SQLiteDatabase.CursorFactor
 
     }
 
+    fun resetOnImport() {
+        val db = this.writableDatabase
+        db?.execSQL("DROP TABLE IF EXISTS $TABLE_TRANSACTIONS")
+        onCreate(db)
+    }
+
 }
