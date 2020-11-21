@@ -26,11 +26,11 @@
     <string name="add_transaction_for">Add Transaction for</string>
     <string name="add">Add</string>
     <string name="delete_account">Delete Account</string>
-    <string name="are_you_sure_want_to_delete_this_account">Are you sure want to delete this account?</string>
+    <string name="delete_account_warning">Are you sure want to delete this account?</string>
     <string name="delete_category">Delete Category</string>
-    <string name="are_you_sure_want_to_delete_this_category_n_nany_transactions_under_this_category_will_be_reverted_to_other">Are you sure want to delete this category? \n\nAny transactions under this category will be reverted to \'Other\'.</string>
+    <string name="delete_category_warning">Are you sure want to delete this category? \n\nAny transactions under this category will be reverted to \'Other\'.</string>
     <string name="delete_transaction">Delete Transaction</string>
-    <string name="are_you_sure_want_to_delete_this_transaction">Are you sure want to delete this transaction?</string>
+    <string name="delete_transaction_warning">Are you sure want to delete this transaction?</string>
     <string name="delete">Delete</string>
     <string name="update_account">Update Account</string>
     <string name="name">Name</string>
@@ -47,4 +47,9 @@
     <string name="submit">Submit</string>
     <string name="cancel">Cancel</string>
     <string name="category_note">category note</string>
+    <string name="permission_denied_info">If permission is denied, it can be granted again in your phone settings.</string>
+    <string name="export_warning">This will wipe the current backup data and replace with the current app data. Please ensure the current app data is correct, or make your own copies of the backup data before exporting.</string>
+    <string name="confirm_export">Confirm export</string>
+    <string name="confirm_import">Confirm import</string>
+    <string name="import_warning">This will wipe the current data and replace with the backup data. Please ensure the backup data is correct before importing.</string>
 </resources>

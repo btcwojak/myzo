@@ -12,7 +12,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="5dp"
         android:fontFamily="@font/open_sans_light"
-        android:text="Confirm import"
+        android:text="@string/confirm_import"
         android:textColor="@android:color/black"
         android:textSize="18sp" />
 
@@ -24,7 +24,7 @@
         android:layout_marginTop="25dp"
         android:fontFamily="@font/open_sans_light"
         android:padding="5dp"
-        android:text="This will wipe the current data and replace with the backup data. Please ensure the backup data is correct before importing."
+        android:text="@string/import_warning"
         android:textColor="@android:color/black"
         android:textSize="16sp" />
 
@@ -43,7 +43,7 @@
             android:layout_marginEnd="30dp"
             android:fontFamily="@font/open_sans_light"
             android:padding="10dp"
-            android:text="Confirm import"
+            android:text="@string/confirm_import"
             android:textColor="@color/colorAccent"
             android:textSize="16sp" />
 
@@ -57,7 +57,7 @@
         android:layout_marginTop="8dp"
         android:fontFamily="@font/open_sans_light"
         android:padding="5dp"
-        android:text="If permission is denied, it can be granted again in your phone settings."
+        android:text="@string/permission_denied_info"
         android:textColor="@android:color/black"
         android:textSize="16sp" />
 
@@ -77,7 +77,7 @@
             android:foreground="?attr/selectableItemBackground"
             android:gravity="center"
             android:padding="10dp"
-            android:text="Cancel"
+            android:text="@string/cancel"
             android:textColor="@color/colorAccent" />
 
     </LinearLayout>

@@ -22,7 +22,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="10dp"
         android:fontFamily="@font/open_sans_light"
-        android:text="@string/are_you_sure_want_to_delete_this_transaction"
+        android:text="@string/delete_transaction_warning"
         android:textColor="@android:color/black"
         android:textSize="16sp" />
 
