@@ -731,7 +731,7 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
         } else {
             Toast.makeText(
                 this,
-                "An error occurred. Please try restarting the app.",
+                "An error occurred. Please ensure backup files are in the correct place.",
                 Toast.LENGTH_SHORT
             ).show()
         }
