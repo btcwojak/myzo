@@ -1,13 +1,11 @@
 package com.example.spudgmoneymanager
 
 import android.app.Dialog
-import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import android.os.Environment
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
@@ -20,7 +18,6 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.opencsv.CSVReader
-import kotlinx.android.synthetic.main.activity_analytics.*
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.day_month_year_picker.*
 import kotlinx.android.synthetic.main.dialog_add_transaction.*
@@ -33,6 +30,8 @@ import kotlinx.android.synthetic.main.dialog_add_transaction.view.expenditure_ra
 import kotlinx.android.synthetic.main.dialog_add_transaction.view.income_radio
 import kotlinx.android.synthetic.main.dialog_backup.*
 import kotlinx.android.synthetic.main.dialog_delete_transaction.*
+import kotlinx.android.synthetic.main.dialog_export_confirm.*
+import kotlinx.android.synthetic.main.dialog_import_confirm.*
 import kotlinx.android.synthetic.main.dialog_update_transaction.*
 import kotlinx.android.synthetic.main.dialog_update_transaction.view.*
 import java.io.File
@@ -653,13 +652,31 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
         backupDialog.setContentView(R.layout.dialog_backup)
         backupDialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
-        backupDialog.tvDone.setOnClickListener {
+        backupDialog.tvCancel.setOnClickListener {
             backupDialog.dismiss()
         }
 
+        backupDialog.import_text_export_location.text = "Backups will be exported to and imported from ${this.getExternalFilesDir(null)!!.absolutePath}."
+
         backupDialog.import_btn.setOnClickListener {
             if (checkStoragePermission()) {
-                importFullCSV()
+                val importConfirmDialog = Dialog(this, R.style.Theme_Dialog)
+                importConfirmDialog.setCancelable(false)
+                importConfirmDialog.setContentView(R.layout.dialog_import_confirm)
+                importConfirmDialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+
+                importConfirmDialog.import_confirm_btn.setOnClickListener {
+                    importFullCSV()
+                    importConfirmDialog.dismiss()
+                    backupDialog.dismiss()
+                }
+
+                importConfirmDialog.tvCancelImport.setOnClickListener {
+                    importConfirmDialog.dismiss()
+                }
+
+                importConfirmDialog.show()
+
             } else {
                 requestStoragePermissionImport()
             }
@@ -667,7 +684,23 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
 
         backupDialog.export_btn.setOnClickListener {
             if (checkStoragePermission()) {
-                exportFullCSV()
+                val exportConfirmDialog = Dialog(this, R.style.Theme_Dialog)
+                exportConfirmDialog.setCancelable(false)
+                exportConfirmDialog.setContentView(R.layout.dialog_export_confirm)
+                exportConfirmDialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+
+                exportConfirmDialog.export_confirm_btn.setOnClickListener {
+                    exportFullCSV()
+                    exportConfirmDialog.dismiss()
+                    backupDialog.dismiss()
+                }
+
+                exportConfirmDialog.tvCancelExport.setOnClickListener {
+                    exportConfirmDialog.dismiss()
+                }
+
+                exportConfirmDialog.show()
+
             } else {
                 requestStoragePermissionExport()
             }
@@ -680,7 +713,7 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
 
     private fun exportFullCSV() {
         if (exportCategoriesCSV() && exportAccountsCSV() && exportTransactionsCSV()) {
-            Toast.makeText(this, "Backup files successfully exported to ${this.externalCacheDir!!.absolutePath}/SMMBackups", Toast.LENGTH_LONG).show()
+            Toast.makeText(this, "Backup files successfully exported to ${this.getExternalFilesDir(null)!!.absolutePath}/SMMBackups", Toast.LENGTH_LONG).show()
         } else {
             Toast.makeText(this, "An error occurred. Please try restarting the app.", Toast.LENGTH_SHORT).show()
         }
@@ -688,7 +721,7 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
 
     private fun importFullCSV() {
         if (importCategoriesCSV() && importAccountsCSV() && importTransactionsCSV()) {
-            Toast.makeText(this, "Backup files imported successfully from ${this.externalCacheDir!!.absolutePath}/SMMBackups", Toast.LENGTH_LONG).show()
+            Toast.makeText(this, "Backup files imported successfully from ${this.getExternalFilesDir(null)!!.absolutePath}/SMMBackups", Toast.LENGTH_LONG).show()
         } else {
             Toast.makeText(this, "An error occurred. Please try restarting the app.", Toast.LENGTH_SHORT).show()
         }
@@ -712,7 +745,7 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
 
         var success = false
         val dbTrans = TransactionsHandler(this, null)
-        val folder = File(this.externalCacheDir!!.absolutePath, "/SMMBackups")
+        val folder = File(this.getExternalFilesDir(null)!!.absolutePath, "/SMMBackups")
         if (!folder.exists()) {
             folder.mkdir()
         }
@@ -755,7 +788,7 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
 
         var success = false
         val dbCats = CategoriesHandler(this, null)
-        val folder = File(this.externalCacheDir!!.absolutePath, "/SMMBackups")
+        val folder = File(this.getExternalFilesDir(null)!!.absolutePath, "/SMMBackups")
         if (!folder.exists()) {
             folder.mkdir()
         }
@@ -788,7 +821,7 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
 
         var success = false
         val dbAccs = AccountsHandler(this, null)
-        val folder = File(this.externalCacheDir!!.absolutePath, "/SMMBackups")
+        val folder = File(this.getExternalFilesDir(null)!!.absolutePath, "/SMMBackups")
         if (!folder.exists()) {
             folder.mkdir()
         }
@@ -819,7 +852,7 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
 
         var success = false
         val dbTrans = TransactionsHandler(this, null)
-        val fileNameAndPath = this.externalCacheDir!!.absolutePath + "/SMMBackups/SMM_Transactions_Backup.csv"
+        val fileNameAndPath = this.getExternalFilesDir(null)!!.absolutePath + "/SMMBackups/SMM_Transactions_Backup.csv"
         val csvFile = File(fileNameAndPath)
 
         if (csvFile.exists()) {
@@ -854,7 +887,7 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
 
         var success = false
         val dbCats = CategoriesHandler(this, null)
-        val fileNameAndPath = this.externalCacheDir!!.absolutePath + "/SMMBackups/SMM_Categories_Backup.csv"
+        val fileNameAndPath = this.getExternalFilesDir(null)!!.absolutePath + "/SMMBackups/SMM_Categories_Backup.csv"
         val csvFile = File(fileNameAndPath)
 
         if (csvFile.exists()) {
@@ -885,7 +918,7 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
 
         var success = false
         val dbAccs = AccountsHandler(this, null)
-        val fileNameAndPath = this.externalCacheDir!!.absolutePath + "/SMMBackups/SMM_Accounts_Backup.csv"
+        val fileNameAndPath = this.getExternalFilesDir(null)!!.absolutePath + "/SMMBackups/SMM_Accounts_Backup.csv"
         val csvFile = File(fileNameAndPath)
 
         if (csvFile.exists()) {

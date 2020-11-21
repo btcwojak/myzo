@@ -13,7 +13,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="5dp"
         android:fontFamily="@font/open_sans_light"
-        android:text="@string/backup"
+        android:text="Confirm export"
         android:textColor="@android:color/black"
         android:textSize="18sp" />
 
@@ -24,22 +24,10 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="25dp"
         android:fontFamily="@font/open_sans_light"
-        android:text="Export to or import from a backup folder, containing CSV files for your transactions, categories and accounts."
+        android:text="This will wipe the current backup data and replace with the current app data. Please ensure the current app data is correct, or make your own copies of the backup data before exporting."
         android:textColor="@android:color/black"
         android:textSize="16sp"
         android:padding="5dp" />
-
-    <TextView
-        android:id="@+id/import_text_export_location"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="5dp"
-        android:fontFamily="@font/open_sans_light"
-        android:textColor="@android:color/black"
-        android:textSize="16sp"
-        android:padding="5dp"
-        tools:text="The backup will be exported to and imported from /storage/emulated/0/Android/data/com.example.spudgmoneymanager/cache."/>
 
     <LinearLayout
         android:gravity="center_horizontal"
@@ -48,30 +36,32 @@
         android:padding="10dp"
         android:layout_height="wrap_content">
 
-    <Button
-        android:id="@+id/import_btn"
+        <Button
+            android:id="@+id/export_confirm_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:fontFamily="@font/open_sans_light"
+            android:text="Confirm export"
+            android:layout_marginEnd="30dp"
+            android:textColor="@color/colorAccent"
+            android:textSize="16sp"
+            android:padding="10dp" />
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/permissions_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
         android:fontFamily="@font/open_sans_light"
-        android:text="Import"
-        android:layout_marginEnd="30dp"
-        android:textColor="@color/colorAccent"
+        android:text="If permission is denied, it can be granted again in your phone settings."
+        android:textColor="@android:color/black"
         android:textSize="16sp"
-        android:padding="10dp" />
+        android:padding="5dp" />
 
-    <Button
-        android:id="@+id/export_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="30dp"
-        android:fontFamily="@font/open_sans_light"
-        android:text="Export"
-        android:textColor="@color/colorAccent"
-        android:textSize="16sp"
-        android:padding="10dp" />
-
-    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -81,14 +71,14 @@
         android:orientation="horizontal">
 
         <TextView
-            android:id="@+id/tvCancel"
+            android:id="@+id/tvCancelExport"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:fontFamily="@font/open_sans_light"
             android:foreground="?attr/selectableItemBackground"
             android:gravity="center"
             android:padding="10dp"
-            android:text="@string/cancel"
+            android:text="Cancel"
             android:textColor="@color/colorAccent" />
 
     </LinearLayout>
