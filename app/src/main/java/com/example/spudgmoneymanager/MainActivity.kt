@@ -1,6 +1,7 @@
 package com.example.spudgmoneymanager
 
 import android.app.Dialog
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Color
@@ -678,19 +679,21 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
 
 
     private fun exportFullCSV() {
-        if (exportTransactionsCSV() && exportCategoriesCSV() && exportAccountsCSV()) {
-            Toast.makeText(this, "Backup files successfully exported to root directory.", Toast.LENGTH_SHORT).show()
+        if (exportCategoriesCSV() && exportAccountsCSV() && exportTransactionsCSV()) {
+            Toast.makeText(this, "Backup files successfully exported to ${this.externalCacheDir!!.absolutePath}/SMMBackups", Toast.LENGTH_LONG).show()
         } else {
             Toast.makeText(this, "An error occurred. Please try restarting the app.", Toast.LENGTH_SHORT).show()
         }
     }
 
     private fun importFullCSV() {
-        if (importTransactionsCSV() && importCategoriesCSV() && importAccountsCSV()) {
-            Toast.makeText(this, "Backup files imported successfully.", Toast.LENGTH_SHORT).show()
+        if (importCategoriesCSV() && importAccountsCSV() && importTransactionsCSV()) {
+            Toast.makeText(this, "Backup files imported successfully from ${this.externalCacheDir!!.absolutePath}/SMMBackups", Toast.LENGTH_LONG).show()
         } else {
             Toast.makeText(this, "An error occurred. Please try restarting the app.", Toast.LENGTH_SHORT).show()
         }
+        setUpTransactionList()
+        setBalanceText()
     }
 
     private fun checkStoragePermission(): Boolean {
@@ -709,7 +712,7 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
 
         var success = false
         val dbTrans = TransactionsHandler(this, null)
-        val folder = File(Environment.getExternalStorageDirectory().toString() + "/" + "SMMBackups")
+        val folder = File(this.externalCacheDir!!.absolutePath, "/SMMBackups")
         if (!folder.exists()) {
             folder.mkdir()
         }
@@ -752,7 +755,7 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
 
         var success = false
         val dbCats = CategoriesHandler(this, null)
-        val folder = File(Environment.getExternalStorageDirectory().toString() + "/" + "SMMBackups")
+        val folder = File(this.externalCacheDir!!.absolutePath, "/SMMBackups")
         if (!folder.exists()) {
             folder.mkdir()
         }
@@ -785,7 +788,7 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
 
         var success = false
         val dbAccs = AccountsHandler(this, null)
-        val folder = File(Environment.getExternalStorageDirectory().toString() + "/" + "SMMBackups")
+        val folder = File(this.externalCacheDir!!.absolutePath, "/SMMBackups")
         if (!folder.exists()) {
             folder.mkdir()
         }
@@ -816,11 +819,12 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
 
         var success = false
         val dbTrans = TransactionsHandler(this, null)
-        val fileNameAndPath = "${Environment.getExternalStorageDirectory()}/SMMBackups/SMM_Transactions_Backup.csv"
+        val fileNameAndPath = this.externalCacheDir!!.absolutePath + "/SMMBackups/SMM_Transactions_Backup.csv"
         val csvFile = File(fileNameAndPath)
 
         if (csvFile.exists()) {
             try {
+                dbTrans.resetOnImport()
                 val csvReader = CSVReader(FileReader(csvFile.absolutePath))
                 var nextLine: Array<String>
                 while (csvReader.readNext().also { nextLine = it } != null) {
@@ -838,7 +842,7 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
                     success = true
                 }
             } catch (e: Exception) {
-                Toast.makeText(this, e.message, Toast.LENGTH_SHORT).show()
+                Log.e("importTransactions", e.message.toString())
             }
         } else {
             Log.e("Import", "Transactions CSV file not found.")
@@ -850,11 +854,13 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
 
         var success = false
         val dbCats = CategoriesHandler(this, null)
-        val fileNameAndPath = "${Environment.getExternalStorageDirectory()}/SMMBackups/SMM_Categories_Backup.csv"
+        val fileNameAndPath = this.externalCacheDir!!.absolutePath + "/SMMBackups/SMM_Categories_Backup.csv"
         val csvFile = File(fileNameAndPath)
 
         if (csvFile.exists()) {
             try {
+                dbCats.resetOnImport()
+                checkDefaultCategories()
                 val csvReader = CSVReader(FileReader(csvFile.absolutePath))
                 var nextLine: Array<String>
                 while (csvReader.readNext().also { nextLine = it } != null) {
@@ -867,7 +873,7 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
                     success = true
                 }
             } catch (e: Exception) {
-                Toast.makeText(this, e.message, Toast.LENGTH_SHORT).show()
+                Log.e("importCategories", e.message.toString())
             }
         } else {
             Log.e("Import", "Categories CSV file not found.")
@@ -879,11 +885,17 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
 
         var success = false
         val dbAccs = AccountsHandler(this, null)
-        val fileNameAndPath = "${Environment.getExternalStorageDirectory()}/SMMBackups/SMM_Accounts_Backup.csv"
+        val fileNameAndPath = this.externalCacheDir!!.absolutePath + "/SMMBackups/SMM_Accounts_Backup.csv"
         val csvFile = File(fileNameAndPath)
 
         if (csvFile.exists()) {
             try {
+                dbAccs.resetOnImport()
+                if (noAccounts()) {
+                    val dbHandler = AccountsHandler(this, null)
+                    dbHandler.addAccount(AccountModel(0, "Main Account"))
+                    Constants.CURRENT_ACCOUNT = dbHandler.getAllAccounts().first().id
+                }
                 val csvReader = CSVReader(FileReader(csvFile.absolutePath))
                 var nextLine: Array<String>
                 while (csvReader.readNext().also { nextLine = it } != null) {
@@ -895,7 +907,7 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
                     success = true
                 }
             } catch (e: Exception) {
-                Toast.makeText(this, e.message, Toast.LENGTH_SHORT).show()
+                Log.e("importAccounts", e.message.toString())
             }
         } else {
             Log.e("Import", "Accounts CSV file not found.")

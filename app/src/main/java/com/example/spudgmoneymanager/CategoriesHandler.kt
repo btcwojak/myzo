@@ -9,12 +9,12 @@ class CategoriesHandler(context: Context, factory: SQLiteDatabase.CursorFactory?
     SQLiteOpenHelper(context, DATABASE_NAME, factory, DATABASE_VERSION) {
 
     companion object {
-        private const val DATABASE_VERSION = 2
+        private const val DATABASE_VERSION = 3
         private const val DATABASE_NAME = "SMMCategories.db"
         private const val TABLE_CATEGORIES = "categories"
 
         private const val KEY_ID = "_id"
-        private const val KEY_TITLE = "category"
+        private const val KEY_TITLE = "title"
         private const val KEY_COLOUR = "colour"
 
     }
