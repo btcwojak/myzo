@@ -1,4 +1,4 @@
-package com.example.spudgmoneymanager
+package com.spudg.spudgmoneymanager
 
 import android.app.Dialog
 import android.content.Intent

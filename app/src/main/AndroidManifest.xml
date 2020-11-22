@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.spudgmoneymanager">
+    package="com.spudg.spudgmoneymanager">
 
     <application
         android:allowBackup="true"
@@ -10,9 +10,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/SpudgMM">
-        <activity android:name=".AnalyticsActivity"></activity>
         <activity
-            android:name=".SplashActivity"
+            android:name="com.spudg.spudgmoneymanager.AnalyticsActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/SpudgMM"/>
+        <activity
+            android:name="com.spudg.spudgmoneymanager.SplashActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Splash">
             <intent-filter>
@@ -22,15 +25,15 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".CategoriesActivity"
+            android:name="com.spudg.spudgmoneymanager.CategoriesActivity"
             android:screenOrientation="portrait"
             android:theme="@style/SpudgMM" />
         <activity
-            android:name=".AccountsActivity"
+            android:name="com.spudg.spudgmoneymanager.AccountsActivity"
             android:screenOrientation="portrait"
             android:theme="@style/SpudgMM" />
         <activity
-            android:name=".MainActivity"
+            android:name="com.spudg.spudgmoneymanager.MainActivity"
             android:screenOrientation="portrait"
             android:theme="@style/SpudgMM" />
 
