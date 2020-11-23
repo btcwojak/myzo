@@ -75,6 +75,7 @@
             android:padding="10dp"
             android:text="@string/cancel"
             app:layout_constraintRight_toRightOf="parent"
+            android:textColor="@android:color/black"
             app:layout_constraintTop_toBottomOf="@id/myp_year" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

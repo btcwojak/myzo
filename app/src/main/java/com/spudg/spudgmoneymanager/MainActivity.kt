@@ -96,7 +96,7 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
 
     private fun setUpTransactionList() {
         if (getTransactionsList().size >= 0) {
-            rvTransactions.layoutManager = LinearLayoutManager(this)
+            rvTransactions.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, true)
             val transactionAdapter = TransactionAdapter(this, getTransactionsList())
             rvTransactions.adapter = transactionAdapter
         }

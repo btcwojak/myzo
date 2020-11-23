@@ -58,7 +58,7 @@
                     android:textColor="#000000"
                     android:textSize="24sp"
                     android:textStyle="bold"
-                    app:layout_constraintBottom_toBottomOf="@id/back_to_trans_from_analytics"
+                    app:layout_constraintBottom_toTopOf="@id/select_new_month_header"
                     app:layout_constraintRight_toRightOf="parent"
                     app:layout_constraintTop_toTopOf="@id/back_to_trans_from_analytics" />
 
@@ -110,7 +110,8 @@
                     android:textColor="@color/colorAccent"
                     android:textSize="16sp"
                     app:layout_constraintLeft_toRightOf="@id/change_month_left_bracket"
-                    app:layout_constraintTop_toBottomOf="@id/analytics_heading" />
+                    app:layout_constraintTop_toBottomOf="@id/analytics_heading"
+                    app:layout_constraintBottom_toBottomOf="@id/back_to_trans_from_analytics"/>
 
                 <TextView
                     android:id="@+id/change_month_right_bracket"
