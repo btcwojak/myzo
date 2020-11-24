@@ -4,14 +4,19 @@ import android.content.ContentValues
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
+import android.util.Log
 import java.text.DecimalFormat
 import java.text.NumberFormat
+import java.util.*
+import kotlin.collections.ArrayList
+
 
 class TransactionsHandler(context: Context, factory: SQLiteDatabase.CursorFactory?) :
     SQLiteOpenHelper(context, DATABASE_NAME, factory, DATABASE_VERSION) {
 
     companion object {
-        private const val DATABASE_VERSION = 8
+
+        private const val DATABASE_VERSION = 11
         private const val DATABASE_NAME = "SMMTransactions.db"
         private const val TABLE_TRANSACTIONS = "transactions"
 
@@ -23,12 +28,13 @@ class TransactionsHandler(context: Context, factory: SQLiteDatabase.CursorFactor
         private const val KEY_MONTH = "month"
         private const val KEY_DAY = "day"
         private const val KEY_YEAR = "year"
+        private const val KEY_DATE_MS = "date_millis"
 
     }
 
     override fun onCreate(db: SQLiteDatabase?) {
         val createTransactionsTable =
-            ("CREATE TABLE $TABLE_TRANSACTIONS($KEY_ID INTEGER PRIMARY KEY,$KEY_NOTE TEXT,$KEY_CATEGORY INTEGER,$KEY_AMOUNT TEXT,$KEY_ACCOUNT INTEGER,$KEY_MONTH INTEGER,$KEY_DAY INTEGER,$KEY_YEAR INTEGER)")
+            ("CREATE TABLE $TABLE_TRANSACTIONS($KEY_ID INTEGER PRIMARY KEY,$KEY_NOTE TEXT,$KEY_CATEGORY INTEGER,$KEY_AMOUNT TEXT,$KEY_ACCOUNT INTEGER,$KEY_MONTH INTEGER,$KEY_DAY INTEGER,$KEY_YEAR INTEGER,$KEY_DATE_MS REAL)")
         db?.execSQL(createTransactionsTable)
     }
 
@@ -46,6 +52,7 @@ class TransactionsHandler(context: Context, factory: SQLiteDatabase.CursorFactor
         values.put(KEY_MONTH, trans.month)
         values.put(KEY_DAY, trans.day)
         values.put(KEY_YEAR, trans.year)
+        values.put(KEY_DATE_MS, Date(trans.day, trans.month, trans.year).time)
         val db = this.writableDatabase
         val success = db.insert(TABLE_TRANSACTIONS, null, values)
         db.close()
@@ -61,6 +68,7 @@ class TransactionsHandler(context: Context, factory: SQLiteDatabase.CursorFactor
         values.put(KEY_MONTH, trans.month)
         values.put(KEY_DAY, trans.day)
         values.put(KEY_YEAR, trans.year)
+        values.put(KEY_DATE_MS, Date(trans.day, trans.month, trans.year).time)
         val db = this.writableDatabase
         val success = db.update(TABLE_TRANSACTIONS, values, KEY_ID + "=" + trans.id, null)
         db.close()
@@ -160,6 +168,7 @@ class TransactionsHandler(context: Context, factory: SQLiteDatabase.CursorFactor
         var month: Int
         var day: Int
         var year: Int
+        var dateMillis: Float
 
         if (cursor.moveToFirst()) {
             do {
@@ -171,6 +180,7 @@ class TransactionsHandler(context: Context, factory: SQLiteDatabase.CursorFactor
                 month = cursor.getInt(cursor.getColumnIndex(KEY_MONTH))
                 day = cursor.getInt(cursor.getColumnIndex(KEY_DAY))
                 year = cursor.getInt(cursor.getColumnIndex(KEY_YEAR))
+                dateMillis = cursor.getFloat(cursor.getColumnIndex(KEY_DATE_MS))
                 val transaction = TransactionModel(
                     id = id,
                     category = category,
@@ -179,13 +189,19 @@ class TransactionsHandler(context: Context, factory: SQLiteDatabase.CursorFactor
                     note = note,
                     month = month,
                     day = day,
-                    year = year
+                    year = year,
+                    dateMillis = dateMillis
                 )
                 list.add(transaction)
             } while (cursor.moveToNext())
         }
 
+        list.sortByDescending {
+            it.dateMillis
+        }
+
         return list
+
 
     }
 
@@ -269,6 +285,7 @@ class TransactionsHandler(context: Context, factory: SQLiteDatabase.CursorFactor
         var month: Int
         var day: Int
         var year: Int
+        var dateMillis: Float
 
         if (cursor.moveToFirst()) {
             do {
@@ -280,6 +297,7 @@ class TransactionsHandler(context: Context, factory: SQLiteDatabase.CursorFactor
                 month = cursor.getInt(cursor.getColumnIndex(KEY_MONTH))
                 day = cursor.getInt(cursor.getColumnIndex(KEY_DAY))
                 year = cursor.getInt(cursor.getColumnIndex(KEY_YEAR))
+                dateMillis = cursor.getFloat(cursor.getColumnIndex(KEY_DATE_MS))
                 val transaction = TransactionModel(
                     id = id,
                     category = category,
@@ -288,7 +306,8 @@ class TransactionsHandler(context: Context, factory: SQLiteDatabase.CursorFactor
                     note = note,
                     month = month,
                     day = day,
-                    year = year
+                    year = year,
+                    dateMillis = dateMillis
                 )
                 list.add(transaction)
             } while (cursor.moveToNext())

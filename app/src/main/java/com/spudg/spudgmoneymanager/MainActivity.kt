@@ -96,7 +96,10 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
 
     private fun setUpTransactionList() {
         if (getTransactionsList().size >= 0) {
-            rvTransactions.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, true)
+            var manager = LinearLayoutManager(this)
+            manager.reverseLayout = true
+            manager.stackFromEnd = true
+            rvTransactions.layoutManager = manager
             val transactionAdapter = TransactionAdapter(this, getTransactionsList())
             rvTransactions.adapter = transactionAdapter
         }
@@ -271,7 +274,8 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
                             account,
                             month,
                             day,
-                            year
+                            year,
+                            0F
                         )
                     )
                 } else if (!isIncome) {
@@ -284,7 +288,8 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
                             account,
                             month,
                             day,
-                            year
+                            year,
+                            0F
                         )
                     )
                 }
@@ -484,7 +489,8 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
                             account,
                             month,
                             day,
-                            year
+                            year,
+                            0F
                         )
                     )
                 } else if (!isIncome) {
@@ -497,7 +503,8 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
                             account,
                             month,
                             day,
-                            year
+                            year,
+                            0F
                         )
                     )
                 }
@@ -529,7 +536,7 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
 
         deleteDialog.tvDelete.setOnClickListener {
             val dbHandler = TransactionsHandler(this, null)
-            dbHandler.deleteTransaction(TransactionModel(transaction.id, "", 0, "", 0, 0, 0, 0))
+            dbHandler.deleteTransaction(TransactionModel(transaction.id, "", 0, "", 0, 0, 0, 0,0F))
 
             Toast.makeText(this, "Transaction deleted.", Toast.LENGTH_LONG).show()
             setBalanceText()
@@ -650,7 +657,7 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
         }
 
         backupDialog.import_text_export_location.text =
-            "Backups will be exported to and imported from ${this.getExternalFilesDir(null)!!.absolutePath}."
+            "Backups will be exported to and imported from ${this.getExternalFilesDir(null)!!.absolutePath}/SMMBackups."
 
         backupDialog.import_btn.setOnClickListener {
             if (checkStoragePermission()) {
@@ -786,6 +793,8 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
                 fw.append("" + recordList[i].day)
                 fw.append(",")
                 fw.append("" + recordList[i].year)
+                fw.append(",")
+                fw.append("" + recordList[i].dateMillis)
                 fw.append("\n")
             }
             fw.flush()
@@ -883,6 +892,7 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
                     val month = nextLine[5]
                     val day = nextLine[6]
                     val year = nextLine[7]
+                    val dateMillis = nextLine[8]
 
                     val transToAdd = TransactionModel(
                         id.toInt(),
@@ -892,7 +902,8 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
                         account.toInt(),
                         month.toInt(),
                         day.toInt(),
-                        year.toInt()
+                        year.toInt(),
+                        dateMillis.toFloat()
                     )
                     dbTrans.addTransaction(transToAdd)
                     success = true

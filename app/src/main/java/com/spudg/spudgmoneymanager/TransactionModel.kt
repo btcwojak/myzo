@@ -9,5 +9,6 @@ class TransactionModel(
     val account: Int,
     val month: Int,
     val day: Int,
-    val year: Int
+    val year: Int,
+    val dateMillis: Float
 )
