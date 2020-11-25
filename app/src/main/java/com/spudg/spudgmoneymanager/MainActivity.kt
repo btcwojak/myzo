@@ -97,8 +97,6 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
     private fun setUpTransactionList() {
         if (getTransactionsList().size >= 0) {
             var manager = LinearLayoutManager(this)
-            manager.reverseLayout = true
-            manager.stackFromEnd = true
             rvTransactions.layoutManager = manager
             val transactionAdapter = TransactionAdapter(this, getTransactionsList())
             rvTransactions.adapter = transactionAdapter
@@ -107,7 +105,7 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
 
     private fun getTransactionsList(): ArrayList<TransactionModel> {
         val dbHandler = TransactionsHandler(this, null)
-        return dbHandler.filterTransactions(Constants.CURRENT_ACCOUNT)
+        return dbHandler.filterTransactions(Constants.CURRENT_ACCOUNT, -1)
     }
 
     private fun addTransaction() {

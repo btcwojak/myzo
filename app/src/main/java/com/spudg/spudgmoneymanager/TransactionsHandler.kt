@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteOpenHelper
 import android.util.Log
 import java.text.DecimalFormat
 import java.text.NumberFormat
+import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -44,6 +45,11 @@ class TransactionsHandler(context: Context, factory: SQLiteDatabase.CursorFactor
     }
 
     fun addTransaction(trans: TransactionModel): Long {
+
+        var strDate = "${trans.day}-${trans.month}-${trans.year}"
+        var sdf = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
+        var dateMillis = sdf.parse(strDate).time
+
         val values = ContentValues()
         values.put(KEY_NOTE, trans.note)
         values.put(KEY_CATEGORY, trans.category)
@@ -52,7 +58,7 @@ class TransactionsHandler(context: Context, factory: SQLiteDatabase.CursorFactor
         values.put(KEY_MONTH, trans.month)
         values.put(KEY_DAY, trans.day)
         values.put(KEY_YEAR, trans.year)
-        values.put(KEY_DATE_MS, Date(trans.day, trans.month, trans.year).time)
+        values.put(KEY_DATE_MS, dateMillis)
         val db = this.writableDatabase
         val success = db.insert(TABLE_TRANSACTIONS, null, values)
         db.close()
@@ -60,6 +66,11 @@ class TransactionsHandler(context: Context, factory: SQLiteDatabase.CursorFactor
     }
 
     fun updateTransaction(trans: TransactionModel): Int {
+
+        var strDate = "${trans.day}-${trans.month}-${trans.year}"
+        var sdf = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
+        var dateMillis = sdf.parse(strDate).time
+
         val values = ContentValues()
         values.put(KEY_NOTE, trans.note)
         values.put(KEY_CATEGORY, trans.category)
@@ -68,7 +79,7 @@ class TransactionsHandler(context: Context, factory: SQLiteDatabase.CursorFactor
         values.put(KEY_MONTH, trans.month)
         values.put(KEY_DAY, trans.day)
         values.put(KEY_YEAR, trans.year)
-        values.put(KEY_DATE_MS, Date(trans.day, trans.month, trans.year).time)
+        values.put(KEY_DATE_MS, dateMillis)
         val db = this.writableDatabase
         val success = db.update(TABLE_TRANSACTIONS, values, KEY_ID + "=" + trans.id, null)
         db.close()
@@ -152,7 +163,7 @@ class TransactionsHandler(context: Context, factory: SQLiteDatabase.CursorFactor
 
     }
 
-    fun filterTransactions(accountFilter: Int): ArrayList<TransactionModel> {
+    fun filterTransactions(accountFilter: Int, sortBy: Int = 0): ArrayList<TransactionModel> {
         val list = ArrayList<TransactionModel>()
         val db = this.readableDatabase
         val cursor = db.rawQuery(
@@ -196,8 +207,16 @@ class TransactionsHandler(context: Context, factory: SQLiteDatabase.CursorFactor
             } while (cursor.moveToNext())
         }
 
-        list.sortByDescending {
-            it.dateMillis
+        if (sortBy == -1) {
+            list.sortByDescending {
+                it.year
+            }
+        }
+
+        if (sortBy == 1) {
+            list.sortBy {
+                it.year
+            }
         }
 
         return list
