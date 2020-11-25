@@ -10,6 +10,7 @@ import kotlinx.android.synthetic.main.transaction_row.view.*
 import java.lang.Exception
 import java.text.DecimalFormat
 import java.text.NumberFormat
+import java.text.SimpleDateFormat
 
 
 class TransactionAdapter(val context: Context, private val items: ArrayList<TransactionModel>) :
@@ -17,6 +18,7 @@ class TransactionAdapter(val context: Context, private val items: ArrayList<Tran
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val transactionItem = view.transaction_row_layout!!
+        val mainRowItem = view.main_row_layout!!
         val categoryView = view.category!!
         val amountView = view.amount!!
         val noteView = view.note!!
@@ -36,15 +38,22 @@ class TransactionAdapter(val context: Context, private val items: ArrayList<Tran
 
         val formatter: NumberFormat = DecimalFormat("#,##0.00")
 
-        holder.dateView.visibility = View.GONE
-
         val transaction = items[position]
+
+        var sdf = SimpleDateFormat("EEEE d MMM yyyy")
+        var date = sdf.format(transaction.dateMillis)
+        Log.e("test", date.toString())
+
+
+        if (context is MainActivity) {
+            holder.dateView.visibility = View.VISIBLE
+            holder.dateView.text = date.toString()
+        }
 
         if (context is MainActivity) {
             try {
-                if (transaction.day != items[position + 1].day) {
-                    holder.dateView.text = "${transaction.day}/${transaction.month}/${transaction.year}"
-                    holder.dateView.visibility = View.VISIBLE
+                if (transaction.dateMillis == items[position - 1].dateMillis) {
+                    holder.dateView.visibility = View.GONE
                 }
             } catch (e: Exception) {
                 Log.v("Transactions", e.message.toString())
@@ -63,13 +72,13 @@ class TransactionAdapter(val context: Context, private val items: ArrayList<Tran
             holder.colourView.setBackgroundColor(colour)
         }
 
-        holder.transactionItem.setOnClickListener {
+        holder.mainRowItem.setOnClickListener {
             if (context is MainActivity) {
                 context.updateTransaction(transaction)
             }
         }
 
-        holder.transactionItem.setOnLongClickListener {
+        holder.mainRowItem.setOnLongClickListener {
             if (context is MainActivity) {
                 context.deleteTransaction(transaction)
             }
