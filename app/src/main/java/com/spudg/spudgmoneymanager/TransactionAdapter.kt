@@ -40,10 +40,11 @@ class TransactionAdapter(val context: Context, private val items: ArrayList<Tran
 
         val transaction = items[position]
 
-        var sdf = SimpleDateFormat("EEEE d MMM yyyy")
-        var date = sdf.format(transaction.dateMillis)
-        Log.e("test", date.toString())
 
+        var sdf = SimpleDateFormat("EEEE d MMM yyyy")
+        var date = sdf.format(transaction.dateMillis.toFloat())
+
+        items[position].dateMillis
 
         if (context is MainActivity) {
             holder.dateView.visibility = View.VISIBLE
@@ -52,7 +53,7 @@ class TransactionAdapter(val context: Context, private val items: ArrayList<Tran
 
         if (context is MainActivity) {
             try {
-                if (transaction.dateMillis == items[position - 1].dateMillis) {
+                if (transaction.dateMillis.toFloat() == items[position - 1].dateMillis.toFloat()) {
                     holder.dateView.visibility = View.GONE
                 }
             } catch (e: Exception) {

@@ -10,5 +10,5 @@ class TransactionModel(
     val month: Int,
     val day: Int,
     val year: Int,
-    val dateMillis: Float
+    val dateMillis: String
 )

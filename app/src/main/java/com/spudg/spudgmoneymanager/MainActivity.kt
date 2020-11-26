@@ -105,7 +105,7 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
 
     private fun getTransactionsList(): ArrayList<TransactionModel> {
         val dbHandler = TransactionsHandler(this, null)
-        return dbHandler.filterTransactions(Constants.CURRENT_ACCOUNT, -1)
+        return dbHandler.filterTransactions(Constants.CURRENT_ACCOUNT, 1)
     }
 
     private fun addTransaction() {
@@ -273,7 +273,7 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
                             month,
                             day,
                             year,
-                            0F
+                            ""
                         )
                     )
                 } else if (!isIncome) {
@@ -287,7 +287,7 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
                             month,
                             day,
                             year,
-                            0F
+                            ""
                         )
                     )
                 }
@@ -488,7 +488,7 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
                             month,
                             day,
                             year,
-                            0F
+                            ""
                         )
                     )
                 } else if (!isIncome) {
@@ -502,7 +502,7 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
                             month,
                             day,
                             year,
-                            0F
+                            ""
                         )
                     )
                 }
@@ -534,7 +534,7 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
 
         deleteDialog.tvDelete.setOnClickListener {
             val dbHandler = TransactionsHandler(this, null)
-            dbHandler.deleteTransaction(TransactionModel(transaction.id, "", 0, "", 0, 0, 0, 0,0F))
+            dbHandler.deleteTransaction(TransactionModel(transaction.id, "", 0, "", 0, 0, 0, 0,""))
 
             Toast.makeText(this, "Transaction deleted.", Toast.LENGTH_LONG).show()
             setBalanceText()
@@ -901,7 +901,7 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
                         month.toInt(),
                         day.toInt(),
                         year.toInt(),
-                        dateMillis.toFloat()
+                        dateMillis
                     )
                     dbTrans.addTransaction(transToAdd)
                     success = true
