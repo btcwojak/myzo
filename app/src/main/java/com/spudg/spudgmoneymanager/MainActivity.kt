@@ -105,7 +105,7 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
 
     private fun getTransactionsList(): ArrayList<TransactionModel> {
         val dbHandler = TransactionsHandler(this, null)
-        return dbHandler.filterTransactions(Constants.CURRENT_ACCOUNT, 1)
+        return dbHandler.filterTransactions(Constants.CURRENT_ACCOUNT, -1)
     }
 
     private fun addTransaction() {
