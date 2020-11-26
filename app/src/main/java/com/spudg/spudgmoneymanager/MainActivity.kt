@@ -330,13 +330,13 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
             changeDateDialog.setContentView(R.layout.day_month_year_picker)
             changeDateDialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
-            if (transaction.day == 4 || transaction.day == 6 || transaction.day == 9 || transaction.day == 11) {
+            if (transaction.month == 4 || transaction.month == 6 || transaction.month == 9 || transaction.month == 11) {
                 changeDateDialog.dmyp_day.maxValue = 30
                 changeDateDialog.dmyp_day.minValue = 1
-            } else if (transaction.day == 2 && transaction.day % 4 == 0) {
+            } else if (transaction.month == 2 && transaction.month % 4 == 0) {
                 changeDateDialog.dmyp_day.maxValue = 29
                 changeDateDialog.dmyp_day.minValue = 1
-            } else if (transaction.day == 2 && transaction.day % 4 != 0) {
+            } else if (transaction.month == 2 && transaction.month % 4 != 0) {
                 changeDateDialog.dmyp_day.maxValue = 28
                 changeDateDialog.dmyp_day.minValue = 1
             } else {
