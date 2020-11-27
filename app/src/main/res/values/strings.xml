@@ -67,4 +67,8 @@
     <string name="larswerkman_holocolorpicker">larswerkman/HoloColorPicker</string>
     <string name="google_material_design_icons">google/material-design-icons</string>
     <string name="steve_matteson_open_sans_light_font">Steve Matteson / Open Sans Light font</string>
+    <string name="v1_0_0_made_by_spudg_software">v1.0.0, made by Spudg Software</string>
+    <string name="spudg_money_manager">Spudg Money Manager</string>
+    <string name="about_smm">About SMM</string>
+    <string name="smm_logo">SMM Logo</string>
 </resources>

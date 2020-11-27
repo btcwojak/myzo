@@ -44,7 +44,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="20dp"
                 android:fontFamily="@font/open_sans_light"
-                android:text="About SMM"
+                android:text="@string/about_smm"
                 android:textColor="#000000"
                 android:textSize="24sp"
                 android:textStyle="bold"
@@ -83,7 +83,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:background="@mipmap/ic_launcher" />
+                    android:background="@mipmap/ic_launcher"
+                    android:contentDescription="@string/smm_logo"/>
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -94,10 +95,10 @@
                         android:id="@+id/spudg_money_manager_title"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="left"
+                        android:layout_gravity="start"
                         android:fontFamily="@font/open_sans_light"
                         android:padding="6dp"
-                        android:text="Spudg Money Manager"
+                        android:text="@string/spudg_money_manager"
                         android:textColor="@android:color/black"
                         android:textSize="20sp" />
 
@@ -105,10 +106,11 @@
                         android:id="@+id/spudg_money_manager_desc"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="left"
+                        android:layout_gravity="start"
                         android:fontFamily="@font/open_sans_light"
-                        android:paddingLeft="10dp"
-                        android:text="v1.0.0, made by Spudg Software"
+                        android:paddingStart="10dp"
+                        android:paddingEnd="10dp"
+                        android:text="@string/v1_0_0_made_by_spudg_software"
                         android:textColor="@android:color/black"
                         android:textSize="16sp" />
 
