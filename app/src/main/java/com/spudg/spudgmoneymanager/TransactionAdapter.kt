@@ -39,11 +39,9 @@ class TransactionAdapter(val context: Context, private val items: ArrayList<Tran
         val formatter: NumberFormat = DecimalFormat("#,##0.00")
 
         val transaction = items[position]
-
-
+        
         var sdf = SimpleDateFormat("EEEE d MMM yyyy")
         var date = sdf.format(transaction.dateMillis.toLong())
-        Log.e("test",transaction.dateMillis.toLong().toString())
 
         if (context is MainActivity) {
             holder.dateView.visibility = View.VISIBLE

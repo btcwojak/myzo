@@ -48,7 +48,7 @@ class TransactionsHandler(context: Context, factory: SQLiteDatabase.CursorFactor
 
         var strDate = "${trans.day}-${trans.month}-${trans.year}"
         var sdf = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
-        var dateMillis = sdf.parse(strDate).time
+        var dateMillis = sdf.parse(strDate)?.time
 
         val values = ContentValues()
         values.put(KEY_NOTE, trans.note)
@@ -69,7 +69,7 @@ class TransactionsHandler(context: Context, factory: SQLiteDatabase.CursorFactor
 
         var strDate = "${trans.day}-${trans.month}-${trans.year}"
         var sdf = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
-        var dateMillis = sdf.parse(strDate).time
+        var dateMillis = sdf.parse(strDate)?.time
 
         val values = ContentValues()
         values.put(KEY_NOTE, trans.note)

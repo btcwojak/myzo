@@ -11,11 +11,15 @@
         android:supportsRtl="true"
         android:theme="@style/SpudgMM">
         <activity
-            android:name="com.spudg.spudgmoneymanager.AnalyticsActivity"
+            android:name=".AboutActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/SpudgMM"/>
+            android:theme="@style/SpudgMM" />
         <activity
-            android:name="com.spudg.spudgmoneymanager.SplashActivity"
+            android:name=".AnalyticsActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/SpudgMM" />
+        <activity
+            android:name=".SplashActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Splash">
             <intent-filter>
@@ -25,15 +29,15 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.spudg.spudgmoneymanager.CategoriesActivity"
+            android:name=".CategoriesActivity"
             android:screenOrientation="portrait"
             android:theme="@style/SpudgMM" />
         <activity
-            android:name="com.spudg.spudgmoneymanager.AccountsActivity"
+            android:name=".AccountsActivity"
             android:screenOrientation="portrait"
             android:theme="@style/SpudgMM" />
         <activity
-            android:name="com.spudg.spudgmoneymanager.MainActivity"
+            android:name=".MainActivity"
             android:screenOrientation="portrait"
             android:theme="@style/SpudgMM" />
 

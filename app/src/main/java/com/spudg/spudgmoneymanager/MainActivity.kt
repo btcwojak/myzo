@@ -79,6 +79,11 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
             backupDialog()
         }
 
+        about_btn.setOnClickListener {
+            val intent = Intent(this, AboutActivity::class.java)
+            startActivity(intent)
+        }
+
         setBalanceText()
         setAccountName()
 
