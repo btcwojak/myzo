@@ -61,7 +61,7 @@
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="50dp"
                 android:fontFamily="@font/open_sans_light"
-                android:text="PhilJay/MPAndroidChart"
+                android:text="@string/philjay_mpandroidchart"
                 android:textColor="@android:color/black"
                 android:textSize="16sp" />
 
@@ -80,7 +80,7 @@
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="10dp"
                 android:fontFamily="@font/open_sans_light"
-                android:text="opencsv/opencsv"
+                android:text="@string/opencsv_opencsv"
                 android:textColor="@android:color/black"
                 android:textSize="16sp" />
 
@@ -99,7 +99,7 @@
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="10dp"
                 android:fontFamily="@font/open_sans_light"
-                android:text="larswerkman/HoloColorPicker"
+                android:text="@string/larswerkman_holocolorpicker"
                 android:textColor="@android:color/black"
                 android:textSize="16sp" />
 
@@ -118,7 +118,7 @@
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="10dp"
                 android:fontFamily="@font/open_sans_light"
-                android:text="google/material-design-icons"
+                android:text="@string/google_material_design_icons"
                 android:textColor="@android:color/black"
                 android:textSize="16sp" />
 
@@ -137,7 +137,7 @@
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="10dp"
                 android:fontFamily="@font/open_sans_light"
-                android:text="Steve Matteson / Open Sans Light font"
+                android:text="@string/steve_matteson_open_sans_light_font"
                 android:textColor="@android:color/black"
                 android:textSize="16sp" />
 

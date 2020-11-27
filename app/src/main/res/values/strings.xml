@@ -62,4 +62,9 @@
     <string name="all_rights_reserved">All rights reserved. By using this application, you agree that the creator of this application is not responsible for any damages.</string>
     <string name="licensed_apache_2_0">Licensed under the Apache License 2.0</string>
     <string name="done">Done</string>
+    <string name="philjay_mpandroidchart">PhilJay/MPAndroidChart</string>
+    <string name="opencsv_opencsv">opencsv/opencsv</string>
+    <string name="larswerkman_holocolorpicker">larswerkman/HoloColorPicker</string>
+    <string name="google_material_design_icons">google/material-design-icons</string>
+    <string name="steve_matteson_open_sans_light_font">Steve Matteson / Open Sans Light font</string>
 </resources>
