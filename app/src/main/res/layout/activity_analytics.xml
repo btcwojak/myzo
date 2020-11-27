@@ -109,9 +109,9 @@
                     android:text="@string/change"
                     android:textColor="@color/colorAccent"
                     android:textSize="16sp"
+                    app:layout_constraintBottom_toBottomOf="@id/back_to_trans_from_analytics"
                     app:layout_constraintLeft_toRightOf="@id/change_month_left_bracket"
-                    app:layout_constraintTop_toBottomOf="@id/analytics_heading"
-                    app:layout_constraintBottom_toBottomOf="@id/back_to_trans_from_analytics"/>
+                    app:layout_constraintTop_toBottomOf="@id/analytics_heading" />
 
                 <TextView
                     android:id="@+id/change_month_right_bracket"

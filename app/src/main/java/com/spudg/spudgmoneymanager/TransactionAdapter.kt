@@ -7,7 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.transaction_row.view.*
-import java.lang.Exception
 import java.text.DecimalFormat
 import java.text.NumberFormat
 import java.text.SimpleDateFormat
@@ -33,13 +32,12 @@ class TransactionAdapter(val context: Context, private val items: ArrayList<Tran
     }
 
 
-
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 
         val formatter: NumberFormat = DecimalFormat("#,##0.00")
 
         val transaction = items[position]
-        
+
         var sdf = SimpleDateFormat("EEEE d MMM yyyy")
         var date = sdf.format(transaction.dateMillis.toLong())
 
