@@ -9,8 +9,6 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
-import android.view.Menu
-import android.view.MenuItem
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
@@ -84,8 +82,8 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
                         backupDialog()
                     }
                     R.id.action_recurring -> {
-                        //val intent = Intent(this, RecurringActivity::class.java)
-                        //startActivity(intent)
+                        val intent = Intent(this, RecurringActivity::class.java)
+                        startActivity(intent)
                     }
                     R.id.action_about -> {
                         val intent = Intent(this, AboutActivity::class.java)

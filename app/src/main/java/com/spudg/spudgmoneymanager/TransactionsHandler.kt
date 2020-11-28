@@ -39,15 +39,13 @@ class TransactionsHandler(context: Context, factory: SQLiteDatabase.CursorFactor
     }
 
     override fun onUpgrade(db: SQLiteDatabase?, oldVersion: Int, newVersion: Int) {
-        db?.execSQL("DROP TABLE IF EXISTS $TABLE_TRANSACTIONS")
-        onCreate(db)
     }
 
     fun addTransaction(trans: TransactionModel): Long {
 
-        var strDate = "${trans.day}-${trans.month}-${trans.year}"
-        var sdf = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
-        var dateMillis = sdf.parse(strDate)?.time
+        val strDate = "${trans.day}-${trans.month}-${trans.year}"
+        val sdf = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
+        val dateMillis = sdf.parse(strDate)?.time
 
         val values = ContentValues()
         values.put(KEY_NOTE, trans.note)
@@ -66,9 +64,9 @@ class TransactionsHandler(context: Context, factory: SQLiteDatabase.CursorFactor
 
     fun updateTransaction(trans: TransactionModel): Int {
 
-        var strDate = "${trans.day}-${trans.month}-${trans.year}"
-        var sdf = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
-        var dateMillis = sdf.parse(strDate)?.time
+        val strDate = "${trans.day}-${trans.month}-${trans.year}"
+        val sdf = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
+        val dateMillis = sdf.parse(strDate)?.time
 
         val values = ContentValues()
         values.put(KEY_NOTE, trans.note)

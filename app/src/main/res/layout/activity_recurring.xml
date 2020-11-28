@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".CategoriesActivity">
+    tools:context=".RecurringActivity">
 
     <LinearLayout
         android:id="@+id/llHeader"
@@ -24,7 +24,7 @@
             android:background="#FFFFFF">
 
             <Button
-                android:id="@+id/back_to_trans_from_categories"
+                android:id="@+id/back_to_trans_from_recurring"
                 android:layout_width="wrap_content"
                 android:layout_height="50dp"
                 android:layout_marginStart="20dp"
@@ -39,18 +39,19 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/category_heading"
+                android:id="@+id/recurring_heading"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="20dp"
                 android:fontFamily="@font/open_sans_light"
-                android:text="@string/all_categories"
+                android:text="All Recurring\nTemplates"
                 android:textColor="#000000"
                 android:textSize="24sp"
+                android:gravity="end"
                 android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="@id/back_to_trans_from_categories"
+                app:layout_constraintBottom_toBottomOf="@id/back_to_trans_from_recurring"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="@id/back_to_trans_from_categories" />
+                app:layout_constraintTop_toTopOf="@id/back_to_trans_from_recurring" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -69,26 +70,26 @@
             app:layout_constraintVertical_weight="4">
 
             <Button
-                android:id="@+id/add_category"
+                android:id="@+id/add_recurring"
                 android:layout_width="wrap_content"
                 android:layout_height="50dp"
                 android:layout_marginBottom="25dp"
                 android:background="#99FFFFFF"
                 android:fontFamily="@font/open_sans_light"
-                android:text="@string/add_category"
+                android:text="+ Recurring Template"
                 android:textColor="@color/colorAccent"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent" />
 
             <LinearLayout
-                android:id="@+id/llCategories"
+                android:id="@+id/llRecurring"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toTopOf="parent">
 
                 <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rvCategories"
+                    android:id="@+id/rvRecurring"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:clipToPadding="false"
