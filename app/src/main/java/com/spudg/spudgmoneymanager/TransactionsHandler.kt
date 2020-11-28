@@ -2,7 +2,6 @@ package com.spudg.spudgmoneymanager
 
 import android.content.ContentValues
 import android.content.Context
-import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 import java.text.DecimalFormat
@@ -163,19 +162,13 @@ class TransactionsHandler(context: Context, factory: SQLiteDatabase.CursorFactor
 
     }
 
-    fun filterTransactions(accountFilter: Int, sortBy: Int = 0, recurringOnly: Boolean = false): ArrayList<TransactionModel> {
+    fun filterTransactions(accountFilter: Int, sortBy: Int = 0): ArrayList<TransactionModel> {
         val list = ArrayList<TransactionModel>()
         val db = this.readableDatabase
-
-        var cursor = if (!recurringOnly) {
-            db.rawQuery(
-                "SELECT * FROM $TABLE_TRANSACTIONS WHERE $KEY_ACCOUNT = $accountFilter",
-                null)
-        } else {
-            db.rawQuery(
-                "SELECT * FROM $TABLE_TRANSACTIONS WHERE $KEY_ACCOUNT = $accountFilter AND $KEY_MONTHLY = 'true'",
-                null)
-        }
+        val cursor = db.rawQuery(
+            "SELECT * FROM $TABLE_TRANSACTIONS WHERE $KEY_ACCOUNT = $accountFilter",
+            null
+        )
 
         var id: Int
         var category: Int

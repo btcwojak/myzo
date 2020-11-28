@@ -44,51 +44,42 @@ class TransactionAdapter(val context: Context, private val items: ArrayList<Tran
         if (context is MainActivity) {
             holder.dateView.visibility = View.VISIBLE
             holder.dateView.text = date.toString()
+        }
 
+        if (context is MainActivity) {
             try {
                 if (transaction.dateMillis.toLong() == items[position - 1].dateMillis.toLong()) {
                     holder.dateView.visibility = View.GONE
                 }
             } catch (e: Exception) {
                 Log.v("Transactions", e.message.toString())
-            }
-
-            holder.categoryView.text = context.getTransactionCategoryTitle(transaction.category)
-
-            val colour = context.getTransactionCategoryColour(transaction.category)
-            holder.colourView.setBackgroundColor(colour)
-
-            holder.mainRowItem.setOnClickListener {
-                    context.updateTransaction(transaction)
-            }
-
-            holder.mainRowItem.setOnLongClickListener {
-                    context.deleteTransaction(transaction)
-                true
             }
         }
 
-        if (context is RecurringActivity) {
-            holder.dateView.visibility = View.VISIBLE
-            holder.dateView.text = date.toString()
-
-            try {
-                if (transaction.dateMillis.toLong() == items[position - 1].dateMillis.toLong()) {
-                    holder.dateView.visibility = View.GONE
-                }
-            } catch (e: Exception) {
-                Log.v("Transactions", e.message.toString())
-            }
-
-            holder.categoryView.text = context.getRecurringTransactionCategoryTitle(transaction.category)
-
-            val colour = context.getRecurringTransactionCategoryColour(transaction.category)
-            holder.colourView.setBackgroundColor(colour)
-
+        if (context is MainActivity) {
+            holder.categoryView.text = context.getTransactionCategoryTitle(transaction.category)
         }
 
         holder.amountView.text = formatter.format((transaction.amount).toDouble()).toString()
         holder.noteView.text = transaction.note
+
+        if (context is MainActivity) {
+            val colour = context.getTransactionCategoryColour(transaction.category)
+            holder.colourView.setBackgroundColor(colour)
+        }
+
+        holder.mainRowItem.setOnClickListener {
+            if (context is MainActivity) {
+                context.updateTransaction(transaction)
+            }
+        }
+
+        holder.mainRowItem.setOnLongClickListener {
+            if (context is MainActivity) {
+                context.deleteTransaction(transaction)
+            }
+            true
+        }
 
     }
 
