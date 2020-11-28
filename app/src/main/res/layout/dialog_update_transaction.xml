@@ -138,15 +138,6 @@
 
     </com.google.android.material.textfield.TextInputLayout>
 
-    <CheckBox
-        android:id="@+id/cbMonthlyUpdate"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:fontFamily="@font/open_sans_light"
-        android:textSize="14sp"
-        android:text="Monthly transaction?" />
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

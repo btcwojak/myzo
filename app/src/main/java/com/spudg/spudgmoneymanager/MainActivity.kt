@@ -9,6 +9,8 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
@@ -277,7 +279,6 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
             val month = monthPicked
             val day = dayPicked
             val year = yearPicked
-            val monthly = addDialog.cbMonthlyAdd.isChecked.toString()
 
             if (selectedCategory.isNotEmpty() && amount.isNotEmpty() && note.isNotEmpty()) {
                 if (isIncome) {
@@ -291,8 +292,7 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
                             month,
                             day,
                             year,
-                            "",
-                            monthly
+                            ""
                         )
                     )
                 } else if (!isIncome) {
@@ -306,8 +306,7 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
                             month,
                             day,
                             year,
-                            "",
-                            monthly
+                            ""
                         )
                     )
                 }
@@ -455,7 +454,6 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
         updateDialog.category_spinner_update_trans.setSelection(transaction.category - 1)
 
         updateDialog.etNoteLayoutUpdate.etNoteUpdate.setText(transaction.note)
-        updateDialog.cbMonthlyUpdate.isChecked = transaction.monthly.toBoolean()
 
         if (transaction.amount.toFloat() >= 0) {
             updateDialog.inc_exp_radio_group.income_radio.isChecked = true
@@ -496,7 +494,6 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
             val month = monthPicked
             val day = dayPicked
             val year = yearPicked
-            val monthly = updateDialog.cbMonthlyUpdate.isChecked.toString()
 
             if (selectedCategory.isNotEmpty() && amount.isNotEmpty() && note.isNotEmpty()) {
                 if (isIncome) {
@@ -510,8 +507,7 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
                             month,
                             day,
                             year,
-                            "",
-                            monthly
+                            ""
                         )
                     )
                 } else if (!isIncome) {
@@ -525,8 +521,7 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
                             month,
                             day,
                             year,
-                            "",
-                            monthly
+                            ""
                         )
                     )
                 }
@@ -558,7 +553,7 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
 
         deleteDialog.tvDelete.setOnClickListener {
             val dbHandler = TransactionsHandler(this, null)
-            dbHandler.deleteTransaction(TransactionModel(transaction.id, "", 0, "", 0, 0, 0, 0, "",""))
+            dbHandler.deleteTransaction(TransactionModel(transaction.id, "", 0, "", 0, 0, 0, 0, ""))
 
             Toast.makeText(this, "Transaction deleted.", Toast.LENGTH_LONG).show()
             setBalanceText()
@@ -817,8 +812,6 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
                 fw.append("" + recordList[i].year)
                 fw.append(",")
                 fw.append("" + recordList[i].dateMillis)
-                fw.append(",")
-                fw.append("" + recordList[i].monthly)
                 fw.append("\n")
             }
             fw.flush()
@@ -917,7 +910,6 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
                     val day = nextLine[6]
                     val year = nextLine[7]
                     val dateMillis = nextLine[8]
-                    val monthly = nextLine[9]
 
                     val transToAdd = TransactionModel(
                         id.toInt(),
@@ -928,8 +920,7 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
                         month.toInt(),
                         day.toInt(),
                         year.toInt(),
-                        dateMillis,
-                        monthly
+                        dateMillis
                     )
                     dbTrans.addTransaction(transToAdd)
                     success = true

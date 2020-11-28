@@ -10,6 +10,5 @@ class TransactionModel(
     val month: Int,
     val day: Int,
     val year: Int,
-    val dateMillis: String,
-    val monthly: String
+    val dateMillis: String
 )
