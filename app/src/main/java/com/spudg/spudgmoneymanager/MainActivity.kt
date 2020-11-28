@@ -9,10 +9,10 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
-import android.widget.AdapterView
-import android.widget.ArrayAdapter
-import android.widget.Toast
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -75,13 +75,27 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
             startActivity(intent)
         }
 
-        backup_btn.setOnClickListener {
-            backupDialog()
-        }
+        more_btn.setOnClickListener {
+            val popupMenu: PopupMenu = PopupMenu(this, more_btn)
+            popupMenu.menuInflater.inflate(R.menu.menu_popup, popupMenu.menu)
+            popupMenu.setOnMenuItemClickListener(PopupMenu.OnMenuItemClickListener { item ->
+                when (item.itemId) {
+                    R.id.action_backup -> {
+                        backupDialog()
+                    }
+                    R.id.action_recurring -> {
+                        //val intent = Intent(this, RecurringActivity::class.java)
+                        //startActivity(intent)
+                    }
+                    R.id.action_about -> {
+                        val intent = Intent(this, AboutActivity::class.java)
+                        startActivity(intent)
+                    }
+                }
+                true
+            })
 
-        about_btn.setOnClickListener {
-            val intent = Intent(this, AboutActivity::class.java)
-            startActivity(intent)
+            popupMenu.show()
         }
 
         setBalanceText()
