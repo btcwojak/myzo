@@ -92,7 +92,7 @@ class AccountsHandler(context: Context, factory: SQLiteDatabase.CursorFactory?) 
 
     }
 
-    fun getAccountName(accountId: Int): String {
+    fun getAccountName(accountId: Int): String? {
         val db = this.readableDatabase
         val cursor = db.rawQuery("SELECT * FROM $TABLE_ACCOUNTS WHERE $KEY_ID = $accountId", null)
 
