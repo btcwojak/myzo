@@ -7,10 +7,6 @@
         android:title="Backup"
         app:showAsAction="never"/>
     <item
-        android:id="@+id/action_recurring"
-        android:title="Recurring"
-        app:showAsAction="never"/>
-    <item
         android:id="@+id/action_about"
         android:title="About"
         app:showAsAction="never"/>

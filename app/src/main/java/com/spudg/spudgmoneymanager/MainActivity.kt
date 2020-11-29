@@ -83,10 +83,6 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
                     R.id.action_backup -> {
                         backupDialog()
                     }
-                    R.id.action_recurring -> {
-                        //val intent = Intent(this, RecurringActivity::class.java)
-                        //startActivity(intent)
-                    }
                     R.id.action_about -> {
                         val intent = Intent(this, AboutActivity::class.java)
                         startActivity(intent)
