@@ -13,8 +13,6 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
-import kotlinx.android.synthetic.main.activity_categories.*
-import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_recurring.*
 import kotlinx.android.synthetic.main.day_month_year_picker.*
 import kotlinx.android.synthetic.main.dialog_add_recurring.*
@@ -22,21 +20,9 @@ import kotlinx.android.synthetic.main.dialog_add_recurring.etAmountLayoutRecurri
 import kotlinx.android.synthetic.main.dialog_add_recurring.tvCancelRecurring
 import kotlinx.android.synthetic.main.dialog_add_recurring.view.*
 import kotlinx.android.synthetic.main.dialog_add_recurring.view.etAmountRecurring
-import kotlinx.android.synthetic.main.dialog_add_transaction.*
-import kotlinx.android.synthetic.main.dialog_add_transaction.category_spinner_add_trans
-import kotlinx.android.synthetic.main.dialog_add_transaction.etAmountLayout
-import kotlinx.android.synthetic.main.dialog_add_transaction.inc_exp_radio_group
-import kotlinx.android.synthetic.main.dialog_add_transaction.tvCancel
-import kotlinx.android.synthetic.main.dialog_add_transaction.view.*
-import kotlinx.android.synthetic.main.dialog_add_transaction.view.etAmount
-import kotlinx.android.synthetic.main.dialog_add_transaction.view.expenditure_radio
-import kotlinx.android.synthetic.main.dialog_add_transaction.view.income_radio
 import kotlinx.android.synthetic.main.dialog_delete_recurring.*
-import kotlinx.android.synthetic.main.dialog_delete_transaction.*
 import kotlinx.android.synthetic.main.dialog_update_recurring.*
 import kotlinx.android.synthetic.main.dialog_update_recurring.view.*
-import kotlinx.android.synthetic.main.dialog_update_transaction.*
-import kotlinx.android.synthetic.main.dialog_update_transaction.view.*
 import java.util.*
 
 class RecurringActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
@@ -439,7 +425,7 @@ class RecurringActivity : AppCompatActivity(), AdapterView.OnItemSelectedListene
 
             if (selectedCategory.isNotEmpty() && amount.isNotEmpty() && note.isNotEmpty()) {
                 if (isIncome) {
-                    dbHandler.updateRecurring(
+                    dbHandler.updateRecurringTransaction(
                         RecurringModel(
                             recurring.id,
                             note,
@@ -457,7 +443,7 @@ class RecurringActivity : AppCompatActivity(), AdapterView.OnItemSelectedListene
                         )
                     )
                 } else if (!isIncome) {
-                    dbHandler.updateRecurring(
+                    dbHandler.updateRecurringTransaction(
                         RecurringModel(
                             recurring.id,
                             note,

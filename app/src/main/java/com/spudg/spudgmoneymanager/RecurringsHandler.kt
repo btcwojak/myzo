@@ -116,7 +116,7 @@ class RecurringsHandler(context: Context, factory: SQLiteDatabase.CursorFactory?
         values.put(KEY_ACCOUNT, recurringTrans.account)
         values.put(KEY_LAST_MONTH, recurringTrans.lastMonth)
         values.put(KEY_LAST_DAY, recurringTrans.lastDay)
-        values.put(KEY_LAST_YEAR, recurringTrans.lastMonth)
+        values.put(KEY_LAST_YEAR, recurringTrans.lastYear)
         values.put(KEY_LAST_DATE_MS, lastDateMillis)
         values.put(KEY_NEXT_MONTH, recurringTrans.nextMonth)
         values.put(KEY_NEXT_DAY, recurringTrans.nextDay)
@@ -129,11 +129,13 @@ class RecurringsHandler(context: Context, factory: SQLiteDatabase.CursorFactory?
     }
 
 
-    fun updateRecurring(recurringTrans: RecurringModel): Int {
+    fun updateRecurringTransaction(recurringTrans: RecurringModel): Int {
 
-        val strDate = "${recurringTrans.nextDay}-${recurringTrans.nextMonth}-${recurringTrans.nextYear}"
-        val sdf = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
-        val nextDateMillis = sdf.parse(strDate)?.time
+        var calendar: Calendar = Calendar.getInstance()
+        calendar.timeInMillis = recurringTrans.nextDateMillis.toLong()
+        var nextMonth = calendar.get(Calendar.MONTH)
+        var nextDay = calendar.get(Calendar.DAY_OF_MONTH)
+        var nextYear = calendar.get(Calendar.YEAR)
 
         val values = ContentValues()
         values.put(KEY_NOTE, recurringTrans.note)
@@ -142,12 +144,12 @@ class RecurringsHandler(context: Context, factory: SQLiteDatabase.CursorFactory?
         values.put(KEY_ACCOUNT, recurringTrans.account)
         values.put(KEY_LAST_MONTH, recurringTrans.lastMonth)
         values.put(KEY_LAST_DAY, recurringTrans.lastDay)
-        values.put(KEY_LAST_YEAR, recurringTrans.lastMonth)
+        values.put(KEY_LAST_YEAR, recurringTrans.lastYear)
         values.put(KEY_LAST_DATE_MS, recurringTrans.lastDateMillis)
-        values.put(KEY_NEXT_MONTH, recurringTrans.nextMonth)
-        values.put(KEY_NEXT_DAY, recurringTrans.nextDay)
-        values.put(KEY_NEXT_YEAR, recurringTrans.nextYear)
-        values.put(KEY_NEXT_DATE_MS, nextDateMillis)
+        values.put(KEY_NEXT_MONTH, nextMonth)
+        values.put(KEY_NEXT_DAY, nextDay)
+        values.put(KEY_NEXT_YEAR, nextYear)
+        values.put(KEY_NEXT_DATE_MS, recurringTrans.nextDateMillis)
         val db = this.writableDatabase
         val success = db.update(TABLE_RECURRINGS, values, KEY_ID + "=" + recurringTrans.id, null)
         db.close()

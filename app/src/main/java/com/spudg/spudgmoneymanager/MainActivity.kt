@@ -52,6 +52,7 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
 
         storagePermission = arrayOf(android.Manifest.permission.WRITE_EXTERNAL_STORAGE)
 
+        checkDueRecurringTransactions()
         setUpTransactionList()
 
         add_transaction.setOnClickListener {
@@ -647,6 +648,22 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
     fun getTransactionCategoryTitle(CategoryId: Int): String {
         val dbHandlerCat = CategoriesHandler(this, null)
         return dbHandlerCat.getCategoryTitle(CategoryId)
+    }
+
+    private fun checkDueRecurringTransactions() {
+        val dbRecurring = RecurringsHandler(this, null)
+        val dbTrans = TransactionsHandler(this, null)
+        val allRecurringTransactions = dbRecurring.getAllRecurringTransactions()
+
+        var currentDateMillis = Calendar.getInstance().timeInMillis
+
+        // get this to work!
+        for (recTrans in allRecurringTransactions) {
+            if (recTrans.nextDateMillis.toLong() <= currentDateMillis) {
+                dbTrans.addTransaction(TransactionModel(0,recTrans.note,recTrans.category,recTrans.amount,recTrans.account,recTrans.nextMonth,recTrans.nextDay,recTrans.nextYear,""))
+                dbRecurring.updateRecurringTransaction(RecurringModel(recTrans.id,recTrans.note,recTrans.category,recTrans.amount,recTrans.account,recTrans.nextMonth,recTrans.nextDay,recTrans.nextYear,recTrans.nextDateMillis,0, 0,0,(recTrans.nextDateMillis.toLong() + 2592000000).toString()))
+            }
+        }
     }
 
     override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
