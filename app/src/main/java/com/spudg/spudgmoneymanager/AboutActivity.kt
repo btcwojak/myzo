@@ -41,7 +41,8 @@ class AboutActivity : AppCompatActivity() {
     }
 
     private fun privacyPolicy() {
-        val url = "https://docs.google.com/document/d/1ZUlUR293yLqaEppmmCGrM5JYRNksaFOU2ky7tAU7htE/edit?usp=sharing"
+        val url =
+            "https://docs.google.com/document/d/1ZUlUR293yLqaEppmmCGrM5JYRNksaFOU2ky7tAU7htE/edit?usp=sharing"
         val i = Intent(Intent.ACTION_VIEW)
         i.data = Uri.parse(url)
         startActivity(i)

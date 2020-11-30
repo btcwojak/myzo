@@ -255,7 +255,12 @@ class TransactionsHandler(context: Context, factory: SQLiteDatabase.CursorFactor
 
     }
 
-    fun getTransactionTotalForCategoryDayMonthYear(categoryId: Int, day: Int, month: Int, year: Int): Float {
+    fun getTransactionTotalForCategoryDayMonthYear(
+        categoryId: Int,
+        day: Int,
+        month: Int,
+        year: Int
+    ): Float {
         var amount: String
         var runningTotal = 0.00F
         val dbTrans = this.readableDatabase

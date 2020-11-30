@@ -58,7 +58,7 @@
     <string name="send_an_email">Send an email</string>
     <string name="about_text">Spudg Money Manager is a personal finance tracker that allows you to record your income and expenditure over time, add custom accounts, categories and export / import your data locally. \n\nSpudg Studios is currently a one-man development studio and this is an early version of the application, so if you have any suggestions or you\'ve found a bug, please send an email below!</string>
     <string name="copyright">Copyright (c) 2020 Spudg Studios</string>
-    <string name="all_rights_reserved">All rights reserved. By using this application, you agree that the creator of this application is not responsible for any damages.</string>
+    <string name="all_rights_reserved">All rights reserved. By using this application, you agree that the creator of this application is not responsible for any losses or damages.</string>
     <string name="licensed_apache_2_0">Licensed under the Apache License 2.0</string>
     <string name="done">Done</string>
     <string name="philjay_mpandroidchart">PhilJay/MPAndroidChart</string>
