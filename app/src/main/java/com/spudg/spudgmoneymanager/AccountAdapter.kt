@@ -34,6 +34,7 @@ class AccountAdapter(private val context: Context, private val items: ArrayList<
             val db = context.getBalance()
             val bal = db.getBalanceForAccount(account.id)
             holder.balanceView.text = "Balance: $bal"
+            db.close()
         }
 
 

@@ -56,8 +56,8 @@
     <string name="privacy_policy_title">Privacy Policy</string>
     <string name="terms_of_use_title">Terms of Use</string>
     <string name="send_an_email">Send an email</string>
-    <string name="about_text">Spudg Money Manager is a personal finance tracker that allows you to record your income and expenditure over time, add custom accounts, categories and export / import your data locally. \n\nSpudg Software is currently a one-man development studio and this is an early version of the application, so if you have any suggestions or you\'ve found a bug, please send an email below!</string>
-    <string name="copyright">Copyright (c) 2020, Spudg Software</string>
+    <string name="about_text">Spudg Money Manager is a personal finance tracker that allows you to record your income and expenditure over time, add custom accounts, categories and export / import your data locally. \n\nSpudg Studios is currently a one-man development studio and this is an early version of the application, so if you have any suggestions or you\'ve found a bug, please send an email below!</string>
+    <string name="copyright">Copyright (c) 2020 Spudg Studios</string>
     <string name="all_rights_reserved">All rights reserved. By using this application, you agree that the creator of this application is not responsible for any damages.</string>
     <string name="licensed_apache_2_0">Licensed under the Apache License 2.0</string>
     <string name="done">Done</string>
@@ -66,7 +66,7 @@
     <string name="larswerkman_holocolorpicker">larswerkman/HoloColorPicker</string>
     <string name="google_material_design_icons">google/material-design-icons</string>
     <string name="steve_matteson_open_sans_light_font">Steve Matteson / Open Sans Light font</string>
-    <string name="v1_0_0_made_by_spudg_software">v1.0.0, made by Spudg Software</string>
+    <string name="v1_0_0_made_by_spudg_software">v1.0.0, made by Spudg Studios</string>
     <string name="spudg_money_manager">Spudg Money Manager</string>
     <string name="about_smm">About SMM</string>
     <string name="smm_logo">SMM Logo</string>
