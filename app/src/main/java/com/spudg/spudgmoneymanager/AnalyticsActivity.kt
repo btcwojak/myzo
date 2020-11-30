@@ -64,8 +64,8 @@ class AnalyticsActivity : AppCompatActivity(), AdapterView.OnItemSelectedListene
         )
 
         val dbCategories = CategoriesHandler(this, null)
-        category_spinner_bar_chart_layout.category_spinner_bar_chart
         val items = dbCategories.getAllCategoryTitles()
+        dbCategories.close()
         val categoryAdapter = ArrayAdapter(this, R.layout.custom_spinner, items)
         category_spinner_bar_chart_layout.category_spinner_bar_chart.adapter = categoryAdapter
         category_spinner_bar_chart_layout.category_spinner_bar_chart.onItemSelectedListener = this
@@ -358,6 +358,9 @@ class AnalyticsActivity : AppCompatActivity(), AdapterView.OnItemSelectedListene
             }
         }
 
+        dbHandlerTransaction.close()
+        dbHandlerCategory.close()
+
     }
 
     private fun makeBarData(monthFilter: Int, yearFilter: Int, categoryFilter: Int) {
@@ -392,6 +395,8 @@ class AnalyticsActivity : AppCompatActivity(), AdapterView.OnItemSelectedListene
                 )
             transactionTotalsPerDay.add(totalForDay)
         }
+
+        dbHandlerTransaction.close()
 
     }
 

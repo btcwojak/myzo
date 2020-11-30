@@ -31,9 +31,10 @@ class AccountsHandler(context: Context, factory: SQLiteDatabase.CursorFactory?) 
     fun addAccount(account: AccountModel) {
         val values = ContentValues()
         values.put(KEY_NAME, account.name)
+        val existingNames = getAllAccountNames()
+
         val db = this.writableDatabase
 
-        val existingNames = getAllAccountNames()
         var alreadyExists = false
         for (name in existingNames) {
             if (name == account.name) {
@@ -43,11 +44,12 @@ class AccountsHandler(context: Context, factory: SQLiteDatabase.CursorFactory?) 
 
         if (!alreadyExists) {
             db.insert(TABLE_ACCOUNTS, null, values)
-            db.close()
             Constants.CAT_UNIQUE_TITLE = 1
         } else {
             Constants.CAT_UNIQUE_TITLE = 0
         }
+
+        db.close()
 
     }
 
@@ -69,6 +71,7 @@ class AccountsHandler(context: Context, factory: SQLiteDatabase.CursorFactory?) 
         }
 
         cursor.close()
+        db.close()
         return list
 
     }
@@ -88,11 +91,12 @@ class AccountsHandler(context: Context, factory: SQLiteDatabase.CursorFactory?) 
         }
 
         cursor.close()
+        db.close()
         return list
 
     }
 
-    fun getAccountName(accountId: Int): String? {
+    fun getAccountName(accountId: Int): String {
         val db = this.readableDatabase
         val cursor = db.rawQuery("SELECT * FROM $TABLE_ACCOUNTS WHERE $KEY_ID = $accountId", null)
 
@@ -114,10 +118,10 @@ class AccountsHandler(context: Context, factory: SQLiteDatabase.CursorFactory?) 
     fun updateAccount(account: AccountModel) {
         val values = ContentValues()
         values.put(KEY_NAME, account.name)
+        val existingNames = getAllAccountNames()
+
         val dbForSearch = this.readableDatabase
         val dbForUpdate = this.writableDatabase
-
-        val existingNames = getAllAccountNames()
 
         if (existingNames.contains(account.name)) {
             Constants.CAT_UNIQUE_TITLE = 0
@@ -149,10 +153,11 @@ class AccountsHandler(context: Context, factory: SQLiteDatabase.CursorFactory?) 
             }
 
             cursor.close()
-            dbForSearch.close()
-            dbForUpdate.close()
 
         }
+
+        dbForSearch.close()
+        dbForUpdate.close()
     }
 
     fun deleteAccount(account: AccountModel): Int {

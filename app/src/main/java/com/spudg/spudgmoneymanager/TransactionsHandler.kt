@@ -45,9 +45,9 @@ class TransactionsHandler(context: Context, factory: SQLiteDatabase.CursorFactor
 
     fun addTransaction(trans: TransactionModel): Long {
 
-        var strDate = "${trans.day}-${trans.month}-${trans.year}"
-        var sdf = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
-        var dateMillis = sdf.parse(strDate)?.time
+        val strDate = "${trans.day}-${trans.month}-${trans.year}"
+        val sdf = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
+        val dateMillis = sdf.parse(strDate)?.time
 
         val values = ContentValues()
         values.put(KEY_NOTE, trans.note)
@@ -66,9 +66,9 @@ class TransactionsHandler(context: Context, factory: SQLiteDatabase.CursorFactor
 
     fun updateTransaction(trans: TransactionModel): Int {
 
-        var strDate = "${trans.day}-${trans.month}-${trans.year}"
-        var sdf = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
-        var dateMillis = sdf.parse(strDate)?.time
+        val strDate = "${trans.day}-${trans.month}-${trans.year}"
+        val sdf = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
+        val dateMillis = sdf.parse(strDate)?.time
 
         val values = ContentValues()
         values.put(KEY_NOTE, trans.note)
@@ -129,6 +129,9 @@ class TransactionsHandler(context: Context, factory: SQLiteDatabase.CursorFactor
             runningBalance += item
         }
 
+        cursor.close()
+        db.close()
+
         val formatter: NumberFormat = DecimalFormat("#,##0.00")
         return formatter.format(runningBalance).toString()
 
@@ -156,6 +159,9 @@ class TransactionsHandler(context: Context, factory: SQLiteDatabase.CursorFactor
         for (item in list) {
             runningBalance += item
         }
+
+        db.close()
+        cursor.close()
 
         val formatter: NumberFormat = DecimalFormat("#,##0.00")
         return formatter.format(runningBalance).toString()
@@ -218,6 +224,9 @@ class TransactionsHandler(context: Context, factory: SQLiteDatabase.CursorFactor
             }
         }
 
+        cursor.close()
+        db.close()
+
         return list
 
 
@@ -239,16 +248,14 @@ class TransactionsHandler(context: Context, factory: SQLiteDatabase.CursorFactor
             } while (cursor.moveToNext())
         }
 
+        cursor.close()
+        dbTrans.close()
+
         return runningTotal
 
     }
 
-    fun getTransactionTotalForCategoryDayMonthYear(
-        categoryId: Int,
-        day: Int,
-        month: Int,
-        year: Int
-    ): Float {
+    fun getTransactionTotalForCategoryDayMonthYear(categoryId: Int, day: Int, month: Int, year: Int): Float {
         var amount: String
         var runningTotal = 0.00F
         val dbTrans = this.readableDatabase
@@ -264,31 +271,12 @@ class TransactionsHandler(context: Context, factory: SQLiteDatabase.CursorFactor
             } while (cursor.moveToNext())
         }
 
+        cursor.close()
+        dbTrans.close()
+
         return runningTotal
 
     }
-
-/*
-    fun getTransactionsForCategory(categoryId: Int): ArrayList<Float> {
-        var amount: String
-        val list: ArrayList<Float> = ArrayList()
-        val db = this.readableDatabase
-        val cursor = db.rawQuery(
-            "SELECT * FROM $TABLE_TRANSACTIONS WHERE $KEY_CATEGORY = $categoryId",
-            null
-        )
-
-        if (cursor.moveToFirst()) {
-            do {
-                amount = cursor.getString(cursor.getColumnIndex(KEY_AMOUNT))
-                list.add(amount.toFloat())
-            } while (cursor.moveToNext())
-        }
-
-        return list
-
-    }
-*/
 
     fun getAllTransactions(): ArrayList<TransactionModel> {
         val list = ArrayList<TransactionModel>()
@@ -330,6 +318,9 @@ class TransactionsHandler(context: Context, factory: SQLiteDatabase.CursorFactor
                 list.add(transaction)
             } while (cursor.moveToNext())
         }
+
+        cursor.close()
+        db.close()
 
         return list
 

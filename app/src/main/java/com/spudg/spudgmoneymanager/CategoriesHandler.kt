@@ -36,9 +36,10 @@ class CategoriesHandler(context: Context, factory: SQLiteDatabase.CursorFactory?
         val values = ContentValues()
         values.put(KEY_TITLE, category.title)
         values.put(KEY_COLOUR, category.colour)
+        val existingTitles = getAllCategoryTitles()
+
         val db = this.writableDatabase
 
-        val existingTitles = getAllCategoryTitles()
         var alreadyExists = false
         for (title in existingTitles) {
             if (title == category.title) {
@@ -48,21 +49,22 @@ class CategoriesHandler(context: Context, factory: SQLiteDatabase.CursorFactory?
 
         if (!alreadyExists) {
             db.insert(TABLE_CATEGORIES, null, values)
-            db.close()
             Constants.CAT_UNIQUE_TITLE = 1
         } else {
             Constants.CAT_UNIQUE_TITLE = 0
         }
+
+        db.close()
     }
 
     fun updateCategory(category: CategoryModel) {
         val values = ContentValues()
         values.put(KEY_TITLE, category.title)
         values.put(KEY_COLOUR, category.colour)
+        val existingTitles = getAllCategoryTitles()
+
         val dbForSearch = this.readableDatabase
         val dbForUpdate = this.writableDatabase
-
-        val existingTitles = getAllCategoryTitles()
 
         if (existingTitles.contains(category.title)) {
             Constants.CAT_UNIQUE_TITLE = 0
@@ -129,9 +131,10 @@ class CategoriesHandler(context: Context, factory: SQLiteDatabase.CursorFactory?
                 )
                 list.add(category)
             } while (cursor.moveToNext())
-            cursor.close()
         }
 
+        cursor.close()
+        db.close()
         return list
 
     }
@@ -148,9 +151,10 @@ class CategoriesHandler(context: Context, factory: SQLiteDatabase.CursorFactory?
                 title = cursor.getString(cursor.getColumnIndex(KEY_TITLE))
                 list.add(title)
             } while (cursor.moveToNext())
-            cursor.close()
         }
 
+        cursor.close()
+        db.close()
         return list
 
     }

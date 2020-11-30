@@ -103,6 +103,7 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
             Constants.CURRENT_ACCOUNT = dbHandler.getAllAccounts().first().id
             setAccountName()
             setBalanceText()
+            dbHandler.close()
         }
 
         checkDefaultCategories()
@@ -120,7 +121,9 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
 
     private fun getTransactionsList(): ArrayList<TransactionModel> {
         val dbHandler = TransactionsHandler(this, null)
-        return dbHandler.filterTransactions(Constants.CURRENT_ACCOUNT, -1)
+        val result = dbHandler.filterTransactions(Constants.CURRENT_ACCOUNT, -1)
+        dbHandler.close()
+        return result
     }
 
     private fun addTransaction() {
@@ -242,6 +245,7 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
 
         val categoryListHandler = CategoriesHandler(this, null)
         val items = categoryListHandler.getAllCategoryTitles()
+        categoryListHandler.close()
         val categoryAdapter = ArrayAdapter(this, R.layout.custom_spinner, items)
         addDialog.category_spinner_add_trans.adapter = categoryAdapter
         addDialog.category_spinner_add_trans.onItemSelectedListener = this
@@ -316,6 +320,9 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
                 Toast.makeText(this, "Category, amount or note can't be blank.", Toast.LENGTH_LONG)
                     .show()
             }
+
+            dbHandlerTrans.close()
+            dbHandlerCat.close()
 
         }
 
@@ -444,6 +451,7 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
 
         val categoryListHandler = CategoriesHandler(this, null)
         val items = categoryListHandler.getAllCategoryTitles()
+        categoryListHandler.close()
         val categoryAdapter = ArrayAdapter(this, R.layout.custom_spinner, items)
         updateDialog.category_spinner_update_trans.adapter = categoryAdapter
         updateDialog.category_spinner_update_trans.onItemSelectedListener = this
@@ -532,6 +540,9 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
                     .show()
             }
 
+            dbHandler.close()
+            dbHandlerCat.close()
+
         }
 
         updateDialog.tvCancel.setOnClickListener {
@@ -554,6 +565,7 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
             Toast.makeText(this, "Transaction deleted.", Toast.LENGTH_LONG).show()
             setBalanceText()
             setUpTransactionList()
+            dbHandler.close()
             deleteDialog.dismiss()
         }
 
@@ -574,23 +586,28 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
             balance_heading.text = "Balance: $balance"
         }
 
+        dbHandler.close()
     }
 
     private fun setAccountName() {
         val dbHandler = AccountsHandler(this, null)
         val name = dbHandler.getAccountName(Constants.CURRENT_ACCOUNT)
         account_heading.text = name
-
+        dbHandler.close()
     }
 
     private fun noAccounts(): Boolean {
         val dbHandler = AccountsHandler(this, null)
-        return dbHandler.getAllAccounts().size < 1
+        val result = dbHandler.getAllAccounts().size < 1
+        dbHandler.close()
+        return result
     }
 
     fun getTransactionCategoryColour(categoryId: Int): Int {
         val dbHandler = CategoriesHandler(this, null)
-        return dbHandler.getCategoryColour(categoryId)
+        val result = dbHandler.getCategoryColour(categoryId)
+        dbHandler.close()
+        return result
     }
 
     private fun checkDefaultCategories() {
@@ -612,6 +629,8 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
         if (!allCategories.contains("Other")) {
             dbHandler.addCategory(CategoryModel(0, "Other", "-65281"))
         }
+
+        dbHandler.close()
 
     }
 
@@ -644,7 +663,9 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
 
     fun getTransactionCategoryTitle(CategoryId: Int): String {
         val dbHandlerCat = CategoriesHandler(this, null)
-        return dbHandlerCat.getCategoryTitle(CategoryId)
+        val result = dbHandlerCat.getCategoryTitle(CategoryId)
+        dbHandlerCat.close()
+        return result
     }
 
     override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
@@ -736,7 +757,7 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
             Toast.makeText(
                 this,
                 "An error occurred. Please try restarting the app.",
-                Toast.LENGTH_SHORT
+                Toast.LENGTH_LONG
             ).show()
         }
     }
@@ -751,8 +772,8 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
         } else {
             Toast.makeText(
                 this,
-                "An error occurred. Please ensure backup files are in the correct place.",
-                Toast.LENGTH_SHORT
+                "An error occurred. Please ensure backup files are in the correct place and that at least one transaction was to be imported.",
+                Toast.LENGTH_LONG
             ).show()
         }
         setUpTransactionList()
@@ -816,6 +837,7 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
         } catch (e: Exception) {
             Toast.makeText(this, e.message, Toast.LENGTH_SHORT).show()
         }
+        dbTrans.close()
         return success
     }
 
@@ -849,6 +871,7 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
         } catch (e: Exception) {
             Toast.makeText(this, e.message, Toast.LENGTH_SHORT).show()
         }
+        dbCats.close()
         return success
     }
 
@@ -880,6 +903,7 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
         } catch (e: Exception) {
             Toast.makeText(this, e.message, Toast.LENGTH_SHORT).show()
         }
+        dbAccs.close()
         return success
     }
 
@@ -927,6 +951,7 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
         } else {
             Log.e("Import", "Transactions CSV file not found.")
         }
+        dbTrans.close()
         return success
     }
 
@@ -959,6 +984,8 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
         } else {
             Log.e("Import", "Categories CSV file not found.")
         }
+
+        dbCats.close()
         return success
     }
 
@@ -994,6 +1021,8 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
         } else {
             Log.e("Import", "Accounts CSV file not found.")
         }
+
+        dbAccs.close()
         return success
     }
 

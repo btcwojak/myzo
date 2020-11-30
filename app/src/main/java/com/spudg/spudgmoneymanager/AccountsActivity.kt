@@ -41,7 +41,9 @@ class AccountsActivity : AppCompatActivity() {
 
     private fun getAccountsList(): ArrayList<AccountModel> {
         val dbHandler = AccountsHandler(this, null)
-        return dbHandler.getAllAccounts()
+        val result = dbHandler.getAllAccounts()
+        dbHandler.close()
+        return result
     }
 
     private fun addAccount() {
@@ -67,6 +69,8 @@ class AccountsActivity : AppCompatActivity() {
             } else {
                 Toast.makeText(this, "Account name can't be blank.", Toast.LENGTH_LONG).show()
             }
+
+            dbHandler.close()
 
         }
 
@@ -111,6 +115,8 @@ class AccountsActivity : AppCompatActivity() {
                 Toast.makeText(this, "Account name can't be blank.", Toast.LENGTH_LONG).show()
             }
 
+            dbHandler.close()
+
         }
 
         updateDialog.tvCancel.setOnClickListener {
@@ -134,6 +140,8 @@ class AccountsActivity : AppCompatActivity() {
 
             Toast.makeText(this, "Account deleted.", Toast.LENGTH_LONG).show()
             setUpAccountList()
+            dbHandlerAcc.close()
+            dbHandlerTrans.close()
             deleteDialog.dismiss()
         }
 
@@ -152,6 +160,7 @@ class AccountsActivity : AppCompatActivity() {
     private fun setTotalBalance() {
         val dbHandler = TransactionsHandler(this, null)
         balance_heading.text = "Total balance: ${dbHandler.getBalanceForAllAccounts()}"
+        dbHandler.close()
     }
 
 

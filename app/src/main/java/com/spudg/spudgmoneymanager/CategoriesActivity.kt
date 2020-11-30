@@ -39,7 +39,9 @@ class CategoriesActivity : AppCompatActivity() {
 
     private fun getCategoriesList(): ArrayList<CategoryModel> {
         val dbHandler = CategoriesHandler(this, null)
-        return dbHandler.getAllCategories()
+        val result = dbHandler.getAllCategories()
+        dbHandler.close()
+        return result
     }
 
 
@@ -83,6 +85,8 @@ class CategoriesActivity : AppCompatActivity() {
                 Toast.makeText(this, "Title or colour can't be blank.", Toast.LENGTH_LONG).show()
             }
 
+            dbHandler.close()
+
         }
 
         addDialog.tvCancel.setOnClickListener {
@@ -124,6 +128,8 @@ class CategoriesActivity : AppCompatActivity() {
                 Toast.makeText(this, "Title or colour can't be blank.", Toast.LENGTH_LONG).show()
             }
 
+            dbHandler.close()
+
         }
 
         updateDialog.tvCancel.setOnClickListener {
@@ -153,6 +159,8 @@ class CategoriesActivity : AppCompatActivity() {
 
             Toast.makeText(this, "Category deleted.", Toast.LENGTH_LONG).show()
             setUpCategoryList()
+            dbHandlerCat.close()
+            dbHandlerTrans.close()
             deleteDialog.dismiss()
         }
 
