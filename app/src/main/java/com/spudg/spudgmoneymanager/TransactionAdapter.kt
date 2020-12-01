@@ -38,8 +38,8 @@ class TransactionAdapter(val context: Context, private val items: ArrayList<Tran
 
         val transaction = items[position]
 
-        var sdf = SimpleDateFormat("EEEE d MMM yyyy")
-        var date = sdf.format(transaction.dateMillis.toLong())
+        val sdf = SimpleDateFormat("EEEE d MMM yyyy")
+        val date = sdf.format(transaction.dateMillis.toLong())
 
         if (context is MainActivity) {
             holder.dateView.visibility = View.VISIBLE

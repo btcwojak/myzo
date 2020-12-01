@@ -61,13 +61,8 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
             addTransaction()
         }
 
-        switch_accounts.setOnClickListener {
+        accounts_btn.setOnClickListener {
             val intent = Intent(this, AccountsActivity::class.java)
-            startActivity(intent)
-        }
-
-        analysis_btn.setOnClickListener {
-            val intent = Intent(this, AnalyticsActivity::class.java)
             startActivity(intent)
         }
 
@@ -81,6 +76,10 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
             popupMenu.menuInflater.inflate(R.menu.menu_popup, popupMenu.menu)
             popupMenu.setOnMenuItemClickListener(PopupMenu.OnMenuItemClickListener { item ->
                 when (item.itemId) {
+                    R.id.action_analysis -> {
+                        val intent = Intent(this, AnalyticsActivity::class.java)
+                        startActivity(intent)
+                    }
                     R.id.action_backup -> {
                         backupDialog()
                     }
@@ -946,6 +945,7 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
                     dbTrans.addTransaction(transToAdd)
                     success = true
                 }
+                csvReader.close()
             } catch (e: Exception) {
                 Log.e("importTransactions", e.message.toString())
             }
@@ -979,6 +979,7 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
                     dbCats.addCategory(catToAdd)
                     success = true
                 }
+                csvReader.close()
             } catch (e: Exception) {
                 Log.e("importCategories", e.message.toString())
             }
@@ -1005,6 +1006,7 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
                     val dbHandler = AccountsHandler(this, null)
                     dbHandler.addAccount(AccountModel(0, "Main Account"))
                     Constants.CURRENT_ACCOUNT = dbHandler.getAllAccounts().first().id
+                    dbHandler.close()
                 }
                 val csvReader = CSVReader(FileReader(csvFile.absolutePath))
                 var nextLine: Array<String>
@@ -1016,6 +1018,7 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
                     dbAccs.addAccount(accToAdd)
                     success = true
                 }
+                csvReader.close()
             } catch (e: Exception) {
                 Log.e("importAccounts", e.message.toString())
             }

@@ -23,20 +23,18 @@
             android:layout_height="match_parent"
             android:background="#FFFFFF">
 
-            <Button
+            <ImageView
                 android:id="@+id/back_to_trans_from_categories"
-                android:layout_width="wrap_content"
-                android:layout_height="50dp"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="20dp"
-                android:layout_marginBottom="30dp"
-                android:background="#FFFFFF"
-                android:fontFamily="@font/open_sans_light"
-                android:text="@string/back"
-                android:textColor="@color/colorAccent"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp"
+                android:layout_width="wrap_content"
+                android:foreground="?attr/selectableItemBackground"
+                android:layout_height="wrap_content"
+                android:background="@drawable/back_btn_padding" />
 
             <TextView
                 android:id="@+id/category_heading"
