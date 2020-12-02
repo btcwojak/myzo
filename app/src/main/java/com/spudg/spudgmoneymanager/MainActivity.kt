@@ -18,6 +18,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.play.core.review.ReviewInfo
+import com.google.android.play.core.review.ReviewManager
+import com.google.android.play.core.review.ReviewManagerFactory
 import com.opencsv.CSVReader
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.day_month_year_picker.*
@@ -49,11 +52,16 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
     private val STORAGE_REQUEST_CODE_EXPORT = 2
     private lateinit var storagePermission: Array<String>
 
+    lateinit var manager: ReviewManager
+    var reviewInfo: ReviewInfo? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
         storagePermission = arrayOf(android.Manifest.permission.WRITE_EXTERNAL_STORAGE)
+
+        initReviews()
 
         setUpTransactionList()
 
@@ -116,6 +124,11 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
             rvTransactions.layoutManager = manager
             val transactionAdapter = TransactionAdapter(this, getTransactionsList())
             rvTransactions.adapter = transactionAdapter
+        }
+        Log.e("test",Constants.TRANSACTIONS_ADDED_SESSION.toString())
+        if (Constants.TRANSACTIONS_ADDED_SESSION == 3) {
+            Log.e("test","yeah")
+            askForReview()
         }
     }
 
@@ -269,6 +282,9 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
         }
 
         addDialog.tvAdd.setOnClickListener {
+
+            Constants.TRANSACTIONS_ADDED_SESSION += 1
+
             val dbHandlerTrans = TransactionsHandler(this, null)
             val dbHandlerCat = CategoriesHandler(this, null)
 
@@ -666,6 +682,27 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
         val result = dbHandlerCat.getCategoryTitle(CategoryId)
         dbHandlerCat.close()
         return result
+    }
+
+    private fun initReviews() {
+        manager = ReviewManagerFactory.create(this)
+        manager.requestReviewFlow().addOnCompleteListener { request ->
+            if (request.isSuccessful) {
+                reviewInfo = request.result
+            } else {
+                Log.e("initReviews","Error with Play review manager.")
+            }
+        }
+    }
+
+    private fun askForReview() {
+        if (reviewInfo != null) {
+            manager.launchReviewFlow(this, reviewInfo!!).addOnFailureListener {
+                Log.e("askForReview","Error with Play review manager.")
+            }.addOnCompleteListener { _ ->
+                Log.e("askForReview","Success with Play review manager.")
+            }
+        }
     }
 
     override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {

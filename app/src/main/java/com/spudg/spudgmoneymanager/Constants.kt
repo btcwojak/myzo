@@ -6,6 +6,7 @@ class Constants {
         var CURRENT_ACCOUNT: Int = 1
         var CAT_COL_SELECTED: Int = 0
         var CAT_UNIQUE_TITLE: Int = 0
+        var TRANSACTIONS_ADDED_SESSION: Int = 0
         var MONTHS_SHORT_ARRAY: Array<String> = arrayOf(
             "Jan",
             "Feb",
