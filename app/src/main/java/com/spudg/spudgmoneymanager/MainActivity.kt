@@ -52,21 +52,18 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
     private val STORAGE_REQUEST_CODE_EXPORT = 2
     private lateinit var storagePermission: Array<String>
 
+    lateinit var manager: ReviewManager
+    var reviewInfo: ReviewInfo? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
         storagePermission = arrayOf(android.Manifest.permission.WRITE_EXTERNAL_STORAGE)
 
-        if (getTransactionsList().size < 1) {
-            llTransactions.visibility = View.GONE
-            tvNoTransactions.visibility = View.VISIBLE
-        } else {
-            llTransactions.visibility = View.VISIBLE
-            tvNoTransactions.visibility = View.GONE
-        }
-
         setUpTransactionList()
+
+        initReviews()
 
         add_transaction.setOnClickListener {
             addTransaction()
@@ -122,17 +119,22 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
     }
 
     private fun setUpTransactionList() {
-        if (getTransactionsList().size >= 0) {
+        if (getTransactionsList().size > 0) {
+            llTransactions.visibility = View.VISIBLE
+            tvNoTransactions.visibility = View.GONE
             var manager = LinearLayoutManager(this)
             rvTransactions.layoutManager = manager
             val transactionAdapter = TransactionAdapter(this, getTransactionsList())
             rvTransactions.adapter = transactionAdapter
+        } else {
+            llTransactions.visibility = View.GONE
+            tvNoTransactions.visibility = View.VISIBLE
         }
-        Log.e("test",Constants.TRANSACTIONS_ADDED_SESSION.toString())
-        if (Constants.TRANSACTIONS_ADDED_SESSION == 3) {
-            Log.e("test","yeah")
+
+        if (Constants.TRANSACTIONS_ADDED_SESSION == 8) {
             askForReview()
         }
+
     }
 
     private fun getTransactionsList(): ArrayList<TransactionModel> {
@@ -687,15 +689,23 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
         return result
     }
 
-    private fun askForReview() {
-        val manager = ReviewManagerFactory.create(this@MainActivity)
-        val request = manager.requestReviewFlow()
-        request.addOnCompleteListener { request ->
+    private fun initReviews() {
+        manager = ReviewManagerFactory.create(this)
+        manager.requestReviewFlow().addOnCompleteListener { request ->
             if (request.isSuccessful) {
-                Log.v("Review API", "Request was successful.")
-                val reviewInfo = request.result
+                reviewInfo = request.result
             } else {
-                Log.v("Review API", "An error occurred.")
+                Log.e("initReviews","An error occurred.")
+            }
+        }
+    }
+
+    private fun askForReview() {
+        if (reviewInfo != null) {
+            manager.launchReviewFlow(this, reviewInfo!!).addOnFailureListener {
+                Log.e("askForReview","An error occurred.")
+            }.addOnCompleteListener { _ ->
+                Log.v("askForReview","Success.")
             }
         }
     }
