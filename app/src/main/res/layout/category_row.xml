@@ -9,9 +9,9 @@
         android:id="@+id/category_inner_row_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="40dp"
+        android:layout_marginLeft="30dp"
         android:layout_marginTop="15dp"
-        android:layout_marginRight="40dp"
+        android:layout_marginRight="30dp"
         android:layout_marginBottom="15dp"
         android:background="@drawable/dialog_background_solid"
         android:elevation="5dp"
@@ -21,9 +21,9 @@
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/update_category"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
-            android:layout_marginEnd="30dp"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginEnd="10dp"
             android:background="@drawable/edit_btn"
             android:foreground="?attr/selectableItemBackground"
             tools:visibility="gone" />
@@ -33,9 +33,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginEnd="15dp"
+            android:layout_marginEnd="10dp"
             android:fontFamily="@font/open_sans_light"
-            android:gravity="start"
             android:text="@string/default_category"
             android:textColor="#212121"
             android:textSize="16sp"
@@ -75,9 +74,9 @@
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/delete_category"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
-            android:layout_marginStart="30dp"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginStart="10dp"
             android:background="@drawable/delete_btn"
             android:foreground="?attr/selectableItemBackground"
             tools:visibility="gone" />

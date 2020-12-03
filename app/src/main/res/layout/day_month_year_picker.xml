@@ -83,6 +83,7 @@
             android:id="@+id/cancel_dmy"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textColor="@android:color/black"
             android:layout_marginTop="10dp"
             android:fontFamily="@font/open_sans_light"
             android:foreground="?attr/selectableItemBackground"

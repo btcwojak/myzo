@@ -57,7 +57,7 @@ class AccountsActivity : AppCompatActivity() {
 
             val dbHandler = AccountsHandler(this, null)
 
-            if (title.isNotEmpty()) {
+            if (name.isNotEmpty()) {
                 dbHandler.addAccount(AccountModel(0, name))
                 if (Constants.CAT_UNIQUE_TITLE == 1) {
                     Toast.makeText(this, "Account added.", Toast.LENGTH_LONG).show()

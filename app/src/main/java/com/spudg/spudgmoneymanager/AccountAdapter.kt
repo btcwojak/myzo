@@ -30,6 +30,10 @@ class AccountAdapter(private val context: Context, private val items: ArrayList<
         val account = items[position]
         holder.nameView.text = account.name
 
+        if (position == 0) {
+            holder.deleteView.visibility = View.GONE
+        }
+
         if (context is AccountsActivity) {
             val db = context.getBalance()
             val bal = db.getBalanceForAccount(account.id)
