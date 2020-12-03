@@ -73,4 +73,5 @@
     <string name="more">More</string>
     <string name="accounts">Accounts</string>
     <string name="daily_activity">Daily Activity</string>
+    <string name="no_transaction_text">No transactions added. Press \'+ TRANSACTION\' to get started! \n\nWhen you\'ve added transactions, press \'More\' then \'Analytics\' to see a visualisation of your data. \n\nYou can also add custom categories other than the default ones provided - such as \'Salary\' or \'Dividends\'.</string>
 </resources>

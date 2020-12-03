@@ -139,6 +139,7 @@
 
             <LinearLayout
                 android:id="@+id/llTransactions"
+                android:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toTopOf="parent">
@@ -151,6 +152,23 @@
                     android:paddingBottom="80dp" />
 
             </LinearLayout>
+
+            <TextView
+                android:id="@+id/tvNoTransactions"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/no_transaction_text"
+                android:gravity="center_horizontal"
+                android:fontFamily="@font/open_sans_light"
+                android:textSize="16sp"
+                android:layout_marginBottom="100dp"
+                android:textColor="@android:color/black"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

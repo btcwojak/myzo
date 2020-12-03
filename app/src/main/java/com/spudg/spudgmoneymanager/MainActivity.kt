@@ -63,6 +63,14 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
 
         initReviews()
 
+        if (getTransactionsList().size < 1) {
+            llTransactions.visibility = View.GONE
+            tvNoTransactions.visibility = View.VISIBLE
+        } else {
+            llTransactions.visibility = View.VISIBLE
+            tvNoTransactions.visibility = View.GONE
+        }
+
         setUpTransactionList()
 
         add_transaction.setOnClickListener {
