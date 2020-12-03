@@ -52,16 +52,11 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
     private val STORAGE_REQUEST_CODE_EXPORT = 2
     private lateinit var storagePermission: Array<String>
 
-    lateinit var manager: ReviewManager
-    var reviewInfo: ReviewInfo? = null
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
         storagePermission = arrayOf(android.Manifest.permission.WRITE_EXTERNAL_STORAGE)
-
-        initReviews()
 
         if (getTransactionsList().size < 1) {
             llTransactions.visibility = View.GONE
@@ -692,23 +687,15 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
         return result
     }
 
-    private fun initReviews() {
-        manager = ReviewManagerFactory.create(this)
-        manager.requestReviewFlow().addOnCompleteListener { request ->
-            if (request.isSuccessful) {
-                reviewInfo = request.result
-            } else {
-                Log.e("initReviews","Error with Play review manager.")
-            }
-        }
-    }
-
     private fun askForReview() {
-        if (reviewInfo != null) {
-            manager.launchReviewFlow(this, reviewInfo!!).addOnFailureListener {
-                Log.e("askForReview","Error with Play review manager.")
-            }.addOnCompleteListener { _ ->
-                Log.e("askForReview","Success with Play review manager.")
+        val manager = ReviewManagerFactory.create(this@MainActivity)
+        val request = manager.requestReviewFlow()
+        request.addOnCompleteListener { request ->
+            if (request.isSuccessful) {
+                Log.v("Review API", "Request was successful.")
+                val reviewInfo = request.result
+            } else {
+                Log.v("Review API", "An error occurred.")
             }
         }
     }
