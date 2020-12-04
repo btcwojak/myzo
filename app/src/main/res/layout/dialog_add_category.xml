@@ -29,10 +29,12 @@
         <androidx.appcompat.widget.AppCompatEditText
             android:id="@+id/etTitle"
             android:layout_width="match_parent"
+            android:inputType="text"
             android:layout_height="wrap_content"
             android:fontFamily="@font/open_sans_light"
             android:hint="@string/title"
-            android:maxLength="14" />
+            android:maxLength="14"
+            android:maxLines="1"/>
 
     </com.google.android.material.textfield.TextInputLayout>
 

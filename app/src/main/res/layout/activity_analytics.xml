@@ -218,7 +218,7 @@
 
                     <LinearLayout
                         android:id="@+id/category_spinner_bar_chart_layout"
-                        android:layout_width="200dp"
+                        android:layout_width="250dp"
                         android:layout_marginTop="15dp"
                         android:layout_height="wrap_content"
                         android:background="@drawable/dropdown_border">
