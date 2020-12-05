@@ -43,6 +43,7 @@ import kotlinx.android.synthetic.main.dialog_update_transaction.view.*
 import java.io.File
 import java.io.FileReader
 import java.io.FileWriter
+import java.text.SimpleDateFormat
 import java.util.*
 
 class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
@@ -723,6 +724,10 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
 
     // Import / export code below
 
+    private fun updateLastBackupDate() {
+        val db = LastBackupHandler(this, null)
+        db.addBackupDate(Calendar.getInstance().timeInMillis.toString())
+    }
 
     private fun backupDialog() {
         val backupDialog = Dialog(this, R.style.Theme_Dialog)
@@ -733,6 +738,17 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
         backupDialog.tvCancel.setOnClickListener {
             backupDialog.dismiss()
         }
+
+        val db = LastBackupHandler(this, null)
+        val date = db.getBackupDate()
+
+        if (date.isNotEmpty()) {
+            val sdf = SimpleDateFormat("d MMM yyyy HH:mm")
+            val formattedDate = sdf.format(date.toFloat())
+            backupDialog.last_backup.text = "Last backup: $formattedDate"
+        }
+
+        db.close()
 
         backupDialog.import_text_export_location.text =
             "Backups will be exported to and imported from ${this.getExternalFilesDir(null)!!.absolutePath}/SMMBackups."
@@ -770,6 +786,7 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
 
                 exportConfirmDialog.export_confirm_btn.setOnClickListener {
                     exportFullCSV()
+                    updateLastBackupDate()
                     exportConfirmDialog.dismiss()
                     backupDialog.dismiss()
                 }

@@ -34,6 +34,10 @@ class AboutActivity : AppCompatActivity() {
             termsOfUse()
         }
 
+        rate_btn.setOnClickListener {
+            rate()
+        }
+
         email_btn.setOnClickListener {
             email()
         }
@@ -79,6 +83,14 @@ class AboutActivity : AppCompatActivity() {
             ).show()
         }
 
+    }
+
+    private fun rate() {
+        val url =
+            "https://play.google.com/store/apps/details?id=com.spudg.spudgmoneymanager"
+        val i = Intent(Intent.ACTION_VIEW)
+        i.data = Uri.parse(url)
+        startActivity(i)
     }
 
 }
