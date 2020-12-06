@@ -44,7 +44,6 @@ class TransactionsHandler(context: Context, factory: SQLiteDatabase.CursorFactor
     }
 
     fun addTransaction(trans: TransactionModel): Long {
-
         val strDate = "${trans.day}-${trans.month}-${trans.year}"
         val sdf = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
         val dateMillis = sdf.parse(strDate)?.time
@@ -65,7 +64,6 @@ class TransactionsHandler(context: Context, factory: SQLiteDatabase.CursorFactor
     }
 
     fun updateTransaction(trans: TransactionModel): Int {
-
         val strDate = "${trans.day}-${trans.month}-${trans.year}"
         val sdf = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
         val dateMillis = sdf.parse(strDate)?.time
@@ -228,7 +226,6 @@ class TransactionsHandler(context: Context, factory: SQLiteDatabase.CursorFactor
         db.close()
 
         return list
-
 
     }
 

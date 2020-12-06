@@ -1,0 +1,13 @@
+package com.spudg.spudgmoneymanager
+
+class RecurringModel(
+    val id: Int,
+    val note: String,
+    val category: Int,
+    val amount: String,
+    val account: Int,
+    val nextMonth: Int,
+    val nextDay: Int,
+    val nextYear: Int,
+    val nextDateMillis: String
+)

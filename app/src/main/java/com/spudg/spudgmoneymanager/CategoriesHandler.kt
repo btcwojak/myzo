@@ -16,7 +16,6 @@ class CategoriesHandler(context: Context, factory: SQLiteDatabase.CursorFactory?
         private const val KEY_ID = "_id"
         private const val KEY_TITLE = "title"
         private const val KEY_COLOUR = "colour"
-
     }
 
 

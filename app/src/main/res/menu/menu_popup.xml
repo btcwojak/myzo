@@ -6,6 +6,10 @@
         android:title="@string/analysis"
         app:showAsAction="never" />
     <item
+        android:id="@+id/action_recurring"
+        android:title="@string/recurring"
+        app:showAsAction="never" />
+    <item
         android:id="@+id/action_backup"
         android:title="@string/backup"
         app:showAsAction="never" />

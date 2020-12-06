@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".CategoriesActivity">
+    tools:context=".RecurringsActivity">
 
     <LinearLayout
-        android:id="@+id/llHeader"
+        android:id="@+id/llRecurringsHeader"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
@@ -24,7 +25,7 @@
             android:background="#FFFFFF">
 
             <ImageView
-                android:id="@+id/back_to_trans_from_categories"
+                android:id="@+id/back_to_trans_from_recurrings"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -37,18 +38,18 @@
                 android:background="@drawable/back_btn_padding" />
 
             <TextView
-                android:id="@+id/category_heading"
+                android:id="@+id/recurring_heading"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="20dp"
                 android:fontFamily="@font/open_sans_light"
-                android:text="@string/all_categories"
+                android:text="@string/recurring_transactions"
                 android:textColor="#000000"
                 android:textSize="24sp"
                 android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="@id/back_to_trans_from_categories"
+                app:layout_constraintBottom_toBottomOf="@id/back_to_trans_from_recurrings"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="@id/back_to_trans_from_categories" />
+                app:layout_constraintTop_toTopOf="@id/back_to_trans_from_recurrings" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -67,32 +68,50 @@
             app:layout_constraintVertical_weight="4">
 
             <Button
-                android:id="@+id/add_category"
+                android:id="@+id/add_recurring"
                 android:layout_width="wrap_content"
                 android:layout_height="50dp"
                 android:layout_marginBottom="25dp"
                 android:background="#99FFFFFF"
                 android:fontFamily="@font/open_sans_light"
-                android:text="@string/add_category"
+                android:text="@string/add_recurring"
                 android:textColor="@color/colorAccent"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent" />
 
             <LinearLayout
-                android:id="@+id/llCategories"
+                android:id="@+id/llRecurrings"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toTopOf="parent">
 
                 <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rvCategories"
+                    android:id="@+id/rvRecurrings"
+                    android:visibility="gone"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:clipToPadding="false"
                     android:paddingBottom="80dp" />
 
             </LinearLayout>
+
+            <TextView
+                android:id="@+id/tvNoRecurrings"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="No recurring transactions added yet. Press the button below to add your first!"
+                android:gravity="center_horizontal"
+                android:fontFamily="@font/open_sans_light"
+                android:textSize="16sp"
+                android:layout_marginBottom="100dp"
+                android:textColor="@android:color/black"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
