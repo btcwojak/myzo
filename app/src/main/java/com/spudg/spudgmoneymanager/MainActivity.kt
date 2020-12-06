@@ -64,6 +64,8 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
 
         storagePermission = arrayOf(android.Manifest.permission.WRITE_EXTERNAL_STORAGE)
 
+        checkRecurringTransactions()
+
         setUpTransactionList()
 
         initReviews()
@@ -122,6 +124,25 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
         }
 
         checkDefaultCategories()
+
+    }
+
+    private fun checkRecurringTransactions() {
+        val dbRec = RecurringsHandler(this, null)
+        val dbTrans = TransactionsHandler(this, null)
+
+        var currentDateMillis = Calendar.getInstance().timeInMillis
+
+        var noItems = dbRec.filterRecurrings().size
+
+        repeat (noItems) { index ->
+            while (dbRec.filterRecurrings()[index].nextDateMillis.toLong() < currentDateMillis) {
+                var rec = dbRec.filterRecurrings()[index]
+                dbRec.updateRecurring(RecurringModel(rec.id,rec.note,rec.category,rec.amount,rec.account,rec.nextMonth+1,rec.nextDay,rec.nextYear,""))
+                dbTrans.addTransaction(TransactionModel(0,rec.note,rec.category,rec.amount,rec.account,rec.nextMonth,rec.nextDay,rec.nextYear,""))
+            }
+
+        }
 
     }
 

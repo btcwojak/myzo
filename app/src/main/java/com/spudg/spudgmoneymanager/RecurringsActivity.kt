@@ -234,7 +234,7 @@ class RecurringsActivity : AppCompatActivity(), AdapterView.OnItemSelectedListen
 
             val category = dbHandlerCat.getCategoryId(selectedCategory)
             val amount = addDialog.etAmountLayoutRecurring.etAmountRecurring.text.toString()
-            val note = addDialog.etAmountLayoutRecurring.etAmountRecurring.text.toString()
+            val note = addDialog.etNoteLayoutAddRecurring.etNoteAddRecurring.text.toString()
             val account = Constants.CURRENT_ACCOUNT
             val nextMonth = monthPicked
             val nextDay = dayPicked
