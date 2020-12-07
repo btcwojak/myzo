@@ -237,6 +237,7 @@ class RecurringsActivity : AppCompatActivity(), AdapterView.OnItemSelectedListen
             val note = addDialog.etNoteLayoutAddRecurring.etNoteAddRecurring.text.toString()
             val account = Constants.CURRENT_ACCOUNT
             val nextMonth = monthPicked
+            val nextOGDay = dayPicked
             val nextDay = dayPicked
             val nextYear = yearPicked
 
@@ -250,6 +251,7 @@ class RecurringsActivity : AppCompatActivity(), AdapterView.OnItemSelectedListen
                             amount,
                             account,
                             nextMonth,
+                            nextOGDay,
                             nextDay,
                             nextYear,
                             ""
@@ -264,6 +266,7 @@ class RecurringsActivity : AppCompatActivity(), AdapterView.OnItemSelectedListen
                             (amount.toDouble() * -1).toString(),
                             account,
                             nextMonth,
+                            nextOGDay,
                             nextDay,
                             nextYear,
                             ""
@@ -455,6 +458,7 @@ class RecurringsActivity : AppCompatActivity(), AdapterView.OnItemSelectedListen
             val account = Constants.CURRENT_ACCOUNT
             val note = updateDialog.etNoteLayoutUpdateRecurring.etNoteUpdateRecurring.text.toString()
             val nextMonth = monthPicked
+            val nextOGDay = dayPicked
             val nextDay = dayPicked
             val nextYear = yearPicked
 
@@ -468,6 +472,7 @@ class RecurringsActivity : AppCompatActivity(), AdapterView.OnItemSelectedListen
                             amount,
                             account,
                             nextMonth,
+                            nextOGDay,
                             nextDay,
                             nextYear,
                             ""
@@ -482,6 +487,7 @@ class RecurringsActivity : AppCompatActivity(), AdapterView.OnItemSelectedListen
                             (amount.toDouble() * -1).toString(),
                             account,
                             nextMonth,
+                            nextOGDay,
                             nextDay,
                             nextYear,
                             ""
@@ -518,7 +524,7 @@ class RecurringsActivity : AppCompatActivity(), AdapterView.OnItemSelectedListen
 
         deleteDialog.tvDeleteRecurring.setOnClickListener {
             val dbHandler = RecurringsHandler(this, null)
-            dbHandler.deleteRecurring(RecurringModel(recurring.id, "", 0, "", 0, 0, 0, 0, ""))
+            dbHandler.deleteRecurring(RecurringModel(recurring.id, "", 0, "", 0,0, 0, 0, 0, ""))
 
             Toast.makeText(this, "Recurring transaction deleted.", Toast.LENGTH_LONG).show()
             setUpRecurringList()

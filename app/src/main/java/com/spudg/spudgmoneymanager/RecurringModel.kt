@@ -7,6 +7,7 @@ class RecurringModel(
     val amount: String,
     val account: Int,
     val nextMonth: Int,
+    val nextOGDay: Int,
     val nextDay: Int,
     val nextYear: Int,
     val nextDateMillis: String

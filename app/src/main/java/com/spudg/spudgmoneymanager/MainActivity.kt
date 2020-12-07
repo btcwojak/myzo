@@ -137,9 +137,54 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
 
         repeat (noItems) { index ->
             while (dbRec.filterRecurrings()[index].nextDateMillis.toLong() < currentDateMillis) {
+
                 var rec = dbRec.filterRecurrings()[index]
-                dbRec.updateRecurring(RecurringModel(rec.id,rec.note,rec.category,rec.amount,rec.account,rec.nextMonth+1,rec.nextDay,rec.nextYear,""))
+
+                var newNextMonth = rec.nextMonth + 1
+                var nextOGDay = rec.nextOGDay
+                var newNextDay = rec.nextDay
+                var newNextYear = rec.nextYear
+
+                if (newNextMonth > 12) {
+                    newNextMonth -= 12
+                    newNextYear += 1
+                }
+
+                if (nextOGDay == 29 && newNextMonth != 2) {
+                    newNextDay = 29
+                } else if (nextOGDay == 29 && newNextMonth == 2) {
+                    if (newNextYear % 4 == 0) {
+                        newNextDay = 29
+                    } else {
+                        newNextDay = 28
+                    }
+                }
+
+                if (nextOGDay == 30 && newNextMonth != 2) {
+                    newNextDay = 30
+                } else if (nextOGDay == 30 && newNextMonth == 2) {
+                    if (newNextYear % 4 == 0) {
+                        newNextDay = 29
+                    } else {
+                        newNextDay = 28
+                    }
+                }
+
+                if (nextOGDay == 31 && (newNextMonth == 1 || newNextMonth == 3 || newNextMonth == 5 || newNextMonth == 7 || newNextMonth == 8 || newNextMonth == 10 || newNextMonth == 12)) {
+                    newNextDay = 31
+                } else if (nextOGDay == 31 && (newNextMonth == 4 || newNextMonth == 6 || newNextMonth == 9 || newNextMonth == 11)) {
+                    newNextDay = 30
+                } else if (nextOGDay == 31 && newNextMonth == 2) {
+                    if (newNextYear % 4 == 0) {
+                        newNextDay = 29
+                    } else {
+                        newNextDay = 28
+                    }
+                }
+
+                dbRec.updateRecurring(RecurringModel(rec.id,rec.note,rec.category,rec.amount,rec.account,newNextMonth,nextOGDay,newNextDay,newNextYear,""))
                 dbTrans.addTransaction(TransactionModel(0,rec.note,rec.category,rec.amount,rec.account,rec.nextMonth,rec.nextDay,rec.nextYear,""))
+
             }
 
         }
