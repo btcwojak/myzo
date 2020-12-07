@@ -193,14 +193,14 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
 
     private fun setUpTransactionList() {
         if (getTransactionsList().size > 0) {
-            llTransactions.visibility = View.VISIBLE
+            rvTransactions.visibility = View.VISIBLE
             tvNoTransactions.visibility = View.GONE
             var manager = LinearLayoutManager(this)
             rvTransactions.layoutManager = manager
             val transactionAdapter = TransactionAdapter(this, getTransactionsList())
             rvTransactions.adapter = transactionAdapter
         } else {
-            llTransactions.visibility = View.GONE
+            rvTransactions.visibility = View.GONE
             tvNoTransactions.visibility = View.VISIBLE
         }
 

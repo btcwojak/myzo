@@ -72,7 +72,7 @@ class RecurringsActivity : AppCompatActivity(), AdapterView.OnItemSelectedListen
             val recurringAdapter = RecurringAdapter(this, getRecurringsList())
             rvRecurrings.adapter = recurringAdapter
         } else {
-            llRecurrings.visibility = View.GONE
+            rvRecurrings.visibility = View.GONE
             tvNoRecurrings.visibility = View.VISIBLE
         }
     }
