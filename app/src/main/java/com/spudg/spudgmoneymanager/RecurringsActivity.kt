@@ -37,6 +37,7 @@ import kotlinx.android.synthetic.main.dialog_update_transaction.etAmountLayout
 import kotlinx.android.synthetic.main.dialog_update_transaction.inc_exp_radio_group
 import kotlinx.android.synthetic.main.dialog_update_transaction.tvCancel
 import kotlinx.android.synthetic.main.dialog_update_transaction.view.*
+import java.text.SimpleDateFormat
 import java.util.*
 
 class RecurringsActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
@@ -163,9 +164,16 @@ class RecurringsActivity : AppCompatActivity(), AdapterView.OnItemSelectedListen
             }
 
             changeDateDialog.submit_dmy.setOnClickListener {
-                addDialog.change_date_add_recurring.text =
-                    "$dayPicked ${Constants.getShortMonth(monthPicked)} $yearPicked"
-                changeDateDialog.dismiss()
+                val strDate = "$dayPicked-$monthPicked-$yearPicked"
+                val sdf = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
+                var dateMillis = sdf.parse(strDate)?.time
+                if (dateMillis!! < Calendar.getInstance().timeInMillis - 86400000) {
+                    Toast.makeText(this, "Recurring transactions must be set for today or the future.",Toast.LENGTH_LONG).show()
+                } else {
+                    addDialog.change_date_add_recurring.text =
+                        "$dayPicked ${Constants.getShortMonth(monthPicked)} $yearPicked"
+                    changeDateDialog.dismiss()
+                }
             }
 
             changeDateDialog.dmyp_day.wrapSelectorWheel = true
