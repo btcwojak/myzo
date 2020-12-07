@@ -79,4 +79,6 @@
     <string name="recurring_transactions">Recurring\nTransactions</string>
     <string name="add_recurring_transaction_for">Add Recurring Transaction for</string>
     <string name="update_recurring_transaction_for">Update Recurring Transaction for</string>
+    <string name="delete_recurring_transaction">Delete recurring transaction</string>
+    <string name="delete_recurring_waring">Are you sure you want to delete this recurring transaction?</string>
 </resources>

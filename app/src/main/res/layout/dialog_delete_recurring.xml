@@ -13,7 +13,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="5dp"
         android:fontFamily="@font/open_sans_light"
-        android:text="Delete recurring transaction"
+        android:text="@string/delete_recurring_transaction"
         android:textColor="@android:color/black"
         android:textSize="18sp" />
 
@@ -23,7 +23,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="10dp"
         android:fontFamily="@font/open_sans_light"
-        android:text="Are you sure you want to delete this recurring transaction?"
+        android:text="@string/delete_recurring_waring"
         android:textColor="@android:color/black"
         android:textSize="16sp" />
 

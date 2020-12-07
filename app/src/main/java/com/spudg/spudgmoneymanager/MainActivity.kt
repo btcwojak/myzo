@@ -153,20 +153,20 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
                 if (nextOGDay == 29 && newNextMonth != 2) {
                     newNextDay = 29
                 } else if (nextOGDay == 29 && newNextMonth == 2) {
-                    if (newNextYear % 4 == 0) {
-                        newNextDay = 29
+                    newNextDay = if (newNextYear % 4 == 0) {
+                        29
                     } else {
-                        newNextDay = 28
+                        28
                     }
                 }
 
                 if (nextOGDay == 30 && newNextMonth != 2) {
                     newNextDay = 30
                 } else if (nextOGDay == 30 && newNextMonth == 2) {
-                    if (newNextYear % 4 == 0) {
-                        newNextDay = 29
+                    newNextDay = if (newNextYear % 4 == 0) {
+                        29
                     } else {
-                        newNextDay = 28
+                        28
                     }
                 }
 
@@ -175,10 +175,10 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
                 } else if (nextOGDay == 31 && (newNextMonth == 4 || newNextMonth == 6 || newNextMonth == 9 || newNextMonth == 11)) {
                     newNextDay = 30
                 } else if (nextOGDay == 31 && newNextMonth == 2) {
-                    if (newNextYear % 4 == 0) {
-                        newNextDay = 29
+                    newNextDay = if (newNextYear % 4 == 0) {
+                        29
                     } else {
-                        newNextDay = 28
+                        28
                     }
                 }
 
