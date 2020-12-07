@@ -46,6 +46,16 @@ class RecurringAdapter(val context: Context, private val items: ArrayList<Recurr
             holder.categoryView.text = context.getTransactionCategoryTitle(recurring.category)
         }
 
+        if (context is RecurringsActivity) {
+            try {
+                if (recurring.nextDateMillis.toLong() == items[position - 1].nextDateMillis.toLong()) {
+                    holder.dateView.visibility = View.GONE
+                }
+            } catch (e: Exception) {
+                Log.v("Transactions", e.message.toString())
+            }
+        }
+
         holder.amountView.text = formatter.format((recurring.amount).toDouble()).toString()
         holder.noteView.text = recurring.note
 
