@@ -7,6 +7,7 @@ import android.content.pm.PackageManager
 import android.content.res.Configuration
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
+import android.icu.text.DateFormat.DAY
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -140,50 +141,229 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
 
                 var rec = dbRec.filterRecurrings()[index]
 
-                var newNextMonth = rec.nextMonth + 1
-                var nextOGDay = rec.nextOGDay
-                var newNextDay = rec.nextDay
-                var newNextYear = rec.nextYear
+                if (rec.frequency == "weekly") {
+                    val strDate = "${rec.nextDay}-${rec.nextMonth}-${rec.nextYear}"
+                    val sdf = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
+                    val nextDateMillis = sdf.parse(strDate)?.time!!.plus(604800000)
+                    val calendar = Calendar.getInstance()
+                    calendar.timeInMillis = nextDateMillis
 
-                if (newNextMonth > 12) {
-                    newNextMonth -= 12
-                    newNextYear += 1
+                    var newNextMonth = calendar.get(Calendar.MONTH) + 1
+                    var nextOGDay = rec.nextOGDay
+                    var newNextDay = calendar.get(Calendar.DAY_OF_MONTH)
+                    var newNextYear = calendar.get(Calendar.YEAR)
+
+                    dbRec.updateRecurring(RecurringModel(rec.id,rec.note,rec.category,rec.amount,rec.account,newNextMonth,nextOGDay,newNextDay,newNextYear,"",rec.frequency))
+                    dbTrans.addTransaction(TransactionModel(0,rec.note,rec.category,rec.amount,rec.account,rec.nextMonth,rec.nextDay,rec.nextYear,""))
                 }
 
-                if (nextOGDay == 29 && newNextMonth != 2) {
-                    newNextDay = 29
-                } else if (nextOGDay == 29 && newNextMonth == 2) {
-                    newNextDay = if (newNextYear % 4 == 0) {
-                        29
-                    } else {
-                        28
+                if (rec.frequency == "bi-weekly") {
+                    val strDate = "${rec.nextDay}-${rec.nextMonth}-${rec.nextYear}"
+                    val sdf = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
+                    val nextDateMillis = sdf.parse(strDate)?.time!!.plus(2*604800000)
+                    val calendar = Calendar.getInstance()
+                    calendar.timeInMillis = nextDateMillis
+
+                    var newNextMonth = calendar.get(Calendar.MONTH) + 1
+                    var nextOGDay = rec.nextOGDay
+                    var newNextDay = calendar.get(Calendar.DAY_OF_MONTH)
+                    var newNextYear = calendar.get(Calendar.YEAR)
+
+                    dbRec.updateRecurring(RecurringModel(rec.id,rec.note,rec.category,rec.amount,rec.account,newNextMonth,nextOGDay,newNextDay,newNextYear,"",rec.frequency))
+                    dbTrans.addTransaction(TransactionModel(0,rec.note,rec.category,rec.amount,rec.account,rec.nextMonth,rec.nextDay,rec.nextYear,""))
+                }
+
+                if (rec.frequency == "tri-weekly") {
+                    val strDate = "${rec.nextDay}-${rec.nextMonth}-${rec.nextYear}"
+                    val sdf = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
+                    val nextDateMillis = sdf.parse(strDate)?.time!!.plus(3*604800000)
+                    val calendar = Calendar.getInstance()
+                    calendar.timeInMillis = nextDateMillis
+
+                    var newNextMonth = calendar.get(Calendar.MONTH) + 1
+                    var nextOGDay = rec.nextOGDay
+                    var newNextDay = calendar.get(Calendar.DAY_OF_MONTH)
+                    var newNextYear = calendar.get(Calendar.YEAR)
+
+                    dbRec.updateRecurring(RecurringModel(rec.id,rec.note,rec.category,rec.amount,rec.account,newNextMonth,nextOGDay,newNextDay,newNextYear,"",rec.frequency))
+                    dbTrans.addTransaction(TransactionModel(0,rec.note,rec.category,rec.amount,rec.account,rec.nextMonth,rec.nextDay,rec.nextYear,""))
+                }
+
+                if (rec.frequency == "four-weekly") {
+                    val strDate = "${rec.nextDay}-${rec.nextMonth}-${rec.nextYear}"
+                    val sdf = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
+                    val nextDateMillis = sdf.parse(strDate)?.time!!.plus(2*604800000).plus(2*604800000)
+                    val calendar = Calendar.getInstance()
+                    calendar.timeInMillis = nextDateMillis
+
+                    var newNextMonth = calendar.get(Calendar.MONTH) + 1
+                    var nextOGDay = rec.nextOGDay
+                    var newNextDay = calendar.get(Calendar.DAY_OF_MONTH)
+                    var newNextYear = calendar.get(Calendar.YEAR)
+
+                    dbRec.updateRecurring(RecurringModel(rec.id,rec.note,rec.category,rec.amount,rec.account,newNextMonth,nextOGDay,newNextDay,newNextYear,"",rec.frequency))
+                    dbTrans.addTransaction(TransactionModel(0,rec.note,rec.category,rec.amount,rec.account,rec.nextMonth,rec.nextDay,rec.nextYear,""))
+                }
+
+                if (rec.frequency == "monthly") {
+                    var newNextMonth = rec.nextMonth + 1
+                    var nextOGDay = rec.nextOGDay
+                    var newNextDay = rec.nextDay
+                    var newNextYear = rec.nextYear
+
+                    if (newNextMonth > 12) {
+                        newNextMonth -= 12
+                        newNextYear += 1
                     }
-                }
 
-                if (nextOGDay == 30 && newNextMonth != 2) {
-                    newNextDay = 30
-                } else if (nextOGDay == 30 && newNextMonth == 2) {
-                    newNextDay = if (newNextYear % 4 == 0) {
-                        29
-                    } else {
-                        28
+                    if (nextOGDay == 29 && newNextMonth != 2) {
+                        newNextDay = 29
+                    } else if (nextOGDay == 29 && newNextMonth == 2) {
+                        newNextDay = if (newNextYear % 4 == 0) {
+                            29
+                        } else {
+                            28
+                        }
                     }
-                }
 
-                if (nextOGDay == 31 && (newNextMonth == 1 || newNextMonth == 3 || newNextMonth == 5 || newNextMonth == 7 || newNextMonth == 8 || newNextMonth == 10 || newNextMonth == 12)) {
-                    newNextDay = 31
-                } else if (nextOGDay == 31 && (newNextMonth == 4 || newNextMonth == 6 || newNextMonth == 9 || newNextMonth == 11)) {
-                    newNextDay = 30
-                } else if (nextOGDay == 31 && newNextMonth == 2) {
-                    newNextDay = if (newNextYear % 4 == 0) {
-                        29
-                    } else {
-                        28
+                    if (nextOGDay == 30 && newNextMonth != 2) {
+                        newNextDay = 30
+                    } else if (nextOGDay == 30 && newNextMonth == 2) {
+                        newNextDay = if (newNextYear % 4 == 0) {
+                            29
+                        } else {
+                            28
+                        }
                     }
+
+                    if (nextOGDay == 31 && (newNextMonth == 1 || newNextMonth == 3 || newNextMonth == 5 || newNextMonth == 7 || newNextMonth == 8 || newNextMonth == 10 || newNextMonth == 12)) {
+                        newNextDay = 31
+                    } else if (nextOGDay == 31 && (newNextMonth == 4 || newNextMonth == 6 || newNextMonth == 9 || newNextMonth == 11)) {
+                        newNextDay = 30
+                    } else if (nextOGDay == 31 && newNextMonth == 2) {
+                        newNextDay = if (newNextYear % 4 == 0) {
+                            29
+                        } else {
+                            28
+                        }
+                    }
+
+                    dbRec.updateRecurring(RecurringModel(rec.id,rec.note,rec.category,rec.amount,rec.account,newNextMonth,nextOGDay,newNextDay,newNextYear,"",rec.frequency))
+                    dbTrans.addTransaction(TransactionModel(0,rec.note,rec.category,rec.amount,rec.account,rec.nextMonth,rec.nextDay,rec.nextYear,""))
+
                 }
 
-                dbRec.updateRecurring(RecurringModel(rec.id,rec.note,rec.category,rec.amount,rec.account,newNextMonth,nextOGDay,newNextDay,newNextYear,""))
-                dbTrans.addTransaction(TransactionModel(0,rec.note,rec.category,rec.amount,rec.account,rec.nextMonth,rec.nextDay,rec.nextYear,""))
+                if (rec.frequency == "bi-monthly") {
+                    var newNextMonth = rec.nextMonth + 2
+                    var nextOGDay = rec.nextOGDay
+                    var newNextDay = rec.nextDay
+                    var newNextYear = rec.nextYear
+
+                    if (newNextMonth > 12) {
+                        newNextMonth -= 12
+                        newNextYear += 1
+                    }
+
+                    if (nextOGDay == 29 && newNextMonth != 2) {
+                        newNextDay = 29
+                    } else if (nextOGDay == 29 && newNextMonth == 2) {
+                        newNextDay = if (newNextYear % 4 == 0) {
+                            29
+                        } else {
+                            28
+                        }
+                    }
+
+                    if (nextOGDay == 30 && newNextMonth != 2) {
+                        newNextDay = 30
+                    } else if (nextOGDay == 30 && newNextMonth == 2) {
+                        newNextDay = if (newNextYear % 4 == 0) {
+                            29
+                        } else {
+                            28
+                        }
+                    }
+
+                    if (nextOGDay == 31 && (newNextMonth == 1 || newNextMonth == 3 || newNextMonth == 5 || newNextMonth == 7 || newNextMonth == 8 || newNextMonth == 10 || newNextMonth == 12)) {
+                        newNextDay = 31
+                    } else if (nextOGDay == 31 && (newNextMonth == 4 || newNextMonth == 6 || newNextMonth == 9 || newNextMonth == 11)) {
+                        newNextDay = 30
+                    } else if (nextOGDay == 31 && newNextMonth == 2) {
+                        newNextDay = if (newNextYear % 4 == 0) {
+                            29
+                        } else {
+                            28
+                        }
+                    }
+
+                    dbRec.updateRecurring(RecurringModel(rec.id,rec.note,rec.category,rec.amount,rec.account,newNextMonth,nextOGDay,newNextDay,newNextYear,"",rec.frequency))
+                    dbTrans.addTransaction(TransactionModel(0,rec.note,rec.category,rec.amount,rec.account,rec.nextMonth,rec.nextDay,rec.nextYear,""))
+                }
+
+                if (rec.frequency == "quarterly") {
+                    var newNextMonth = rec.nextMonth + 3
+                    var nextOGDay = rec.nextOGDay
+                    var newNextDay = rec.nextDay
+                    var newNextYear = rec.nextYear
+
+                    if (newNextMonth > 12) {
+                        newNextMonth -= 12
+                        newNextYear += 1
+                    }
+
+                    if (nextOGDay == 29 && newNextMonth != 2) {
+                        newNextDay = 29
+                    } else if (nextOGDay == 29 && newNextMonth == 2) {
+                        newNextDay = if (newNextYear % 4 == 0) {
+                            29
+                        } else {
+                            28
+                        }
+                    }
+
+                    if (nextOGDay == 30 && newNextMonth != 2) {
+                        newNextDay = 30
+                    } else if (nextOGDay == 30 && newNextMonth == 2) {
+                        newNextDay = if (newNextYear % 4 == 0) {
+                            29
+                        } else {
+                            28
+                        }
+                    }
+
+                    if (nextOGDay == 31 && (newNextMonth == 1 || newNextMonth == 3 || newNextMonth == 5 || newNextMonth == 7 || newNextMonth == 8 || newNextMonth == 10 || newNextMonth == 12)) {
+                        newNextDay = 31
+                    } else if (nextOGDay == 31 && (newNextMonth == 4 || newNextMonth == 6 || newNextMonth == 9 || newNextMonth == 11)) {
+                        newNextDay = 30
+                    } else if (nextOGDay == 31 && newNextMonth == 2) {
+                        newNextDay = if (newNextYear % 4 == 0) {
+                            29
+                        } else {
+                            28
+                        }
+                    }
+
+                    dbRec.updateRecurring(RecurringModel(rec.id,rec.note,rec.category,rec.amount,rec.account,newNextMonth,nextOGDay,newNextDay,newNextYear,"",rec.frequency))
+                    dbTrans.addTransaction(TransactionModel(0,rec.note,rec.category,rec.amount,rec.account,rec.nextMonth,rec.nextDay,rec.nextYear,""))
+                }
+
+                if (rec.frequency == "yearly") {
+                    var newNextMonth = rec.nextMonth
+                    var nextOGDay = rec.nextOGDay
+                    var newNextDay = rec.nextDay
+                    var newNextYear = rec.nextYear + 1
+
+                    if (newNextYear % 4 != 0 && newNextMonth == 2 && newNextDay == 29) {
+                        newNextDay = 28
+                    }
+
+                    if (nextOGDay == 29 && newNextDay == 28 && newNextYear % 4 == 0) {
+                        newNextDay = 29
+                    }
+
+                    dbRec.updateRecurring(RecurringModel(rec.id,rec.note,rec.category,rec.amount,rec.account,newNextMonth,nextOGDay,newNextDay,newNextYear,"",rec.frequency))
+                    dbTrans.addTransaction(TransactionModel(0,rec.note,rec.category,rec.amount,rec.account,rec.nextMonth,rec.nextDay,rec.nextYear,""))
+                }
 
             }
 

@@ -10,5 +10,6 @@ class RecurringModel(
     val nextOGDay: Int,
     val nextDay: Int,
     val nextYear: Int,
-    val nextDateMillis: String
+    val nextDateMillis: String,
+    val frequency: String
 )

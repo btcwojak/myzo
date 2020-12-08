@@ -13,7 +13,7 @@ class RecurringsHandler(context: Context, factory: SQLiteDatabase.CursorFactory?
     SQLiteOpenHelper(context, DATABASE_NAME, factory, DATABASE_VERSION) {
 
     companion object {
-        private const val DATABASE_VERSION = 2
+        private const val DATABASE_VERSION = 3
         private const val DATABASE_NAME = "SMMRecurrings.db"
         private const val TABLE_RECURRINGS = "recurrings"
 
@@ -27,12 +27,13 @@ class RecurringsHandler(context: Context, factory: SQLiteDatabase.CursorFactory?
         private const val KEY_NEXT_DAY = "next_day"
         private const val KEY_NEXT_YEAR = "next_year"
         private const val KEY_NEXT_DATE_MS = "next_date_millis"
+        private const val KEY_FREQUENCY = "frequency"
     }
 
 
     override fun onCreate(db: SQLiteDatabase?) {
         val createRecurringsTable =
-            ("CREATE TABLE $TABLE_RECURRINGS($KEY_ID INTEGER PRIMARY KEY,$KEY_NOTE TEXT,$KEY_CATEGORY INTEGER,$KEY_AMOUNT TEXT,$KEY_ACCOUNT INTEGER,$KEY_NEXT_MONTH INTEGER,$KEY_NEXT_OG_DAY INTEGER,$KEY_NEXT_DAY INTEGER,$KEY_NEXT_YEAR INTEGER,$KEY_NEXT_DATE_MS TEXT)")
+            ("CREATE TABLE $TABLE_RECURRINGS($KEY_ID INTEGER PRIMARY KEY,$KEY_NOTE TEXT,$KEY_CATEGORY INTEGER,$KEY_AMOUNT TEXT,$KEY_ACCOUNT INTEGER,$KEY_NEXT_MONTH INTEGER,$KEY_NEXT_OG_DAY INTEGER,$KEY_NEXT_DAY INTEGER,$KEY_NEXT_YEAR INTEGER,$KEY_NEXT_DATE_MS TEXT,$KEY_FREQUENCY TEXT)")
         db?.execSQL(createRecurringsTable)
     }
 
@@ -59,6 +60,7 @@ class RecurringsHandler(context: Context, factory: SQLiteDatabase.CursorFactory?
         var nextDay: Int
         var nextYear: Int
         var nextDateMillis: String
+        var frequency: String
 
         if (cursor.moveToFirst()) {
             do {
@@ -72,6 +74,7 @@ class RecurringsHandler(context: Context, factory: SQLiteDatabase.CursorFactory?
                 nextDay = cursor.getInt(cursor.getColumnIndex(KEY_NEXT_DAY))
                 nextYear = cursor.getInt(cursor.getColumnIndex(KEY_NEXT_YEAR))
                 nextDateMillis = cursor.getString(cursor.getColumnIndex(KEY_NEXT_DATE_MS))
+                frequency = cursor.getString(cursor.getColumnIndex(KEY_FREQUENCY))
                 val recurring = RecurringModel(
                     id = id,
                     category = category,
@@ -82,7 +85,8 @@ class RecurringsHandler(context: Context, factory: SQLiteDatabase.CursorFactory?
                     nextOGDay = nextOGDay,
                     nextDay = nextDay,
                     nextYear = nextYear,
-                    nextDateMillis = nextDateMillis
+                    nextDateMillis = nextDateMillis,
+                    frequency = frequency
                 )
                 list.add(recurring)
             } while (cursor.moveToNext())
@@ -122,6 +126,7 @@ class RecurringsHandler(context: Context, factory: SQLiteDatabase.CursorFactory?
         values.put(KEY_NEXT_DAY, recurring.nextDay)
         values.put(KEY_NEXT_YEAR, recurring.nextYear)
         values.put(KEY_NEXT_DATE_MS, nextDateMillis)
+        values.put(KEY_FREQUENCY, recurring.frequency)
         val db = this.writableDatabase
         val success = db.insert(TABLE_RECURRINGS, null, values)
         db.close()
@@ -143,6 +148,7 @@ class RecurringsHandler(context: Context, factory: SQLiteDatabase.CursorFactory?
         values.put(KEY_NEXT_DAY, recurring.nextDay)
         values.put(KEY_NEXT_YEAR, recurring.nextYear)
         values.put(KEY_NEXT_DATE_MS, nextDateMillis)
+        values.put(KEY_FREQUENCY, recurring.frequency)
         val db = this.writableDatabase
         val success = db.update(TABLE_RECURRINGS, values, KEY_ID + "=" + recurring.id, null)
         db.close()

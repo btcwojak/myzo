@@ -44,6 +44,7 @@ class RecurringsActivity : AppCompatActivity(), AdapterView.OnItemSelectedListen
 
     private var isIncome = true
     private var selectedCategory = ""
+    private var selectedFrequency = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -167,13 +168,11 @@ class RecurringsActivity : AppCompatActivity(), AdapterView.OnItemSelectedListen
                 val strDate = "$dayPicked-$monthPicked-$yearPicked"
                 val sdf = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
                 var dateMillis = sdf.parse(strDate)?.time
-                if (dateMillis!! < Calendar.getInstance().timeInMillis - 86400000) {
-                    Toast.makeText(this, "Recurring transactions must be set for today or the future.",Toast.LENGTH_LONG).show()
-                } else {
+
                     addDialog.change_date_add_recurring.text =
                         "$dayPicked ${Constants.getShortMonth(monthPicked)} $yearPicked"
                     changeDateDialog.dismiss()
-                }
+
             }
 
             changeDateDialog.dmyp_day.wrapSelectorWheel = true
@@ -248,8 +247,9 @@ class RecurringsActivity : AppCompatActivity(), AdapterView.OnItemSelectedListen
             val nextOGDay = dayPicked
             val nextDay = dayPicked
             val nextYear = yearPicked
+            val frequency = addDialog.etFrequencyAdd.text.toString()
 
-            if (selectedCategory.isNotEmpty() && amount.isNotEmpty() && note.isNotEmpty()) {
+            if (selectedCategory.isNotEmpty() && amount.isNotEmpty() && note.isNotEmpty() && frequency.isNotEmpty()) {
                 if (isIncome) {
                     dbHandlerRec.addRecurring(
                         RecurringModel(
@@ -262,7 +262,8 @@ class RecurringsActivity : AppCompatActivity(), AdapterView.OnItemSelectedListen
                             nextOGDay,
                             nextDay,
                             nextYear,
-                            ""
+                            "",
+                            frequency
                         )
                     )
                 } else if (!isIncome) {
@@ -277,7 +278,8 @@ class RecurringsActivity : AppCompatActivity(), AdapterView.OnItemSelectedListen
                             nextOGDay,
                             nextDay,
                             nextYear,
-                            ""
+                            "",
+                            frequency
                         )
                     )
                 }
@@ -287,7 +289,7 @@ class RecurringsActivity : AppCompatActivity(), AdapterView.OnItemSelectedListen
                 addDialog.dismiss()
 
             } else {
-                Toast.makeText(this, "Category, amount or note can't be blank.", Toast.LENGTH_LONG)
+                Toast.makeText(this, "Category, amount, note or frequency can't be blank.", Toast.LENGTH_LONG)
                     .show()
             }
 
@@ -469,6 +471,7 @@ class RecurringsActivity : AppCompatActivity(), AdapterView.OnItemSelectedListen
             val nextOGDay = dayPicked
             val nextDay = dayPicked
             val nextYear = yearPicked
+            val frequency = updateDialog.etFrequencyUpdate.text.toString()
 
             if (selectedCategory.isNotEmpty() && amount.isNotEmpty() && note.isNotEmpty()) {
                 if (isIncome) {
@@ -483,7 +486,8 @@ class RecurringsActivity : AppCompatActivity(), AdapterView.OnItemSelectedListen
                             nextOGDay,
                             nextDay,
                             nextYear,
-                            ""
+                            "",
+                            frequency
                         )
                     )
                 } else if (!isIncome) {
@@ -498,7 +502,8 @@ class RecurringsActivity : AppCompatActivity(), AdapterView.OnItemSelectedListen
                             nextOGDay,
                             nextDay,
                             nextYear,
-                            ""
+                            "",
+                            frequency
                         )
                     )
                 }
@@ -532,7 +537,7 @@ class RecurringsActivity : AppCompatActivity(), AdapterView.OnItemSelectedListen
 
         deleteDialog.tvDeleteRecurring.setOnClickListener {
             val dbHandler = RecurringsHandler(this, null)
-            dbHandler.deleteRecurring(RecurringModel(recurring.id, "", 0, "", 0,0, 0, 0, 0, ""))
+            dbHandler.deleteRecurring(RecurringModel(recurring.id, "", 0, "", 0,0, 0, 0, 0, "",""))
 
             Toast.makeText(this, "Recurring transaction deleted.", Toast.LENGTH_LONG).show()
             setUpRecurringList()

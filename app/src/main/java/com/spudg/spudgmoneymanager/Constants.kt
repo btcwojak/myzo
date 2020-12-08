@@ -21,6 +21,16 @@ class Constants {
             "Nov",
             "Dec"
         )
+        var RECURRING_FREQUENCIES: Array<String> = arrayOf(
+            "weekly",
+            "bi-weekly",
+            "tri-weekly",
+            "four-weekly",
+            "monthly",
+            "bi-monthly",
+            "quarterly",
+            "yearly",
+        )
         var DAYS31: ArrayList<Int> = arrayListOf(
             1,
             2,
