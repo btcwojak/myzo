@@ -1178,7 +1178,10 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
     }
 
 
+
     // Import / export code below
+
+
 
     private fun updateLastBackupDate() {
         val db = LastBackupHandler(this, null)
@@ -1262,9 +1265,8 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
 
     }
 
-
     private fun exportFullCSV() {
-        if (exportCategoriesCSV() && exportAccountsCSV() && exportTransactionsCSV()) {
+        if (exportCategoriesCSV() && exportAccountsCSV() && exportTransactionsCSV() && exportRecurringsCSV()) {
             Toast.makeText(
                 this,
                 "Backup files successfully exported to ${this.getExternalFilesDir(null)!!.absolutePath}/SMMBackups",
@@ -1280,7 +1282,7 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
     }
 
     private fun importFullCSV() {
-        if (importCategoriesCSV() && importAccountsCSV() && importTransactionsCSV()) {
+        if (importCategoriesCSV() && importAccountsCSV() && importTransactionsCSV() && importRecurringsCSV()) {
             Toast.makeText(
                 this,
                 "Backup files imported successfully from ${this.getExternalFilesDir(null)!!.absolutePath}/SMMBackups",
@@ -1355,6 +1357,56 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
             Toast.makeText(this, e.message, Toast.LENGTH_SHORT).show()
         }
         dbTrans.close()
+        return success
+    }
+
+    private fun exportRecurringsCSV(): Boolean {
+
+        var success = false
+        val dbRecs = RecurringsHandler(this, null)
+        val folder = File(this.getExternalFilesDir(null)!!.absolutePath, "/SMMBackups")
+        if (!folder.exists()) {
+            folder.mkdir()
+        }
+        val csvFileName = "SMM_Recurrings_Backup.csv"
+        val fileNameAndPath = "$folder/$csvFileName"
+        var recordList = ArrayList<RecurringModel>()
+        recordList.clear()
+        recordList = dbRecs.getAllRecurrings()
+
+        try {
+            val fw = FileWriter(fileNameAndPath)
+            for (i in recordList.indices) {
+                fw.append("" + recordList[i].id)
+                fw.append(",")
+                fw.append("" + recordList[i].note)
+                fw.append(",")
+                fw.append("" + recordList[i].category)
+                fw.append(",")
+                fw.append("" + recordList[i].amount)
+                fw.append(",")
+                fw.append("" + recordList[i].account)
+                fw.append(",")
+                fw.append("" + recordList[i].nextMonth)
+                fw.append(",")
+                fw.append("" + recordList[i].nextOGDay)
+                fw.append(",")
+                fw.append("" + recordList[i].nextDay)
+                fw.append(",")
+                fw.append("" + recordList[i].nextYear)
+                fw.append(",")
+                fw.append("" + recordList[i].nextDateMillis)
+                fw.append(",")
+                fw.append("" + recordList[i].frequency)
+                fw.append("\n")
+            }
+            fw.flush()
+            fw.close()
+            success = true
+        } catch (e: Exception) {
+            Toast.makeText(this, e.message, Toast.LENGTH_SHORT).show()
+        }
+        dbRecs.close()
         return success
     }
 
@@ -1544,6 +1596,59 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
         }
 
         dbAccs.close()
+        return success
+    }
+
+    private fun importRecurringsCSV(): Boolean {
+
+        var success = false
+        val dbRecs = RecurringsHandler(this, null)
+        val fileNameAndPath =
+            this.getExternalFilesDir(null)!!.absolutePath + "/SMMBackups/SMM_Recurrings_Backup.csv"
+        val csvFile = File(fileNameAndPath)
+
+        if (csvFile.exists()) {
+            try {
+                dbRecs.resetOnImport()
+                val csvReader = CSVReader(FileReader(csvFile.absolutePath))
+                var nextLine: Array<String>
+                while (csvReader.readNext().also { nextLine = it } != null) {
+                    val id = nextLine[0]
+                    val note = nextLine[1]
+                    val category = nextLine[2]
+                    val amount = nextLine[3]
+                    val account = nextLine[4]
+                    val nextMonth = nextLine[5]
+                    val nextOGDay = nextLine[6]
+                    val nextDay = nextLine[7]
+                    val nextYear = nextLine[8]
+                    val nextDateMillis = nextLine[9]
+                    val frequency = nextLine[10]
+
+                    val recToAdd = RecurringModel(
+                        id.toInt(),
+                        note,
+                        category.toInt(),
+                        amount,
+                        account.toInt(),
+                        nextMonth.toInt(),
+                        nextOGDay.toInt(),
+                        nextDay.toInt(),
+                        nextYear.toInt(),
+                        nextDateMillis,
+                        frequency
+                    )
+                    dbRecs.addRecurring(recToAdd)
+                    success = true
+                }
+                csvReader.close()
+            } catch (e: Exception) {
+                Log.e("importRecurrings", e.message.toString())
+            }
+        } else {
+            Log.e("Import", "Recurrings CSV file not found.")
+        }
+        dbRecs.close()
         return success
     }
 

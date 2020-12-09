@@ -161,5 +161,66 @@ class RecurringsHandler(context: Context, factory: SQLiteDatabase.CursorFactory?
         return success
     }
 
+    fun getAllRecurrings(): ArrayList<RecurringModel> {
+        val list = ArrayList<RecurringModel>()
+        val db = this.readableDatabase
+        val cursor = db.rawQuery("SELECT * FROM $TABLE_RECURRINGS", null)
+
+        var id: Int
+        var category: Int
+        var amount: String
+        var account: Int
+        var note: String
+        var nextMonth: Int
+        var nextOGDay: Int
+        var nextDay: Int
+        var nextYear: Int
+        var nextDateMillis: String
+        var frequency: String
+
+        if (cursor.moveToFirst()) {
+            do {
+                id = cursor.getInt(cursor.getColumnIndex(KEY_ID))
+                category = cursor.getInt(cursor.getColumnIndex(KEY_CATEGORY))
+                amount = cursor.getString(cursor.getColumnIndex(KEY_AMOUNT))
+                account = cursor.getInt(cursor.getColumnIndex(KEY_ACCOUNT))
+                note = cursor.getString(cursor.getColumnIndex(KEY_NOTE))
+                nextMonth = cursor.getInt(cursor.getColumnIndex(KEY_NEXT_MONTH))
+                nextOGDay = cursor.getInt(cursor.getColumnIndex(KEY_NEXT_OG_DAY))
+                nextDay = cursor.getInt(cursor.getColumnIndex(KEY_NEXT_DAY))
+                nextYear = cursor.getInt(cursor.getColumnIndex(KEY_NEXT_YEAR))
+                nextDateMillis = cursor.getString(cursor.getColumnIndex(KEY_NEXT_DATE_MS))
+                frequency = cursor.getString(cursor.getColumnIndex(KEY_FREQUENCY))
+
+                val recurring = RecurringModel(
+                    id = id,
+                    category = category,
+                    amount = amount,
+                    account = account,
+                    note = note,
+                    nextMonth = nextMonth,
+                    nextOGDay = nextOGDay,
+                    nextDay = nextDay,
+                    nextYear = nextYear,
+                    nextDateMillis = nextDateMillis,
+                    frequency = frequency
+                )
+                list.add(recurring)
+            } while (cursor.moveToNext())
+        }
+
+        cursor.close()
+        db.close()
+
+        return list
+
+    }
+
+    fun resetOnImport() {
+        val db = this.writableDatabase
+        db?.execSQL("DROP TABLE IF EXISTS $TABLE_RECURRINGS")
+        onCreate(db)
+    }
+
 
 }
