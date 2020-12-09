@@ -1,13 +1,10 @@
 package com.spudg.spudgmoneymanager
 
 import android.app.Dialog
-import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.content.res.Configuration
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
-import android.icu.text.DateFormat.DAY
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -132,14 +129,14 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
         val dbRec = RecurringsHandler(this, null)
         val dbTrans = TransactionsHandler(this, null)
 
-        var currentDateMillis = Calendar.getInstance().timeInMillis
+        val currentDateMillis = Calendar.getInstance().timeInMillis
 
-        var noItems = dbRec.filterRecurrings().size
+        val noItems = dbRec.filterRecurrings().size
 
-        repeat (noItems) { index ->
+        repeat(noItems) { index ->
             while (dbRec.filterRecurrings()[index].nextDateMillis.toLong() < currentDateMillis) {
 
-                var rec = dbRec.filterRecurrings()[index]
+                val rec = dbRec.filterRecurrings()[index]
 
                 if (rec.frequency == "Weekly") {
                     val strDate = "${rec.nextDay}-${rec.nextMonth}-${rec.nextYear}"
@@ -148,66 +145,171 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
                     val calendar = Calendar.getInstance()
                     calendar.timeInMillis = nextDateMillis
 
-                    var newNextMonth = calendar.get(Calendar.MONTH) + 1
-                    var nextOGDay = rec.nextOGDay
-                    var newNextDay = calendar.get(Calendar.DAY_OF_MONTH)
-                    var newNextYear = calendar.get(Calendar.YEAR)
+                    val newNextMonth = calendar.get(Calendar.MONTH) + 1
+                    val nextOGDay = rec.nextOGDay
+                    val newNextDay = calendar.get(Calendar.DAY_OF_MONTH)
+                    val newNextYear = calendar.get(Calendar.YEAR)
 
-                    dbRec.updateRecurring(RecurringModel(rec.id,rec.note,rec.category,rec.amount,rec.account,newNextMonth,nextOGDay,newNextDay,newNextYear,"",rec.frequency))
-                    dbTrans.addTransaction(TransactionModel(0,rec.note,rec.category,rec.amount,rec.account,rec.nextMonth,rec.nextDay,rec.nextYear,""))
+                    dbRec.updateRecurring(
+                        RecurringModel(
+                            rec.id,
+                            rec.note,
+                            rec.category,
+                            rec.amount,
+                            rec.account,
+                            newNextMonth,
+                            nextOGDay,
+                            newNextDay,
+                            newNextYear,
+                            "",
+                            rec.frequency
+                        )
+                    )
+                    dbTrans.addTransaction(
+                        TransactionModel(
+                            0,
+                            rec.note,
+                            rec.category,
+                            rec.amount,
+                            rec.account,
+                            rec.nextMonth,
+                            rec.nextDay,
+                            rec.nextYear,
+                            ""
+                        )
+                    )
                 }
 
                 if (rec.frequency == "Bi-weekly") {
                     val strDate = "${rec.nextDay}-${rec.nextMonth}-${rec.nextYear}"
                     val sdf = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
-                    val nextDateMillis = sdf.parse(strDate)?.time!!.plus(2*604800000)
+                    val nextDateMillis = sdf.parse(strDate)?.time!!.plus(2 * 604800000)
                     val calendar = Calendar.getInstance()
                     calendar.timeInMillis = nextDateMillis
 
-                    var newNextMonth = calendar.get(Calendar.MONTH) + 1
-                    var nextOGDay = rec.nextOGDay
-                    var newNextDay = calendar.get(Calendar.DAY_OF_MONTH)
-                    var newNextYear = calendar.get(Calendar.YEAR)
+                    val newNextMonth = calendar.get(Calendar.MONTH) + 1
+                    val nextOGDay = rec.nextOGDay
+                    val newNextDay = calendar.get(Calendar.DAY_OF_MONTH)
+                    val newNextYear = calendar.get(Calendar.YEAR)
 
-                    dbRec.updateRecurring(RecurringModel(rec.id,rec.note,rec.category,rec.amount,rec.account,newNextMonth,nextOGDay,newNextDay,newNextYear,"",rec.frequency))
-                    dbTrans.addTransaction(TransactionModel(0,rec.note,rec.category,rec.amount,rec.account,rec.nextMonth,rec.nextDay,rec.nextYear,""))
+                    dbRec.updateRecurring(
+                        RecurringModel(
+                            rec.id,
+                            rec.note,
+                            rec.category,
+                            rec.amount,
+                            rec.account,
+                            newNextMonth,
+                            nextOGDay,
+                            newNextDay,
+                            newNextYear,
+                            "",
+                            rec.frequency
+                        )
+                    )
+                    dbTrans.addTransaction(
+                        TransactionModel(
+                            0,
+                            rec.note,
+                            rec.category,
+                            rec.amount,
+                            rec.account,
+                            rec.nextMonth,
+                            rec.nextDay,
+                            rec.nextYear,
+                            ""
+                        )
+                    )
                 }
 
                 if (rec.frequency == "Tri-weekly") {
                     val strDate = "${rec.nextDay}-${rec.nextMonth}-${rec.nextYear}"
                     val sdf = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
-                    val nextDateMillis = sdf.parse(strDate)?.time!!.plus(3*604800000)
+                    val nextDateMillis = sdf.parse(strDate)?.time!!.plus(3 * 604800000)
                     val calendar = Calendar.getInstance()
                     calendar.timeInMillis = nextDateMillis
 
-                    var newNextMonth = calendar.get(Calendar.MONTH) + 1
-                    var nextOGDay = rec.nextOGDay
-                    var newNextDay = calendar.get(Calendar.DAY_OF_MONTH)
-                    var newNextYear = calendar.get(Calendar.YEAR)
+                    val newNextMonth = calendar.get(Calendar.MONTH) + 1
+                    val nextOGDay = rec.nextOGDay
+                    val newNextDay = calendar.get(Calendar.DAY_OF_MONTH)
+                    val newNextYear = calendar.get(Calendar.YEAR)
 
-                    dbRec.updateRecurring(RecurringModel(rec.id,rec.note,rec.category,rec.amount,rec.account,newNextMonth,nextOGDay,newNextDay,newNextYear,"",rec.frequency))
-                    dbTrans.addTransaction(TransactionModel(0,rec.note,rec.category,rec.amount,rec.account,rec.nextMonth,rec.nextDay,rec.nextYear,""))
+                    dbRec.updateRecurring(
+                        RecurringModel(
+                            rec.id,
+                            rec.note,
+                            rec.category,
+                            rec.amount,
+                            rec.account,
+                            newNextMonth,
+                            nextOGDay,
+                            newNextDay,
+                            newNextYear,
+                            "",
+                            rec.frequency
+                        )
+                    )
+                    dbTrans.addTransaction(
+                        TransactionModel(
+                            0,
+                            rec.note,
+                            rec.category,
+                            rec.amount,
+                            rec.account,
+                            rec.nextMonth,
+                            rec.nextDay,
+                            rec.nextYear,
+                            ""
+                        )
+                    )
                 }
 
                 if (rec.frequency == "Four-weekly") {
                     val strDate = "${rec.nextDay}-${rec.nextMonth}-${rec.nextYear}"
                     val sdf = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
-                    val nextDateMillis = sdf.parse(strDate)?.time!!.plus(2*604800000).plus(2*604800000)
+                    val nextDateMillis =
+                        sdf.parse(strDate)?.time!!.plus(2 * 604800000).plus(2 * 604800000)
                     val calendar = Calendar.getInstance()
                     calendar.timeInMillis = nextDateMillis
 
-                    var newNextMonth = calendar.get(Calendar.MONTH) + 1
-                    var nextOGDay = rec.nextOGDay
-                    var newNextDay = calendar.get(Calendar.DAY_OF_MONTH)
-                    var newNextYear = calendar.get(Calendar.YEAR)
+                    val newNextMonth = calendar.get(Calendar.MONTH) + 1
+                    val nextOGDay = rec.nextOGDay
+                    val newNextDay = calendar.get(Calendar.DAY_OF_MONTH)
+                    val newNextYear = calendar.get(Calendar.YEAR)
 
-                    dbRec.updateRecurring(RecurringModel(rec.id,rec.note,rec.category,rec.amount,rec.account,newNextMonth,nextOGDay,newNextDay,newNextYear,"",rec.frequency))
-                    dbTrans.addTransaction(TransactionModel(0,rec.note,rec.category,rec.amount,rec.account,rec.nextMonth,rec.nextDay,rec.nextYear,""))
+                    dbRec.updateRecurring(
+                        RecurringModel(
+                            rec.id,
+                            rec.note,
+                            rec.category,
+                            rec.amount,
+                            rec.account,
+                            newNextMonth,
+                            nextOGDay,
+                            newNextDay,
+                            newNextYear,
+                            "",
+                            rec.frequency
+                        )
+                    )
+                    dbTrans.addTransaction(
+                        TransactionModel(
+                            0,
+                            rec.note,
+                            rec.category,
+                            rec.amount,
+                            rec.account,
+                            rec.nextMonth,
+                            rec.nextDay,
+                            rec.nextYear,
+                            ""
+                        )
+                    )
                 }
 
                 if (rec.frequency == "Monthly") {
                     var newNextMonth = rec.nextMonth + 1
-                    var nextOGDay = rec.nextOGDay
+                    val nextOGDay = rec.nextOGDay
                     var newNextDay = rec.nextDay
                     var newNextYear = rec.nextYear
 
@@ -248,14 +350,40 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
                         }
                     }
 
-                    dbRec.updateRecurring(RecurringModel(rec.id,rec.note,rec.category,rec.amount,rec.account,newNextMonth,nextOGDay,newNextDay,newNextYear,"",rec.frequency))
-                    dbTrans.addTransaction(TransactionModel(0,rec.note,rec.category,rec.amount,rec.account,rec.nextMonth,rec.nextDay,rec.nextYear,""))
+                    dbRec.updateRecurring(
+                        RecurringModel(
+                            rec.id,
+                            rec.note,
+                            rec.category,
+                            rec.amount,
+                            rec.account,
+                            newNextMonth,
+                            nextOGDay,
+                            newNextDay,
+                            newNextYear,
+                            "",
+                            rec.frequency
+                        )
+                    )
+                    dbTrans.addTransaction(
+                        TransactionModel(
+                            0,
+                            rec.note,
+                            rec.category,
+                            rec.amount,
+                            rec.account,
+                            rec.nextMonth,
+                            rec.nextDay,
+                            rec.nextYear,
+                            ""
+                        )
+                    )
 
                 }
 
                 if (rec.frequency == "Bi-monthly") {
                     var newNextMonth = rec.nextMonth + 2
-                    var nextOGDay = rec.nextOGDay
+                    val nextOGDay = rec.nextOGDay
                     var newNextDay = rec.nextDay
                     var newNextYear = rec.nextYear
 
@@ -296,13 +424,39 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
                         }
                     }
 
-                    dbRec.updateRecurring(RecurringModel(rec.id,rec.note,rec.category,rec.amount,rec.account,newNextMonth,nextOGDay,newNextDay,newNextYear,"",rec.frequency))
-                    dbTrans.addTransaction(TransactionModel(0,rec.note,rec.category,rec.amount,rec.account,rec.nextMonth,rec.nextDay,rec.nextYear,""))
+                    dbRec.updateRecurring(
+                        RecurringModel(
+                            rec.id,
+                            rec.note,
+                            rec.category,
+                            rec.amount,
+                            rec.account,
+                            newNextMonth,
+                            nextOGDay,
+                            newNextDay,
+                            newNextYear,
+                            "",
+                            rec.frequency
+                        )
+                    )
+                    dbTrans.addTransaction(
+                        TransactionModel(
+                            0,
+                            rec.note,
+                            rec.category,
+                            rec.amount,
+                            rec.account,
+                            rec.nextMonth,
+                            rec.nextDay,
+                            rec.nextYear,
+                            ""
+                        )
+                    )
                 }
 
                 if (rec.frequency == "Quarterly") {
                     var newNextMonth = rec.nextMonth + 3
-                    var nextOGDay = rec.nextOGDay
+                    val nextOGDay = rec.nextOGDay
                     var newNextDay = rec.nextDay
                     var newNextYear = rec.nextYear
 
@@ -343,15 +497,41 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
                         }
                     }
 
-                    dbRec.updateRecurring(RecurringModel(rec.id,rec.note,rec.category,rec.amount,rec.account,newNextMonth,nextOGDay,newNextDay,newNextYear,"",rec.frequency))
-                    dbTrans.addTransaction(TransactionModel(0,rec.note,rec.category,rec.amount,rec.account,rec.nextMonth,rec.nextDay,rec.nextYear,""))
+                    dbRec.updateRecurring(
+                        RecurringModel(
+                            rec.id,
+                            rec.note,
+                            rec.category,
+                            rec.amount,
+                            rec.account,
+                            newNextMonth,
+                            nextOGDay,
+                            newNextDay,
+                            newNextYear,
+                            "",
+                            rec.frequency
+                        )
+                    )
+                    dbTrans.addTransaction(
+                        TransactionModel(
+                            0,
+                            rec.note,
+                            rec.category,
+                            rec.amount,
+                            rec.account,
+                            rec.nextMonth,
+                            rec.nextDay,
+                            rec.nextYear,
+                            ""
+                        )
+                    )
                 }
 
                 if (rec.frequency == "Yearly") {
-                    var newNextMonth = rec.nextMonth
-                    var nextOGDay = rec.nextOGDay
+                    val newNextMonth = rec.nextMonth
+                    val nextOGDay = rec.nextOGDay
                     var newNextDay = rec.nextDay
-                    var newNextYear = rec.nextYear + 1
+                    val newNextYear = rec.nextYear + 1
 
                     if (newNextYear % 4 != 0 && newNextMonth == 2 && newNextDay == 29) {
                         newNextDay = 28
@@ -361,8 +541,34 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
                         newNextDay = 29
                     }
 
-                    dbRec.updateRecurring(RecurringModel(rec.id,rec.note,rec.category,rec.amount,rec.account,newNextMonth,nextOGDay,newNextDay,newNextYear,"",rec.frequency))
-                    dbTrans.addTransaction(TransactionModel(0,rec.note,rec.category,rec.amount,rec.account,rec.nextMonth,rec.nextDay,rec.nextYear,""))
+                    dbRec.updateRecurring(
+                        RecurringModel(
+                            rec.id,
+                            rec.note,
+                            rec.category,
+                            rec.amount,
+                            rec.account,
+                            newNextMonth,
+                            nextOGDay,
+                            newNextDay,
+                            newNextYear,
+                            "",
+                            rec.frequency
+                        )
+                    )
+                    dbTrans.addTransaction(
+                        TransactionModel(
+                            0,
+                            rec.note,
+                            rec.category,
+                            rec.amount,
+                            rec.account,
+                            rec.nextMonth,
+                            rec.nextDay,
+                            rec.nextYear,
+                            ""
+                        )
+                    )
                 }
 
             }
@@ -375,7 +581,7 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
         if (getTransactionsList().size > 0) {
             rvTransactions.visibility = View.VISIBLE
             tvNoTransactions.visibility = View.GONE
-            var manager = LinearLayoutManager(this)
+            val manager = LinearLayoutManager(this)
             rvTransactions.layoutManager = manager
             val transactionAdapter = TransactionAdapter(this, getTransactionsList())
             rvTransactions.adapter = transactionAdapter
@@ -948,7 +1154,7 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
             if (request.isSuccessful) {
                 reviewInfo = request.result
             } else {
-                Log.e("initReviews","An error occurred.")
+                Log.e("initReviews", "An error occurred.")
             }
         }
     }
@@ -956,9 +1162,9 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
     private fun askForReview() {
         if (reviewInfo != null) {
             manager.launchReviewFlow(this, reviewInfo!!).addOnFailureListener {
-                Log.e("askForReview","An error occurred.")
+                Log.e("askForReview", "An error occurred.")
             }.addOnCompleteListener { _ ->
-                Log.v("askForReview","Success.")
+                Log.v("askForReview", "Success.")
             }
         }
     }
@@ -993,7 +1199,7 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
         val date = db.getBackupDate()
 
         if (date.isNotEmpty()) {
-            val sdf = SimpleDateFormat("d MMM yyyy HH:mm")
+            val sdf = SimpleDateFormat("d MMM yyyy HH:mm", Locale.getDefault())
             val formattedDate = sdf.format(date.toFloat())
             backupDialog.last_backup.text = "Last backup: $formattedDate"
         }

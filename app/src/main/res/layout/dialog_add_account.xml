@@ -30,11 +30,11 @@
             android:id="@+id/etName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="text"
             android:fontFamily="@font/open_sans_light"
             android:hint="@string/name"
+            android:inputType="text"
             android:maxLength="12"
-            android:maxLines="1"/>
+            android:maxLines="1" />
 
     </com.google.android.material.textfield.TextInputLayout>
 

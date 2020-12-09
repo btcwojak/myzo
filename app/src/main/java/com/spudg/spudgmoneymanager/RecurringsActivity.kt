@@ -4,7 +4,6 @@ import android.app.Dialog
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -12,6 +11,7 @@ import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.activity_recurrings.*
 import kotlinx.android.synthetic.main.day_month_year_picker.*
@@ -55,7 +55,7 @@ class RecurringsActivity : AppCompatActivity(), AdapterView.OnItemSelectedListen
         if (getRecurringsList().size > 0) {
             rvRecurrings.visibility = View.VISIBLE
             tvNoRecurrings.visibility = View.GONE
-            var manager = LinearLayoutManager(this)
+            val manager = LinearLayoutManager(this)
             rvRecurrings.layoutManager = manager
             val recurringAdapter = RecurringAdapter(this, getRecurringsList())
             rvRecurrings.adapter = recurringAdapter
@@ -154,9 +154,13 @@ class RecurringsActivity : AppCompatActivity(), AdapterView.OnItemSelectedListen
             changeDateDialog.submit_dmy.setOnClickListener {
                 val strDate = "$dayPicked-$monthPicked-$yearPicked"
                 val sdf = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
-                var dateMillis = sdf.parse(strDate)?.time
+                val dateMillis = sdf.parse(strDate)?.time
                 if (dateMillis!! < Calendar.getInstance().timeInMillis - 86400000) {
-                    Toast.makeText(this, "Recurring transactions must be set for today or the future.",Toast.LENGTH_LONG).show()
+                    Toast.makeText(
+                        this,
+                        "Recurring transactions must be set for today or the future.",
+                        Toast.LENGTH_LONG
+                    ).show()
                 } else {
                     addDialog.change_date_add_recurring.text =
                         "$dayPicked ${Constants.getShortMonth(monthPicked)} $yearPicked"
@@ -182,7 +186,8 @@ class RecurringsActivity : AppCompatActivity(), AdapterView.OnItemSelectedListen
         }
 
 
-        addDialog.etAmountLayoutRecurring.etAmountRecurring.addTextChangedListener(object : TextWatcher {
+        addDialog.etAmountLayoutRecurring.etAmountRecurring.addTextChangedListener(object :
+            TextWatcher {
             override fun onTextChanged(arg0: CharSequence, arg1: Int, arg2: Int, arg3: Int) {}
             override fun beforeTextChanged(arg0: CharSequence, arg1: Int, arg2: Int, arg3: Int) {}
             override fun afterTextChanged(arg0: Editable) {
@@ -251,7 +256,9 @@ class RecurringsActivity : AppCompatActivity(), AdapterView.OnItemSelectedListen
             val nextYear = yearPicked
             val frequency = selectedFrequency
 
-            if (selectedCategory.isNotEmpty() && amount.isNotEmpty() && note.isNotEmpty() && account.toString().isNotEmpty() && frequency.isNotEmpty()) {
+            if (selectedCategory.isNotEmpty() && amount.isNotEmpty() && note.isNotEmpty() && account.toString()
+                    .isNotEmpty() && frequency.isNotEmpty()
+            ) {
                 if (isIncome) {
                     dbHandlerRec.addRecurring(
                         RecurringModel(
@@ -291,7 +298,11 @@ class RecurringsActivity : AppCompatActivity(), AdapterView.OnItemSelectedListen
                 addDialog.dismiss()
 
             } else {
-                Toast.makeText(this, "Category, amount, note or frequency can't be blank.", Toast.LENGTH_LONG)
+                Toast.makeText(
+                    this,
+                    "Category, amount, note or frequency can't be blank.",
+                    Toast.LENGTH_LONG
+                )
                     .show()
             }
 
@@ -410,7 +421,8 @@ class RecurringsActivity : AppCompatActivity(), AdapterView.OnItemSelectedListen
 
         }
 
-        updateDialog.etAmountLayoutRecurring.etAmountRecurring.addTextChangedListener(object : TextWatcher {
+        updateDialog.etAmountLayoutRecurring.etAmountRecurring.addTextChangedListener(object :
+            TextWatcher {
             override fun onTextChanged(arg0: CharSequence, arg1: Int, arg2: Int, arg3: Int) {}
             override fun beforeTextChanged(arg0: CharSequence, arg1: Int, arg2: Int, arg3: Int) {}
             override fun afterTextChanged(arg0: Editable) {
@@ -436,7 +448,7 @@ class RecurringsActivity : AppCompatActivity(), AdapterView.OnItemSelectedListen
         val frequencyAdapter = ArrayAdapter(this, R.layout.custom_spinner, frequencies)
         updateDialog.frequency_dropdown_update_recurring.adapter = frequencyAdapter
         updateDialog.frequency_dropdown_update_recurring.onItemSelectedListener = this
-        var freqId = when (recurring.frequency) {
+        val freqId = when (recurring.frequency) {
             "Weekly" -> 1
             "Bi-weekly" -> 2
             "Tri-weekly" -> 3
@@ -460,12 +472,16 @@ class RecurringsActivity : AppCompatActivity(), AdapterView.OnItemSelectedListen
         updateDialog.etNoteLayoutUpdateRecurring.etNoteUpdateRecurring.setText(recurring.note)
 
         if (recurring.amount.toFloat() >= 0) {
-            updateDialog.inc_exp_radio_group_recurring_update.income_radio_recurring_update.isChecked = true
-            updateDialog.inc_exp_radio_group_recurring_update.expenditure_radio_recurring_update.isChecked = false
+            updateDialog.inc_exp_radio_group_recurring_update.income_radio_recurring_update.isChecked =
+                true
+            updateDialog.inc_exp_radio_group_recurring_update.expenditure_radio_recurring_update.isChecked =
+                false
             updateDialog.etAmountLayoutRecurring.etAmountRecurring.setText(recurring.amount)
         } else {
-            updateDialog.inc_exp_radio_group_recurring_update.expenditure_radio_recurring_update.isChecked = true
-            updateDialog.inc_exp_radio_group_recurring_update.income_radio_recurring_update.isChecked = false
+            updateDialog.inc_exp_radio_group_recurring_update.expenditure_radio_recurring_update.isChecked =
+                true
+            updateDialog.inc_exp_radio_group_recurring_update.income_radio_recurring_update.isChecked =
+                false
             updateDialog.etAmountLayoutRecurring.etAmountRecurring.setText((recurring.amount.toFloat() * -1).toString())
         }
 
@@ -495,14 +511,17 @@ class RecurringsActivity : AppCompatActivity(), AdapterView.OnItemSelectedListen
             val category = dbHandlerCat.getCategoryId(selectedCategory)
             val amount = updateDialog.etAmountLayoutRecurring.etAmountRecurring.text.toString()
             val account = dbHandlerAcc.getAccountId(selectedAccount)
-            val note = updateDialog.etNoteLayoutUpdateRecurring.etNoteUpdateRecurring.text.toString()
+            val note =
+                updateDialog.etNoteLayoutUpdateRecurring.etNoteUpdateRecurring.text.toString()
             val nextMonth = monthPicked
             val nextOGDay = dayPicked
             val nextDay = dayPicked
             val nextYear = yearPicked
             val frequency = selectedFrequency
 
-            if (selectedCategory.isNotEmpty() && amount.isNotEmpty() && note.isNotEmpty() && account.toString().isNotEmpty() && frequency.isNotEmpty()) {
+            if (selectedCategory.isNotEmpty() && amount.isNotEmpty() && note.isNotEmpty() && account.toString()
+                    .isNotEmpty() && frequency.isNotEmpty()
+            ) {
                 if (isIncome) {
                     dbHandlerRec.updateRecurring(
                         RecurringModel(
@@ -567,7 +586,21 @@ class RecurringsActivity : AppCompatActivity(), AdapterView.OnItemSelectedListen
 
         deleteDialog.tvDeleteRecurring.setOnClickListener {
             val dbHandler = RecurringsHandler(this, null)
-            dbHandler.deleteRecurring(RecurringModel(recurring.id, "", 0, "", 0,0, 0, 0, 0, "",""))
+            dbHandler.deleteRecurring(
+                RecurringModel(
+                    recurring.id,
+                    "",
+                    0,
+                    "",
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    "",
+                    ""
+                )
+            )
 
             Toast.makeText(this, "Recurring transaction deleted.", Toast.LENGTH_LONG).show()
             setUpRecurringList()
@@ -633,23 +666,53 @@ class RecurringsActivity : AppCompatActivity(), AdapterView.OnItemSelectedListen
 
     override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
         when (parent!!.id) {
-            R.id.category_dropdown_add_recurring-> selectedCategory = parent.getItemAtPosition(position).toString()
-            R.id.frequency_dropdown_add_recurring -> selectedFrequency = parent.getItemAtPosition(position).toString()
-            R.id.account_dropdown_add_recurring -> selectedAccount = parent.getItemAtPosition(position).toString()
-            R.id.category_dropdown_update_recurring-> selectedCategory = parent.getItemAtPosition(position).toString()
-            R.id.frequency_dropdown_update_recurring -> selectedFrequency = parent.getItemAtPosition(position).toString()
-            R.id.account_dropdown_update_recurring -> selectedAccount = parent.getItemAtPosition(position).toString()
+            R.id.category_dropdown_add_recurring -> selectedCategory =
+                parent.getItemAtPosition(position).toString()
+            R.id.frequency_dropdown_add_recurring -> selectedFrequency =
+                parent.getItemAtPosition(position).toString()
+            R.id.account_dropdown_add_recurring -> selectedAccount =
+                parent.getItemAtPosition(position).toString()
+            R.id.category_dropdown_update_recurring -> selectedCategory =
+                parent.getItemAtPosition(position).toString()
+            R.id.frequency_dropdown_update_recurring -> selectedFrequency =
+                parent.getItemAtPosition(position).toString()
+            R.id.account_dropdown_update_recurring -> selectedAccount =
+                parent.getItemAtPosition(position).toString()
         }
     }
 
     override fun onNothingSelected(parent: AdapterView<*>?) {
         when (parent!!.id) {
-            R.id.category_dropdown_add_recurring-> Toast.makeText(this, "Nothing is selected in the category dropdown.",Toast.LENGTH_SHORT).show()
-            R.id.frequency_dropdown_add_recurring -> Toast.makeText(this, "Nothing is selected in the frequency dropdown.",Toast.LENGTH_SHORT).show()
-            R.id.account_dropdown_add_recurring -> Toast.makeText(this, "Nothing is selected in the account dropdown.",Toast.LENGTH_SHORT).show()
-            R.id.category_dropdown_update_recurring-> Toast.makeText(this, "Nothing is selected in the category dropdown.",Toast.LENGTH_SHORT).show()
-            R.id.frequency_dropdown_update_recurring -> Toast.makeText(this, "Nothing is selected in the frequency dropdown.",Toast.LENGTH_SHORT).show()
-            R.id.account_dropdown_update_recurring -> Toast.makeText(this, "Nothing is selected in the account dropdown.",Toast.LENGTH_SHORT).show()
+            R.id.category_dropdown_add_recurring -> Toast.makeText(
+                this,
+                "Nothing is selected in the category dropdown.",
+                Toast.LENGTH_SHORT
+            ).show()
+            R.id.frequency_dropdown_add_recurring -> Toast.makeText(
+                this,
+                "Nothing is selected in the frequency dropdown.",
+                Toast.LENGTH_SHORT
+            ).show()
+            R.id.account_dropdown_add_recurring -> Toast.makeText(
+                this,
+                "Nothing is selected in the account dropdown.",
+                Toast.LENGTH_SHORT
+            ).show()
+            R.id.category_dropdown_update_recurring -> Toast.makeText(
+                this,
+                "Nothing is selected in the category dropdown.",
+                Toast.LENGTH_SHORT
+            ).show()
+            R.id.frequency_dropdown_update_recurring -> Toast.makeText(
+                this,
+                "Nothing is selected in the frequency dropdown.",
+                Toast.LENGTH_SHORT
+            ).show()
+            R.id.account_dropdown_update_recurring -> Toast.makeText(
+                this,
+                "Nothing is selected in the account dropdown.",
+                Toast.LENGTH_SHORT
+            ).show()
         }
 
     }

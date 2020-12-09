@@ -4,7 +4,6 @@ import android.content.ContentValues
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
-import android.util.Log
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -161,7 +160,6 @@ class RecurringsHandler(context: Context, factory: SQLiteDatabase.CursorFactory?
         db.close()
         return success
     }
-
 
 
 }

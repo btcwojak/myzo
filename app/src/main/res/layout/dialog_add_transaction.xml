@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/dialog_background_solid"
@@ -81,9 +80,9 @@
             android:id="@+id/category_dropdown_layout"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="0dp"
-            android:layout_weight="10"
             android:layout_height="match_parent"
             android:layout_marginTop="5dp"
+            android:layout_weight="10"
             android:background="@drawable/dropdown_border">
 
             <Spinner
@@ -100,8 +99,8 @@
             android:id="@+id/etAmountLayout"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="0dp"
-            android:layout_weight="8"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_weight="8">
 
             <androidx.appcompat.widget.AppCompatEditText
                 android:id="@+id/etAmount"
@@ -131,7 +130,7 @@
             android:hint="@string/note"
             android:inputType="text"
             android:maxLength="48"
-            android:maxLines="1"/>
+            android:maxLines="1" />
 
     </com.google.android.material.textfield.TextInputLayout>
 

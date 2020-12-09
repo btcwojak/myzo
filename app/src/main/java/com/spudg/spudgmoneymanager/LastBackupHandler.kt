@@ -4,7 +4,6 @@ import android.content.ContentValues
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
-import android.util.Log
 
 class LastBackupHandler(context: Context, factory: SQLiteDatabase.CursorFactory?) :
     SQLiteOpenHelper(context, DATABASE_NAME, factory, DATABASE_VERSION) {
@@ -50,7 +49,8 @@ class LastBackupHandler(context: Context, factory: SQLiteDatabase.CursorFactory?
         val db = this.writableDatabase
         val cursor = db.rawQuery(
             "SELECT * FROM $TABLE_LAST_BACKUP",
-            null)
+            null
+        )
         var date = ""
 
         if (cursor.moveToFirst()) {
@@ -69,7 +69,8 @@ class LastBackupHandler(context: Context, factory: SQLiteDatabase.CursorFactory?
         val db = this.writableDatabase
         val cursor = db.rawQuery(
             "SELECT * FROM $TABLE_LAST_BACKUP",
-            null)
+            null
+        )
         val exists = cursor.moveToFirst()
 
         cursor.close()

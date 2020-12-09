@@ -81,4 +81,7 @@
     <string name="update_recurring_transaction_for">Update Recurring Transaction for</string>
     <string name="delete_recurring_transaction">Delete recurring transaction</string>
     <string name="delete_recurring_waring">Are you sure you want to delete this recurring transaction?</string>
+    <string name="next_posting_date_placeholder">Next posting date: 07/12/2022</string>
+    <string name="account">Account</string>
+    <string name="frequency">Frequency</string>
 </resources>

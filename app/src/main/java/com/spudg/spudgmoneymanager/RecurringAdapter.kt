@@ -51,7 +51,8 @@ class RecurringAdapter(val context: Context, private val items: ArrayList<Recurr
         }
 
         if (context is RecurringsActivity) {
-            holder.categoryView.text = context.getRecurringTransactionCategoryTitle(recurring.category)
+            holder.categoryView.text =
+                context.getRecurringTransactionCategoryTitle(recurring.category)
         }
 
         if (context is RecurringsActivity) {
