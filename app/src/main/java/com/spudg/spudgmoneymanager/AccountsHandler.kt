@@ -76,7 +76,7 @@ class AccountsHandler(context: Context, factory: SQLiteDatabase.CursorFactory?) 
 
     }
 
-    private fun getAllAccountNames(): ArrayList<String> {
+    fun getAllAccountNames(): ArrayList<String> {
         val list = ArrayList<String>()
         val db = this.readableDatabase
         val cursor = db.rawQuery("SELECT * FROM $TABLE_ACCOUNTS", null)
@@ -93,6 +93,27 @@ class AccountsHandler(context: Context, factory: SQLiteDatabase.CursorFactory?) 
         cursor.close()
         db.close()
         return list
+
+    }
+
+    fun getAccountId(accountName: String): Int {
+        val db = this.readableDatabase
+
+        val cursor =
+            db.rawQuery("SELECT * FROM $TABLE_ACCOUNTS WHERE $KEY_NAME = '$accountName'", null)
+
+        val id: Int
+
+        id = if (cursor.moveToFirst()) {
+            cursor.getInt(cursor.getColumnIndex(KEY_ID))
+        } else {
+            0
+        }
+
+        cursor.close()
+        db.close()
+
+        return id
 
     }
 

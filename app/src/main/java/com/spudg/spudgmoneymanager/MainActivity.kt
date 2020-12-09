@@ -141,7 +141,7 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
 
                 var rec = dbRec.filterRecurrings()[index]
 
-                if (rec.frequency == "weekly") {
+                if (rec.frequency == "Weekly") {
                     val strDate = "${rec.nextDay}-${rec.nextMonth}-${rec.nextYear}"
                     val sdf = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
                     val nextDateMillis = sdf.parse(strDate)?.time!!.plus(604800000)
@@ -157,7 +157,7 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
                     dbTrans.addTransaction(TransactionModel(0,rec.note,rec.category,rec.amount,rec.account,rec.nextMonth,rec.nextDay,rec.nextYear,""))
                 }
 
-                if (rec.frequency == "bi-weekly") {
+                if (rec.frequency == "Bi-weekly") {
                     val strDate = "${rec.nextDay}-${rec.nextMonth}-${rec.nextYear}"
                     val sdf = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
                     val nextDateMillis = sdf.parse(strDate)?.time!!.plus(2*604800000)
@@ -173,7 +173,7 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
                     dbTrans.addTransaction(TransactionModel(0,rec.note,rec.category,rec.amount,rec.account,rec.nextMonth,rec.nextDay,rec.nextYear,""))
                 }
 
-                if (rec.frequency == "tri-weekly") {
+                if (rec.frequency == "Tri-weekly") {
                     val strDate = "${rec.nextDay}-${rec.nextMonth}-${rec.nextYear}"
                     val sdf = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
                     val nextDateMillis = sdf.parse(strDate)?.time!!.plus(3*604800000)
@@ -189,7 +189,7 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
                     dbTrans.addTransaction(TransactionModel(0,rec.note,rec.category,rec.amount,rec.account,rec.nextMonth,rec.nextDay,rec.nextYear,""))
                 }
 
-                if (rec.frequency == "four-weekly") {
+                if (rec.frequency == "Four-weekly") {
                     val strDate = "${rec.nextDay}-${rec.nextMonth}-${rec.nextYear}"
                     val sdf = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
                     val nextDateMillis = sdf.parse(strDate)?.time!!.plus(2*604800000).plus(2*604800000)
@@ -205,7 +205,7 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
                     dbTrans.addTransaction(TransactionModel(0,rec.note,rec.category,rec.amount,rec.account,rec.nextMonth,rec.nextDay,rec.nextYear,""))
                 }
 
-                if (rec.frequency == "monthly") {
+                if (rec.frequency == "Monthly") {
                     var newNextMonth = rec.nextMonth + 1
                     var nextOGDay = rec.nextOGDay
                     var newNextDay = rec.nextDay
@@ -253,7 +253,7 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
 
                 }
 
-                if (rec.frequency == "bi-monthly") {
+                if (rec.frequency == "Bi-monthly") {
                     var newNextMonth = rec.nextMonth + 2
                     var nextOGDay = rec.nextOGDay
                     var newNextDay = rec.nextDay
@@ -300,7 +300,7 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
                     dbTrans.addTransaction(TransactionModel(0,rec.note,rec.category,rec.amount,rec.account,rec.nextMonth,rec.nextDay,rec.nextYear,""))
                 }
 
-                if (rec.frequency == "quarterly") {
+                if (rec.frequency == "Quarterly") {
                     var newNextMonth = rec.nextMonth + 3
                     var nextOGDay = rec.nextOGDay
                     var newNextDay = rec.nextDay
@@ -347,7 +347,7 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
                     dbTrans.addTransaction(TransactionModel(0,rec.note,rec.category,rec.amount,rec.account,rec.nextMonth,rec.nextDay,rec.nextYear,""))
                 }
 
-                if (rec.frequency == "yearly") {
+                if (rec.frequency == "Yearly") {
                     var newNextMonth = rec.nextMonth
                     var nextOGDay = rec.nextOGDay
                     var newNextDay = rec.nextDay

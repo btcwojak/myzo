@@ -93,7 +93,7 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <Spinner
-                android:id="@+id/category_spinner_update_trans_recurring"
+                android:id="@+id/category_dropdown_update_recurring"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:backgroundTint="@color/colorPrimaryDark"
@@ -140,23 +140,41 @@
 
     </com.google.android.material.textfield.TextInputLayout>
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/etFrequencyLayoutUpdate"
+    <LinearLayout
+        android:id="@+id/frequency_dropdown_layout_update_recurring"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="50dp"
+        android:layout_marginTop="5dp"
+        android:background="@drawable/dropdown_border">
 
-        <androidx.appcompat.widget.AppCompatEditText
-            android:id="@+id/etFrequencyUpdate"
+        <Spinner
+            android:id="@+id/frequency_dropdown_update_recurring"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:fontFamily="@font/open_sans_light"
-            android:hint="@string/note"
-            android:inputType="text"
-            android:maxLength="48"
-            android:maxLines="1"/>
+            android:backgroundTint="@color/colorPrimaryDark"
+            android:overlapAnchor="false"
+            android:spinnerMode="dropdown" />
 
-    </com.google.android.material.textfield.TextInputLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/account_dropdown_layout_update_recurring"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="5dp"
+        android:background="@drawable/dropdown_border">
+
+        <Spinner
+            android:id="@+id/account_dropdown_update_recurring"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:backgroundTint="@color/colorPrimaryDark"
+            android:overlapAnchor="false"
+            android:spinnerMode="dropdown" />
+
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"

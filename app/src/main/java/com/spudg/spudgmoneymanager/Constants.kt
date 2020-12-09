@@ -22,14 +22,14 @@ class Constants {
             "Dec"
         )
         var RECURRING_FREQUENCIES: Array<String> = arrayOf(
-            "weekly",
-            "bi-weekly",
-            "tri-weekly",
-            "four-weekly",
-            "monthly",
-            "bi-monthly",
-            "quarterly",
-            "yearly",
+            "Weekly",
+            "Bi-weekly",
+            "Tri-weekly",
+            "Four-weekly",
+            "Monthly",
+            "Bi-monthly",
+            "Quarterly",
+            "Yearly",
         )
         var DAYS31: ArrayList<Int> = arrayListOf(
             1,

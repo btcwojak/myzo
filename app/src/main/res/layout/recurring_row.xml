@@ -111,6 +111,40 @@
 
                 </LinearLayout>
 
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingBottom="10dp">
+
+                    <TextView
+                        android:id="@+id/account_recurring"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/open_sans_light"
+                        android:text="Account"
+                        android:paddingStart="10dp"
+                        android:gravity="center_horizontal"
+                        android:paddingEnd="10dp"
+                        android:textColor="#212121"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/frequency_recurring"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/open_sans_light"
+                        android:text="Frequency"
+                        android:paddingStart="10dp"
+                        android:gravity="center_horizontal"
+                        android:paddingEnd="10dp"
+                        android:textColor="#212121"
+                        android:textSize="16sp" />
+
+                </LinearLayout>
+
             </LinearLayout>
 
         </LinearLayout>

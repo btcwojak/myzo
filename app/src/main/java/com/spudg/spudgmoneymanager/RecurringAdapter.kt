@@ -22,6 +22,8 @@ class RecurringAdapter(val context: Context, private val items: ArrayList<Recurr
         val noteView = view.note_recurring!!
         val colourView = view.category_colour_recurring!!
         val dateView = view.next_date_header_recurring!!
+        val frequencyView = view.frequency_recurring!!
+        val accountView = view.account_recurring!!
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -42,8 +44,14 @@ class RecurringAdapter(val context: Context, private val items: ArrayList<Recurr
 
         holder.dateView.text = "Next posting date: $date"
 
+        holder.frequencyView.text = recurring.frequency
+
         if (context is RecurringsActivity) {
-            holder.categoryView.text = context.getTransactionCategoryTitle(recurring.category)
+            holder.accountView.text = context.getRecurringTransactionAccountName(recurring.account)
+        }
+
+        if (context is RecurringsActivity) {
+            holder.categoryView.text = context.getRecurringTransactionCategoryTitle(recurring.category)
         }
 
         if (context is RecurringsActivity) {
@@ -60,7 +68,7 @@ class RecurringAdapter(val context: Context, private val items: ArrayList<Recurr
         holder.noteView.text = recurring.note
 
         if (context is RecurringsActivity) {
-            val colour = context.getTransactionCategoryColour(recurring.category)
+            val colour = context.getRecurringTransactionCategoryColour(recurring.category)
             holder.colourView.setBackgroundColor(colour)
         }
 
