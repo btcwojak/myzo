@@ -399,9 +399,20 @@ class RecurringsActivity : AppCompatActivity(), AdapterView.OnItemSelectedListen
             }
 
             changeDateDialog.submit_dmy.setOnClickListener {
-                updateDialog.change_date_update_recurring.text =
-                    "$dayPicked ${Constants.getShortMonth(monthPicked)} $yearPicked"
-                changeDateDialog.dismiss()
+                val strDate = "$dayPicked-$monthPicked-$yearPicked"
+                val sdf = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
+                val dateMillis = sdf.parse(strDate)?.time
+                if (dateMillis!! < Calendar.getInstance().timeInMillis - 86400000) {
+                    Toast.makeText(
+                        this,
+                        "Recurring transactions must be set for today or the future.",
+                        Toast.LENGTH_LONG
+                    ).show()
+                } else {
+                    updateDialog.change_date_update_recurring.text =
+                        "$dayPicked ${Constants.getShortMonth(monthPicked)} $yearPicked"
+                    changeDateDialog.dismiss()
+                }
             }
 
             changeDateDialog.dmyp_day.wrapSelectorWheel = true
