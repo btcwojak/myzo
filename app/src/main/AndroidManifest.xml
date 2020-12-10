@@ -10,7 +10,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/SpudgMM">
-        <activity android:name=".RecurringsActivity"></activity>
+        <activity
+            android:name=".RecurringsActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/SpudgMM"/>
         <activity
             android:name=".AboutActivity"
             android:screenOrientation="portrait"
