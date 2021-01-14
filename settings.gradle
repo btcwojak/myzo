@@ -1,2 +1,2 @@
 include ':app'
-rootProject.name = "Spudg Money Manager"
+rootProject.name = "Myzo"

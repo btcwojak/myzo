@@ -43,7 +43,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="20dp"
                 android:fontFamily="@font/open_sans_light"
-                android:text="@string/about_smm"
+                android:text="@string/about_myzo"
                 android:textColor="#000000"
                 android:textSize="24sp"
                 android:textStyle="bold"
@@ -87,7 +87,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:background="@mipmap/ic_launcher"
-                        android:contentDescription="@string/smm_logo" />
+                        android:contentDescription="@string/myzo_logo" />
 
                     <LinearLayout
                         android:layout_width="wrap_content"
@@ -101,19 +101,19 @@
                             android:layout_gravity="start"
                             android:fontFamily="@font/open_sans_light"
                             android:padding="6dp"
-                            android:text="@string/spudg_money_manager"
+                            android:text="@string/myzo"
                             android:textColor="@android:color/black"
                             android:textSize="20sp" />
 
                         <TextView
-                            android:id="@+id/spudg_money_manager_desc"
+                            android:id="@+id/myzo_desc"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="start"
                             android:fontFamily="@font/open_sans_light"
                             android:paddingStart="10dp"
                             android:paddingEnd="10dp"
-                            android:text="@string/v1_0_0_made_by_spudg_software"
+                            android:text="@string/v1_0_0_made_by_spudg_studios"
                             android:textColor="@android:color/black"
                             android:textSize="16sp" />
 

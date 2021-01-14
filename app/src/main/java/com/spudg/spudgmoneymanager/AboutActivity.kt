@@ -18,7 +18,7 @@ class AboutActivity : AppCompatActivity() {
         setContentView(R.layout.activity_about)
 
         var version = packageManager.getPackageInfo(packageName, 0).versionName
-        spudg_money_manager_desc.text = "v$version, made by Spudg Studios"
+        myzo_desc.text = "v$version, made by Spudg Studios"
 
         back_to_trans_from_about.setOnClickListener {
             val intent = Intent(this, MainActivity::class.java)
@@ -71,7 +71,7 @@ class AboutActivity : AppCompatActivity() {
         val intent = Intent(Intent.ACTION_SEND)
         intent.type = "message/rfc822"
         intent.putExtra(Intent.EXTRA_EMAIL, arrayOf("spudgstudios@gmail.com"))
-        intent.putExtra(Intent.EXTRA_SUBJECT, "SMM - Suggestion / bug report")
+        intent.putExtra(Intent.EXTRA_SUBJECT, "Myzo - Suggestion / bug report")
 
         try {
             startActivity(Intent.createChooser(intent, "Send mail..."))

@@ -9,19 +9,19 @@
         android:requestLegacyExternalStorage="true"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/SpudgMM">
+        android:theme="@style/Myzo">
         <activity
             android:name=".RecurringsActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/SpudgMM"/>
+            android:theme="@style/Myzo"/>
         <activity
             android:name=".AboutActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/SpudgMM" />
+            android:theme="@style/Myzo" />
         <activity
             android:name=".AnalyticsActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/SpudgMM" />
+            android:theme="@style/Myzo" />
         <activity
             android:name=".SplashActivity"
             android:screenOrientation="portrait"
@@ -35,15 +35,15 @@
         <activity
             android:name=".CategoriesActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/SpudgMM" />
+            android:theme="@style/Myzo" />
         <activity
             android:name=".AccountsActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/SpudgMM" />
+            android:theme="@style/Myzo" />
         <activity
             android:name=".MainActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/SpudgMM" />
+            android:theme="@style/Myzo" />
 
         <meta-data
             android:name="preloaded_fonts"

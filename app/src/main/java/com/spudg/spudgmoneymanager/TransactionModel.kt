@@ -1,6 +1,5 @@
 package com.spudg.spudgmoneymanager
 
-
 class TransactionModel(
     val id: Int,
     val note: String,
