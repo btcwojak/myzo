@@ -13,7 +13,7 @@
         <activity
             android:name=".RecurringsActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/Myzo"/>
+            android:theme="@style/Myzo" />
         <activity
             android:name=".AboutActivity"
             android:screenOrientation="portrait"

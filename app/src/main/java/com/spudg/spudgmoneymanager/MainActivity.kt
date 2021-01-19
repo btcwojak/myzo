@@ -1178,9 +1178,7 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
     }
 
 
-
     // Import / export code below
-
 
 
     private fun updateLastBackupDate() {
