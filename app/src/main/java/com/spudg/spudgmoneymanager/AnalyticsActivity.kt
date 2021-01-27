@@ -21,6 +21,7 @@ import com.github.mikephil.charting.formatter.ValueFormatter
 import kotlinx.android.synthetic.main.activity_analytics.*
 import kotlinx.android.synthetic.main.activity_analytics.view.*
 import kotlinx.android.synthetic.main.month_year_picker.*
+import java.text.DecimalFormat
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -164,8 +165,17 @@ class AnalyticsActivity : AppCompatActivity(), AdapterView.OnItemSelectedListene
             dataSetInc.valueLinePart2Length = 0.8f
             dataSetInc.yValuePosition = PieDataSet.ValuePosition.OUTSIDE_SLICE
             dataSetInc.isDrawValuesEnabled
+            dataInc.setValueFormatter(object : ValueFormatter() {
+                override fun getFormattedValue(value: Float): String {
+                    return if (value > 0) {
+                        val mFormat = DecimalFormat("###,###,##0.00")
+                        mFormat.format(super.getFormattedValue(value).toFloat())
+                    } else {
+                        ""
+                    }
+                }
+            })
 
-            dataInc.setValueFormatter(PercentFormatter())
             dataInc.setValueTextSize(11f)
             dataInc.setValueTextColor(Color.BLACK)
 
@@ -216,8 +226,18 @@ class AnalyticsActivity : AppCompatActivity(), AdapterView.OnItemSelectedListene
             dataSetExp.valueLinePart1Length = 0.4f
             dataSetExp.valueLinePart2Length = 0.8f
             dataSetExp.yValuePosition = PieDataSet.ValuePosition.OUTSIDE_SLICE
+            dataSetExp.isDrawValuesEnabled
+            dataExp.setValueFormatter(object : ValueFormatter() {
+                override fun getFormattedValue(value: Float): String {
+                    return if (value > 0) {
+                        val mFormat = DecimalFormat("###,###,##0.00")
+                        mFormat.format(super.getFormattedValue(value).toFloat())
+                    } else {
+                        ""
+                    }
+                }
+            })
 
-            dataExp.setValueFormatter(PercentFormatter())
             dataExp.setValueTextSize(11f)
             dataExp.setValueTextColor(Color.BLACK)
 
@@ -254,16 +274,6 @@ class AnalyticsActivity : AppCompatActivity(), AdapterView.OnItemSelectedListene
             val dataBar = BarData(dataSetBar)
             dataSetBar.color = categoryColour
 
-            dataBar.setValueFormatter(object : ValueFormatter() {
-                override fun getFormattedValue(value: Float): String {
-                    return if (value > 0) {
-                        super.getFormattedValue(value)
-                    } else {
-                        ""
-                    }
-                }
-            })
-
             val chartBar: BarChart = chartBar
             if (entriesBar.size > 0) {
                 chartBar.data = dataBar
@@ -277,6 +287,17 @@ class AnalyticsActivity : AppCompatActivity(), AdapterView.OnItemSelectedListene
             chartBar.axisRight.isEnabled = false
             chartBar.xAxis.position = XAxis.XAxisPosition.BOTTOM
             chartBar.legend.isEnabled = false
+
+            dataBar.setValueFormatter(object : ValueFormatter() {
+                override fun getFormattedValue(value: Float): String {
+                    return if (value > 0) {
+                        val mFormat = DecimalFormat("###,###,##0.00")
+                        mFormat.format(super.getFormattedValue(value).toFloat())
+                    } else {
+                        ""
+                    }
+                }
+            })
 
             chartBar.description.isEnabled = false
 
