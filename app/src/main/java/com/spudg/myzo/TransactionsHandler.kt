@@ -1,4 +1,4 @@
-package com.spudg.spudgmoneymanager
+package com.spudg.myzo
 
 import android.content.ContentValues
 import android.content.Context

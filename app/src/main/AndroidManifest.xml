@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.spudg.spudgmoneymanager">
+    package="com.spudg.myzo">
 
     <application
         android:allowBackup="true"
@@ -11,19 +11,19 @@
         android:supportsRtl="true"
         android:theme="@style/Myzo">
         <activity
-            android:name=".RecurringsActivity"
+            android:name="com.spudg.myzo.RecurringsActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Myzo" />
         <activity
-            android:name=".AboutActivity"
+            android:name="com.spudg.myzo.AboutActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Myzo" />
         <activity
-            android:name=".AnalyticsActivity"
+            android:name="com.spudg.myzo.AnalyticsActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Myzo" />
         <activity
-            android:name=".SplashActivity"
+            android:name="com.spudg.myzo.SplashActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Splash">
             <intent-filter>
@@ -33,15 +33,15 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".CategoriesActivity"
+            android:name="com.spudg.myzo.CategoriesActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Myzo" />
         <activity
-            android:name=".AccountsActivity"
+            android:name="com.spudg.myzo.AccountsActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Myzo" />
         <activity
-            android:name=".MainActivity"
+            android:name="com.spudg.myzo.MainActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Myzo" />
 

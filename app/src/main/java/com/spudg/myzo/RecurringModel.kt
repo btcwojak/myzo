@@ -1,4 +1,4 @@
-package com.spudg.spudgmoneymanager
+package com.spudg.myzo
 
 class RecurringModel(
     val id: Int,

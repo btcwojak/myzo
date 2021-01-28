@@ -1,4 +1,4 @@
-package com.spudg.spudgmoneymanager
+package com.spudg.myzo
 
 import android.content.Intent
 import android.os.Bundle

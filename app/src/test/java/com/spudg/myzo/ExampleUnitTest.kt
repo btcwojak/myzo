@@ -1,4 +1,4 @@
-package com.spudg.spudgmoneymanager
+package com.spudg.myzo
 
 import org.junit.Assert.assertEquals
 import org.junit.Test

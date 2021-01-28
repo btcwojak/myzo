@@ -7,11 +7,11 @@ android {
     buildToolsVersion "30.0.3"
 
     defaultConfig {
-        applicationId "com.spudg.spudgmoneymanager"
+        applicationId "com.spudg.myzo"
         minSdkVersion 21
         targetSdkVersion 30
-        versionCode 15
-        versionName "1.6.3"
+        versionCode 16
+        versionName "1.6.4"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }

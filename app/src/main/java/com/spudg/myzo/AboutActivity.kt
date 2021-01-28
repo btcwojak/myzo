@@ -1,4 +1,4 @@
-package com.spudg.spudgmoneymanager
+package com.spudg.myzo
 
 import android.app.Dialog
 import android.content.ActivityNotFoundException
@@ -46,7 +46,7 @@ class AboutActivity : AppCompatActivity() {
 
     private fun privacyPolicy() {
         val url =
-            "https://docs.google.com/document/d/1ZUlUR293yLqaEppmmCGrM5JYRNksaFOU2ky7tAU7htE/edit?usp=sharing"
+            "https://docs.google.com/document/d/1ZUlUR293yLqaEppmmCGrM5JYRNksaFOU2ky7tAU7htE"
         val i = Intent(Intent.ACTION_VIEW)
         i.data = Uri.parse(url)
         startActivity(i)
@@ -87,7 +87,7 @@ class AboutActivity : AppCompatActivity() {
 
     private fun rate() {
         val url =
-            "https://play.google.com/store/apps/details?id=com.spudg.spudgmoneymanager"
+            "https://play.google.com/store/apps/details?id=com.spudg.myzo"
         val i = Intent(Intent.ACTION_VIEW)
         i.data = Uri.parse(url)
         startActivity(i)

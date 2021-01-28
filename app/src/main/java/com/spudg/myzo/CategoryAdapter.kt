@@ -1,4 +1,4 @@
-package com.spudg.spudgmoneymanager
+package com.spudg.myzo
 
 import android.content.Context
 import android.view.LayoutInflater
