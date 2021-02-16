@@ -16,7 +16,6 @@ class TransactionAdapter(val context: Context, private val items: ArrayList<Tran
     RecyclerView.Adapter<TransactionAdapter.ViewHolder>() {
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val transactionItem = view.transaction_row_layout!!
         val mainRowItem = view.main_row_layout!!
         val categoryView = view.category!!
         val amountView = view.amount!!

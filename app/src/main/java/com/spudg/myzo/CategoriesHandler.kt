@@ -164,9 +164,7 @@ class CategoriesHandler(context: Context, factory: SQLiteDatabase.CursorFactory?
         val cursor =
             db.rawQuery("SELECT * FROM $TABLE_CATEGORIES WHERE $KEY_ID = '$categoryId'", null)
 
-        val colour: Int
-
-        colour = if (cursor.moveToFirst()) {
+        val colour: Int = if (cursor.moveToFirst()) {
             cursor.getString(cursor.getColumnIndex(KEY_COLOUR)).toInt()
         } else {
             0
@@ -185,9 +183,7 @@ class CategoriesHandler(context: Context, factory: SQLiteDatabase.CursorFactory?
         val cursor =
             db.rawQuery("SELECT * FROM $TABLE_CATEGORIES WHERE $KEY_TITLE = '$categoryTitle'", null)
 
-        val id: Int
-
-        id = if (cursor.moveToFirst()) {
+        val id: Int = if (cursor.moveToFirst()) {
             cursor.getInt(cursor.getColumnIndex(KEY_ID))
         } else {
             0
@@ -206,9 +202,7 @@ class CategoriesHandler(context: Context, factory: SQLiteDatabase.CursorFactory?
         val cursor =
             db.rawQuery("SELECT * FROM $TABLE_CATEGORIES WHERE $KEY_ID = $categoryId", null)
 
-        val title: String
-
-        title = if (cursor.moveToFirst()) {
+        val title: String = if (cursor.moveToFirst()) {
             cursor.getString(cursor.getColumnIndex(KEY_TITLE))
         } else {
             "Error"

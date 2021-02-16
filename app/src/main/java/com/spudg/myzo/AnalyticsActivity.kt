@@ -256,7 +256,7 @@ class AnalyticsActivity : AppCompatActivity(), AdapterView.OnItemSelectedListene
     private fun setupBarChart() {
 
         val dbCategory = CategoriesHandler(this, null)
-        var categoryColour = dbCategory.getCategoryColour(Constants.CATEGORY_FILTER_BAR)
+        val categoryColour = dbCategory.getCategoryColour(Constants.CATEGORY_FILTER_BAR)
         dbCategory.close()
 
         var runningTotal = 0.00F
@@ -407,7 +407,7 @@ class AnalyticsActivity : AppCompatActivity(), AdapterView.OnItemSelectedListene
         }
 
         for (day in daysInMonth) {
-            var totalForDay: Float =
+            val totalForDay: Float =
                 dbHandlerTransaction.getTransactionTotalForCategoryDayMonthYear(
                     categoryFilter,
                     day,
@@ -441,26 +441,8 @@ class AnalyticsActivity : AppCompatActivity(), AdapterView.OnItemSelectedListene
         transactionTotalsPerDay = arrayListOf()
     }
 
-    private fun resetAllData() {
-        entriesInc = arrayListOf()
-        entriesExp = arrayListOf()
-        entriesBar = arrayListOf()
-
-        categoryTitlesInc = arrayListOf()
-        categoryTitlesExp = arrayListOf()
-
-        categoryColoursInc = arrayListOf()
-        categoryColoursExp = arrayListOf()
-
-        categoryTotalsInc = arrayListOf()
-        categoryTotalsExp = arrayListOf()
-
-        daysInMonth = arrayListOf()
-        transactionTotalsPerDay = arrayListOf()
-    }
-
     private fun setMonthHeader(month: Int, year: Int) {
-        month_selected_header.text = "${Constants.MONTHS_SHORT_ARRAY[month - 1]} $year"
+        month_selected_header.text = getString(R.string.month_header, Constants.MONTHS_SHORT_ARRAY[month - 1], year.toString())
     }
 
     override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {

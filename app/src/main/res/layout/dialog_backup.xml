@@ -26,7 +26,7 @@
         android:layout_marginEnd="8dp"
         android:fontFamily="@font/open_sans_light"
         android:padding="5dp"
-        android:text="Export to or import from a backup folder, containing CSV files for your transactions, categories and accounts."
+        android:text="@string/export_import_explain"
         android:textColor="@android:color/black"
         android:textSize="16sp" />
 
@@ -58,7 +58,7 @@
             android:layout_marginEnd="30dp"
             android:fontFamily="@font/open_sans_light"
             android:padding="10dp"
-            android:text="Import"
+            android:text="@string/import_btn"
             android:textColor="@color/colorAccent"
             android:textSize="16sp" />
 
@@ -69,7 +69,7 @@
             android:layout_marginStart="30dp"
             android:fontFamily="@font/open_sans_light"
             android:padding="10dp"
-            android:text="Export"
+            android:text="@string/export_btn"
             android:textColor="@color/colorAccent"
             android:textSize="16sp" />
 
@@ -83,7 +83,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="5dp"
         android:fontFamily="@font/open_sans_light"
-        android:text="Last export: Never"
+        android:text="@string/last_export_never"
         android:textSize="18sp" />
 
     <LinearLayout

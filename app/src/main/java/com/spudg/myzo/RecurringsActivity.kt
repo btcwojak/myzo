@@ -83,7 +83,7 @@ class RecurringsActivity : AppCompatActivity(), AdapterView.OnItemSelectedListen
         var yearPicked = Calendar.getInstance()[Calendar.YEAR]
 
         addDialog.change_date_add_recurring.text =
-            "$dayPicked ${Constants.getShortMonth(monthPicked)} $yearPicked"
+            getString(R.string.day_month_year, dayPicked.toString(), Constants.getShortMonth(monthPicked), yearPicked.toString())
 
         addDialog.change_date_add_recurring.setOnClickListener {
             val changeDateDialog = Dialog(this, R.style.Theme_Dialog)
@@ -163,7 +163,7 @@ class RecurringsActivity : AppCompatActivity(), AdapterView.OnItemSelectedListen
                     ).show()
                 } else {
                     addDialog.change_date_add_recurring.text =
-                        "$dayPicked ${Constants.getShortMonth(monthPicked)} $yearPicked"
+                        getString(R.string.day_month_year, dayPicked.toString(), Constants.getShortMonth(monthPicked), yearPicked.toString())
                     changeDateDialog.dismiss()
                 }
             }
@@ -177,7 +177,7 @@ class RecurringsActivity : AppCompatActivity(), AdapterView.OnItemSelectedListen
                 monthPicked = Calendar.getInstance()[Calendar.MONTH] + 1
                 yearPicked = Calendar.getInstance()[Calendar.YEAR]
                 addDialog.change_date_add_recurring.text =
-                    "$dayPicked ${Constants.getShortMonth(monthPicked)} $yearPicked"
+                    getString(R.string.day_month_year, dayPicked.toString(), Constants.getShortMonth(monthPicked), yearPicked.toString())
                 changeDateDialog.dismiss()
             }
 
@@ -330,7 +330,7 @@ class RecurringsActivity : AppCompatActivity(), AdapterView.OnItemSelectedListen
         var yearPicked = recurring.nextYear
 
         updateDialog.change_date_update_recurring.text =
-            "$dayPicked ${Constants.getShortMonth(monthPicked)} $yearPicked"
+            getString(R.string.day_month_year, dayPicked.toString(), Constants.getShortMonth(monthPicked), yearPicked.toString())
 
         updateDialog.change_date_update_recurring.setOnClickListener {
             val changeDateDialog = Dialog(this, R.style.Theme_Dialog)
@@ -410,7 +410,7 @@ class RecurringsActivity : AppCompatActivity(), AdapterView.OnItemSelectedListen
                     ).show()
                 } else {
                     updateDialog.change_date_update_recurring.text =
-                        "$dayPicked ${Constants.getShortMonth(monthPicked)} $yearPicked"
+                        getString(R.string.day_month_year, dayPicked.toString(), Constants.getShortMonth(monthPicked), yearPicked.toString())
                     changeDateDialog.dismiss()
                 }
             }
@@ -424,7 +424,7 @@ class RecurringsActivity : AppCompatActivity(), AdapterView.OnItemSelectedListen
                 monthPicked = recurring.nextMonth
                 yearPicked = recurring.nextYear
                 updateDialog.change_date_update_recurring.text =
-                    "$dayPicked ${Constants.getShortMonth(monthPicked)} $yearPicked"
+                    getString(R.string.day_month_year, dayPicked.toString(), Constants.getShortMonth(monthPicked), yearPicked.toString())
                 changeDateDialog.dismiss()
             }
 
@@ -648,8 +648,8 @@ class RecurringsActivity : AppCompatActivity(), AdapterView.OnItemSelectedListen
         return result
     }
 
-    fun currencyInputFilter(str: String, MAX_BEFORE_POINT: Int, MAX_DECIMAL: Int): String {
-        var str = str
+    fun currencyInputFilter(string: String, MAX_BEFORE_POINT: Int, MAX_DECIMAL: Int): String {
+        var str = string
         if (str[0] == '.') str = "0$str"
         val max = str.length
         var rFinal = ""

@@ -49,12 +49,12 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
     private var isIncome = true
     private var selectedCategory = ""
 
-    private val STORAGE_REQUEST_CODE_IMPORT = 1
-    private val STORAGE_REQUEST_CODE_EXPORT = 2
+    private val storageRequestCodeImport = 1
+    private val storageRequestCodeExport = 2
     private lateinit var storagePermission: Array<String>
 
-    lateinit var manager: ReviewManager
-    var reviewInfo: ReviewInfo? = null
+    private lateinit var manager: ReviewManager
+    private var reviewInfo: ReviewInfo? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -83,9 +83,9 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
         }
 
         more_btn.setOnClickListener {
-            val popupMenu: PopupMenu = PopupMenu(this, more_btn)
+            val popupMenu = PopupMenu(this, more_btn)
             popupMenu.menuInflater.inflate(R.menu.menu_popup, popupMenu.menu)
-            popupMenu.setOnMenuItemClickListener(PopupMenu.OnMenuItemClickListener { item ->
+            popupMenu.setOnMenuItemClickListener { item ->
                 when (item.itemId) {
                     R.id.action_analysis -> {
                         val intent = Intent(this, AnalyticsActivity::class.java)
@@ -104,7 +104,7 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
                     }
                 }
                 true
-            })
+            }
 
             popupMenu.show()
         }
@@ -614,7 +614,7 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
         var yearPicked = Calendar.getInstance()[Calendar.YEAR]
 
         addDialog.change_date_add.text =
-            "$dayPicked ${Constants.getShortMonth(monthPicked)} $yearPicked"
+            getString(R.string.day_month_year, dayPicked.toString(), Constants.getShortMonth(monthPicked), yearPicked.toString())
 
         addDialog.change_date_add.setOnClickListener {
             val changeDateDialog = Dialog(this, R.style.Theme_Dialog)
@@ -684,7 +684,7 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
 
             changeDateDialog.submit_dmy.setOnClickListener {
                 addDialog.change_date_add.text =
-                    "$dayPicked ${Constants.getShortMonth(monthPicked)} $yearPicked"
+                    getString(R.string.day_month_year, dayPicked.toString(), Constants.getShortMonth(monthPicked), yearPicked.toString())
                 changeDateDialog.dismiss()
             }
 
@@ -697,7 +697,7 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
                 monthPicked = Calendar.getInstance()[Calendar.MONTH] + 1
                 yearPicked = Calendar.getInstance()[Calendar.YEAR]
                 addDialog.change_date_add.text =
-                    "$dayPicked ${Constants.getShortMonth(monthPicked)} $yearPicked"
+                    getString(R.string.day_month_year, dayPicked.toString(), Constants.getShortMonth(monthPicked), yearPicked.toString())
                 changeDateDialog.dismiss()
             }
 
@@ -824,7 +824,7 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
         var yearPicked = transaction.year
 
         updateDialog.change_date_update.text =
-            "$dayPicked ${Constants.getShortMonth(monthPicked)} $yearPicked"
+            getString(R.string.day_month_year, dayPicked.toString(), Constants.getShortMonth(monthPicked), yearPicked.toString())
 
         updateDialog.change_date_update.setOnClickListener {
             val changeDateDialog = Dialog(this, R.style.Theme_Dialog)
@@ -894,7 +894,7 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
 
             changeDateDialog.submit_dmy.setOnClickListener {
                 updateDialog.change_date_update.text =
-                    "$dayPicked ${Constants.getShortMonth(monthPicked)} $yearPicked"
+                    getString(R.string.day_month_year, dayPicked.toString(), Constants.getShortMonth(monthPicked), yearPicked.toString())
                 changeDateDialog.dismiss()
             }
 
@@ -907,7 +907,7 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
                 monthPicked = transaction.month
                 yearPicked = transaction.year
                 updateDialog.change_date_update.text =
-                    "$dayPicked ${Constants.getShortMonth(monthPicked)} $yearPicked"
+                    getString(R.string.day_month_year, dayPicked.toString(), Constants.getShortMonth(monthPicked), yearPicked.toString())
                 changeDateDialog.dismiss()
             }
 
@@ -1061,9 +1061,9 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
         val dbHandler = TransactionsHandler(this, null)
         val balance = dbHandler.getBalanceForAccount(Constants.CURRENT_ACCOUNT)
         if (balance.isEmpty()) {
-            balance_heading.text = "Error"
+            balance_heading.text = getString(R.string.error)
         } else {
-            balance_heading.text = "Balance: $balance"
+            balance_heading.text = getString(R.string.account_balance, balance)
         }
 
         dbHandler.close()
@@ -1114,8 +1114,8 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
 
     }
 
-    fun currencyInputFilter(str: String, MAX_BEFORE_POINT: Int, MAX_DECIMAL: Int): String {
-        var str = str
+    fun currencyInputFilter(string: String, MAX_BEFORE_POINT: Int, MAX_DECIMAL: Int): String {
+        var str = string
         if (str[0] == '.') str = "0$str"
         val max = str.length
         var rFinal = ""
@@ -1163,7 +1163,7 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
         if (reviewInfo != null) {
             manager.launchReviewFlow(this, reviewInfo!!).addOnFailureListener {
                 Log.e("askForReview", "An error occurred.")
-            }.addOnCompleteListener { _ ->
+            }.addOnCompleteListener {
                 Log.v("askForReview", "Success.")
             }
         }
@@ -1202,13 +1202,13 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
         if (date.isNotEmpty()) {
             val sdf = SimpleDateFormat("d MMM yyyy HH:mm", Locale.getDefault())
             val formattedDate = sdf.format(date.toFloat())
-            backupDialog.last_backup.text = "Last backup: $formattedDate"
+            backupDialog.last_backup.text = getString(R.string.last_backup_date, formattedDate)
         }
 
         db.close()
 
         backupDialog.import_text_export_location.text =
-            "Backups will be exported to and imported from ${this.getExternalFilesDir(null)!!.absolutePath}/SMMBackups."
+            getString(R.string.backups_exported_to_imported_from, this.getExternalFilesDir(null)!!.absolutePath)
 
         backupDialog.import_btn.setOnClickListener {
             if (checkStoragePermission()) {
@@ -1305,11 +1305,11 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
     }
 
     private fun requestStoragePermissionExport() {
-        ActivityCompat.requestPermissions(this, storagePermission, STORAGE_REQUEST_CODE_EXPORT)
+        ActivityCompat.requestPermissions(this, storagePermission, storageRequestCodeExport)
     }
 
     private fun requestStoragePermissionImport() {
-        ActivityCompat.requestPermissions(this, storagePermission, STORAGE_REQUEST_CODE_IMPORT)
+        ActivityCompat.requestPermissions(this, storagePermission, storageRequestCodeImport)
     }
 
     private fun exportTransactionsCSV(): Boolean {
@@ -1658,14 +1658,14 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
 
         when (requestCode) {
-            STORAGE_REQUEST_CODE_IMPORT -> {
+            storageRequestCodeImport -> {
                 if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     importFullCSV()
                 } else {
                     Toast.makeText(this, "Permission denied.", Toast.LENGTH_SHORT).show()
                 }
             }
-            STORAGE_REQUEST_CODE_EXPORT -> {
+            storageRequestCodeExport -> {
                 if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     exportFullCSV()
                 } else {

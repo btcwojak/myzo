@@ -12,13 +12,11 @@ class CategoryAdapter(private val context: Context, private val items: ArrayList
     RecyclerView.Adapter<CategoryAdapter.ViewHolder>() {
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val categoryItem = view.category_row_layout!!
         val titleView = view.title_category!!
         val colourView = view.colour_category!!
         val updateView = view.update_category!!
         val deleteView = view.delete_category!!
         val defaultView = view.default_category!!
-
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {

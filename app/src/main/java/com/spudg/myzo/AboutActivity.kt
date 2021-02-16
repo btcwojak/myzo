@@ -17,8 +17,9 @@ class AboutActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_about)
 
-        var version = packageManager.getPackageInfo(packageName, 0).versionName
-        myzo_desc.text = "v$version, made by Spudg Studios"
+        val version = packageManager.getPackageInfo(packageName, 0).versionName
+        myzo_desc.text = getString(R.string.version_by_ss, version.toString())
+
 
         back_to_trans_from_about.setOnClickListener {
             val intent = Intent(this, MainActivity::class.java)

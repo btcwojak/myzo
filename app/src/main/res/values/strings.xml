@@ -84,4 +84,19 @@
     <string name="next_posting_date_placeholder">Next posting date: 07/12/2022</string>
     <string name="account">Account</string>
     <string name="frequency">Frequency</string>
+    <string name="rate_on_play_store">Rate on Play Store</string>
+    <string name="export_import_explain">Export to or import from a backup folder, containing CSV files for your transactions, categories and accounts.</string>
+    <string name="import_btn">Import</string>
+    <string name="export_btn">Export</string>
+    <string name="last_export_never">Last export: Never</string>
+    <string name="no_recurring_desc">No recurring transactions added yet. Press the button below to add your first!</string>
+    <string name="version_by_ss">v%1$s, made by Spudg Studios</string>
+    <string name="account_balance">Balance: %1$s</string>
+    <string name="total_account_balance">Total balance: %1$s</string>
+    <string name="month_header">%1$s %2$s</string>
+    <string name="day_month_year">%1$s %2$s %3$s</string>
+    <string name="error">Error</string>
+    <string name="last_backup_date">Last backup: %1$s</string>
+    <string name="backups_exported_to_imported_from">Backups will be exported to and imported from %1$s/SMMBackups.</string>
+    <string name="next_posting_date">Next posting date: %1$s</string>
 </resources>

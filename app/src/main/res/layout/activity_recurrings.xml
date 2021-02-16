@@ -34,7 +34,8 @@
                 android:foreground="?attr/selectableItemBackground"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                android:contentDescription="@string/back" />
 
             <TextView
                 android:id="@+id/recurring_heading"
@@ -104,7 +105,7 @@
                 android:gravity="center_horizontal"
                 android:paddingLeft="20dp"
                 android:paddingRight="20dp"
-                android:text="No recurring transactions added yet. Press the button below to add your first!"
+                android:text="@string/no_recurring_desc"
                 android:textColor="@android:color/black"
                 android:textSize="16sp"
                 app:layout_constraintBottom_toBottomOf="parent"

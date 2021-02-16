@@ -35,10 +35,11 @@
                 android:foreground="?attr/selectableItemBackground"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                android:contentDescription="@string/back" />
 
             <TextView
-                android:id="@+id/category_heading"
+                android:id="@+id/about_myzo_heading"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="20dp"
@@ -177,7 +178,7 @@
                     android:fontFamily="@font/open_sans_light"
                     android:foreground="?attr/selectableItemBackground"
                     android:padding="10dp"
-                    android:text="Rate on Play Store"
+                    android:text="@string/rate_on_play_store"
                     android:textColor="@color/colorAccent"
                     android:textSize="16sp"
                     app:layout_constraintBottom_toTopOf="@id/email_btn"

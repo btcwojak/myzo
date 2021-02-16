@@ -159,7 +159,7 @@ class AccountsActivity : AppCompatActivity() {
 
     private fun setTotalBalance() {
         val dbHandler = TransactionsHandler(this, null)
-        balance_heading.text = "Total balance: ${dbHandler.getBalanceForAllAccounts()}"
+        balance_heading.text = getString(R.string.total_account_balance, dbHandler.getBalanceForAllAccounts())
         dbHandler.close()
     }
 

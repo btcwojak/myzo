@@ -102,9 +102,7 @@ class AccountsHandler(context: Context, factory: SQLiteDatabase.CursorFactory?) 
         val cursor =
             db.rawQuery("SELECT * FROM $TABLE_ACCOUNTS WHERE $KEY_NAME = '$accountName'", null)
 
-        val id: Int
-
-        id = if (cursor.moveToFirst()) {
+        val id: Int = if (cursor.moveToFirst()) {
             cursor.getInt(cursor.getColumnIndex(KEY_ID))
         } else {
             0
@@ -121,9 +119,7 @@ class AccountsHandler(context: Context, factory: SQLiteDatabase.CursorFactory?) 
         val db = this.readableDatabase
         val cursor = db.rawQuery("SELECT * FROM $TABLE_ACCOUNTS WHERE $KEY_ID = $accountId", null)
 
-        val name: String
-
-        name = if (cursor.moveToFirst()) {
+        val name: String = if (cursor.moveToFirst()) {
             cursor.getString(cursor.getColumnIndex(KEY_NAME))
         } else {
             "Error"
