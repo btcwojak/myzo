@@ -614,7 +614,12 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
         var yearPicked = Calendar.getInstance()[Calendar.YEAR]
 
         addDialog.change_date_add.text =
-            getString(R.string.day_month_year, dayPicked.toString(), Constants.getShortMonth(monthPicked), yearPicked.toString())
+            getString(
+                R.string.day_month_year,
+                dayPicked.toString(),
+                Constants.getShortMonth(monthPicked),
+                yearPicked.toString()
+            )
 
         addDialog.change_date_add.setOnClickListener {
             val changeDateDialog = Dialog(this, R.style.Theme_Dialog)
@@ -684,7 +689,12 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
 
             changeDateDialog.submit_dmy.setOnClickListener {
                 addDialog.change_date_add.text =
-                    getString(R.string.day_month_year, dayPicked.toString(), Constants.getShortMonth(monthPicked), yearPicked.toString())
+                    getString(
+                        R.string.day_month_year,
+                        dayPicked.toString(),
+                        Constants.getShortMonth(monthPicked),
+                        yearPicked.toString()
+                    )
                 changeDateDialog.dismiss()
             }
 
@@ -697,7 +707,12 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
                 monthPicked = Calendar.getInstance()[Calendar.MONTH] + 1
                 yearPicked = Calendar.getInstance()[Calendar.YEAR]
                 addDialog.change_date_add.text =
-                    getString(R.string.day_month_year, dayPicked.toString(), Constants.getShortMonth(monthPicked), yearPicked.toString())
+                    getString(
+                        R.string.day_month_year,
+                        dayPicked.toString(),
+                        Constants.getShortMonth(monthPicked),
+                        yearPicked.toString()
+                    )
                 changeDateDialog.dismiss()
             }
 
@@ -824,7 +839,12 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
         var yearPicked = transaction.year
 
         updateDialog.change_date_update.text =
-            getString(R.string.day_month_year, dayPicked.toString(), Constants.getShortMonth(monthPicked), yearPicked.toString())
+            getString(
+                R.string.day_month_year,
+                dayPicked.toString(),
+                Constants.getShortMonth(monthPicked),
+                yearPicked.toString()
+            )
 
         updateDialog.change_date_update.setOnClickListener {
             val changeDateDialog = Dialog(this, R.style.Theme_Dialog)
@@ -894,7 +914,12 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
 
             changeDateDialog.submit_dmy.setOnClickListener {
                 updateDialog.change_date_update.text =
-                    getString(R.string.day_month_year, dayPicked.toString(), Constants.getShortMonth(monthPicked), yearPicked.toString())
+                    getString(
+                        R.string.day_month_year,
+                        dayPicked.toString(),
+                        Constants.getShortMonth(monthPicked),
+                        yearPicked.toString()
+                    )
                 changeDateDialog.dismiss()
             }
 
@@ -907,7 +932,12 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
                 monthPicked = transaction.month
                 yearPicked = transaction.year
                 updateDialog.change_date_update.text =
-                    getString(R.string.day_month_year, dayPicked.toString(), Constants.getShortMonth(monthPicked), yearPicked.toString())
+                    getString(
+                        R.string.day_month_year,
+                        dayPicked.toString(),
+                        Constants.getShortMonth(monthPicked),
+                        yearPicked.toString()
+                    )
                 changeDateDialog.dismiss()
             }
 
@@ -1208,7 +1238,10 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
         db.close()
 
         backupDialog.import_text_export_location.text =
-            getString(R.string.backups_exported_to_imported_from, this.getExternalFilesDir(null)!!.absolutePath)
+            getString(
+                R.string.backups_exported_to_imported_from,
+                this.getExternalFilesDir(null)!!.absolutePath
+            )
 
         backupDialog.import_btn.setOnClickListener {
             if (checkStoragePermission()) {

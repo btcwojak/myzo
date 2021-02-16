@@ -83,7 +83,12 @@ class RecurringsActivity : AppCompatActivity(), AdapterView.OnItemSelectedListen
         var yearPicked = Calendar.getInstance()[Calendar.YEAR]
 
         addDialog.change_date_add_recurring.text =
-            getString(R.string.day_month_year, dayPicked.toString(), Constants.getShortMonth(monthPicked), yearPicked.toString())
+            getString(
+                R.string.day_month_year,
+                dayPicked.toString(),
+                Constants.getShortMonth(monthPicked),
+                yearPicked.toString()
+            )
 
         addDialog.change_date_add_recurring.setOnClickListener {
             val changeDateDialog = Dialog(this, R.style.Theme_Dialog)
@@ -163,7 +168,12 @@ class RecurringsActivity : AppCompatActivity(), AdapterView.OnItemSelectedListen
                     ).show()
                 } else {
                     addDialog.change_date_add_recurring.text =
-                        getString(R.string.day_month_year, dayPicked.toString(), Constants.getShortMonth(monthPicked), yearPicked.toString())
+                        getString(
+                            R.string.day_month_year,
+                            dayPicked.toString(),
+                            Constants.getShortMonth(monthPicked),
+                            yearPicked.toString()
+                        )
                     changeDateDialog.dismiss()
                 }
             }
@@ -177,7 +187,12 @@ class RecurringsActivity : AppCompatActivity(), AdapterView.OnItemSelectedListen
                 monthPicked = Calendar.getInstance()[Calendar.MONTH] + 1
                 yearPicked = Calendar.getInstance()[Calendar.YEAR]
                 addDialog.change_date_add_recurring.text =
-                    getString(R.string.day_month_year, dayPicked.toString(), Constants.getShortMonth(monthPicked), yearPicked.toString())
+                    getString(
+                        R.string.day_month_year,
+                        dayPicked.toString(),
+                        Constants.getShortMonth(monthPicked),
+                        yearPicked.toString()
+                    )
                 changeDateDialog.dismiss()
             }
 
@@ -330,7 +345,12 @@ class RecurringsActivity : AppCompatActivity(), AdapterView.OnItemSelectedListen
         var yearPicked = recurring.nextYear
 
         updateDialog.change_date_update_recurring.text =
-            getString(R.string.day_month_year, dayPicked.toString(), Constants.getShortMonth(monthPicked), yearPicked.toString())
+            getString(
+                R.string.day_month_year,
+                dayPicked.toString(),
+                Constants.getShortMonth(monthPicked),
+                yearPicked.toString()
+            )
 
         updateDialog.change_date_update_recurring.setOnClickListener {
             val changeDateDialog = Dialog(this, R.style.Theme_Dialog)
@@ -410,7 +430,12 @@ class RecurringsActivity : AppCompatActivity(), AdapterView.OnItemSelectedListen
                     ).show()
                 } else {
                     updateDialog.change_date_update_recurring.text =
-                        getString(R.string.day_month_year, dayPicked.toString(), Constants.getShortMonth(monthPicked), yearPicked.toString())
+                        getString(
+                            R.string.day_month_year,
+                            dayPicked.toString(),
+                            Constants.getShortMonth(monthPicked),
+                            yearPicked.toString()
+                        )
                     changeDateDialog.dismiss()
                 }
             }
@@ -424,7 +449,12 @@ class RecurringsActivity : AppCompatActivity(), AdapterView.OnItemSelectedListen
                 monthPicked = recurring.nextMonth
                 yearPicked = recurring.nextYear
                 updateDialog.change_date_update_recurring.text =
-                    getString(R.string.day_month_year, dayPicked.toString(), Constants.getShortMonth(monthPicked), yearPicked.toString())
+                    getString(
+                        R.string.day_month_year,
+                        dayPicked.toString(),
+                        Constants.getShortMonth(monthPicked),
+                        yearPicked.toString()
+                    )
                 changeDateDialog.dismiss()
             }
 

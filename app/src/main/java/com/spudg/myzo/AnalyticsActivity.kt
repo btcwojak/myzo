@@ -442,7 +442,11 @@ class AnalyticsActivity : AppCompatActivity(), AdapterView.OnItemSelectedListene
     }
 
     private fun setMonthHeader(month: Int, year: Int) {
-        month_selected_header.text = getString(R.string.month_header, Constants.MONTHS_SHORT_ARRAY[month - 1], year.toString())
+        month_selected_header.text = getString(
+            R.string.month_header,
+            Constants.MONTHS_SHORT_ARRAY[month - 1],
+            year.toString()
+        )
     }
 
     override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {

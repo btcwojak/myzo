@@ -37,7 +37,8 @@ class AccountAdapter(private val context: Context, private val items: ArrayList<
         if (context is AccountsActivity) {
             val db = context.getBalance()
             val bal = db.getBalanceForAccount(account.id)
-            holder.balanceView.text = holder.balanceView.context.getString(R.string.account_balance, bal)
+            holder.balanceView.text =
+                holder.balanceView.context.getString(R.string.account_balance, bal)
             db.close()
         }
 

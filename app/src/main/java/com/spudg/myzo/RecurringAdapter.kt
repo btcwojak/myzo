@@ -41,7 +41,8 @@ class RecurringAdapter(val context: Context, private val items: ArrayList<Recurr
         val sdf = SimpleDateFormat("EEEE d MMM yyyy")
         val date = sdf.format(recurring.nextDateMillis.toLong())
 
-        holder.dateView.text = holder.dateView.context.getString(R.string.next_posting_date, date.toString())
+        holder.dateView.text =
+            holder.dateView.context.getString(R.string.next_posting_date, date.toString())
 
         holder.frequencyView.text = recurring.frequency
 
