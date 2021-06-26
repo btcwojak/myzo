@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/dialog_background_solid"
+    android:orientation="vertical"
+    android:padding="10dp">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="5dp"
+        android:fontFamily="@font/open_sans_light"
+        android:text="Transfer between accounts"
+        android:textColor="@android:color/black"
+        android:textSize="18sp" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="From"
+        android:layout_marginStart="8dp"
+        android:textSize="16sp"
+        android:layout_marginTop="20dp"/>
+
+    <LinearLayout
+        android:id="@+id/accountFromDropdownLayoutTransfer"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_marginTop="5dp"
+        android:layout_weight="10"
+        android:background="@drawable/dropdown_border">
+
+        <Spinner
+            android:id="@+id/accountFromDropdownTransfer"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:backgroundTint="@color/colorPrimaryDark"
+            android:overlapAnchor="false"
+            android:spinnerMode="dropdown" />
+
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="To"
+        android:layout_marginStart="8dp"
+        android:textSize="16sp"
+        android:layout_marginTop="20dp"/>
+
+    <LinearLayout
+        android:id="@+id/accountToDropdownLayoutTransfer"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_marginTop="5dp"
+        android:layout_weight="10"
+        android:background="@drawable/dropdown_border">
+
+        <Spinner
+            android:id="@+id/accountToDropdownTransfer"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:backgroundTint="@color/colorPrimaryDark"
+            android:overlapAnchor="false"
+            android:spinnerMode="dropdown" />
+
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="With category"
+        android:layout_marginStart="8dp"
+        android:textSize="16sp"
+        android:layout_marginTop="20dp"/>
+
+    <LinearLayout
+        android:id="@+id/categoryDropdownTransferLayout"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_marginTop="5dp"
+        android:layout_weight="10"
+        android:background="@drawable/dropdown_border">
+
+        <Spinner
+            android:id="@+id/categoryDropdownTransfer"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:backgroundTint="@color/colorPrimaryDark"
+            android:overlapAnchor="false"
+            android:spinnerMode="dropdown" />
+
+    </LinearLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/etAmountTransferLayout"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="15dp">
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/etAmountTransfer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/open_sans_light"
+            android:hint="@string/amount_transfer"
+            android:inputType="numberDecimal" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:gravity="end"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/tvTransfer"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:fontFamily="@font/open_sans_light"
+            android:foreground="?attr/selectableItemBackground"
+            android:gravity="center"
+            android:padding="10dp"
+            android:text="Transfer"
+            android:textColor="#673AB7" />
+
+        <TextView
+            android:id="@+id/tvCancelTransfer"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:fontFamily="@font/open_sans_light"
+            android:foreground="?attr/selectableItemBackground"
+            android:gravity="center"
+            android:padding="10dp"
+            android:text="@string/cancel"
+            android:textColor="@android:color/black" />
+
+    </LinearLayout>
+</LinearLayout>

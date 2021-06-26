@@ -5,18 +5,32 @@ import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.util.Log
+import android.view.View
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.activity_accounts.*
 import kotlinx.android.synthetic.main.dialog_add_account.*
 import kotlinx.android.synthetic.main.dialog_add_account.etNameLayout
+import kotlinx.android.synthetic.main.dialog_add_account.tvAdd
 import kotlinx.android.synthetic.main.dialog_add_account.tvCancel
 import kotlinx.android.synthetic.main.dialog_add_account.view.etName
+import kotlinx.android.synthetic.main.dialog_add_transaction.*
 import kotlinx.android.synthetic.main.dialog_delete_transaction.tvDelete
+import kotlinx.android.synthetic.main.dialog_transfer_between.*
+import kotlinx.android.synthetic.main.dialog_transfer_between.view.*
 import kotlinx.android.synthetic.main.dialog_update_account.*
+import java.util.*
+import kotlin.collections.ArrayList
 
-class AccountsActivity : AppCompatActivity() {
+class AccountsActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
+
+    private var selectedAccountFrom = ""
+    private var selectedAccountTo = ""
+    private var selectedCategory = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,6 +43,70 @@ class AccountsActivity : AppCompatActivity() {
             addAccount()
         }
 
+        btnTransfer.setOnClickListener {
+            transferBetween()
+        }
+
+    }
+
+    private fun transferBetween() {
+        val transferDialog = Dialog(this, R.style.Theme_Dialog)
+        transferDialog.setCancelable(false)
+        transferDialog.setContentView(R.layout.dialog_transfer_between)
+        transferDialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+
+        val accountsListHandler = AccountsHandler(this, null)
+        val itemsAccounts = accountsListHandler.getAllAccountNames()
+        accountsListHandler.close()
+        val accountsAdapter = ArrayAdapter(this, R.layout.custom_spinner, itemsAccounts)
+        transferDialog.accountFromDropdownTransfer.adapter = accountsAdapter
+        transferDialog.accountFromDropdownTransfer.onItemSelectedListener = this
+        transferDialog.accountToDropdownTransfer.adapter = accountsAdapter
+        transferDialog.accountToDropdownTransfer.onItemSelectedListener = this
+
+        val categoryListHandler = CategoriesHandler(this, null)
+        val itemsCategories = categoryListHandler.getAllCategoryTitles()
+        accountsListHandler.close()
+        val categoryAdapter = ArrayAdapter(this, R.layout.custom_spinner, itemsCategories)
+        transferDialog.categoryDropdownTransfer.adapter = categoryAdapter
+        transferDialog.categoryDropdownTransfer.onItemSelectedListener = this
+
+        transferDialog.tvTransfer.setOnClickListener {
+            val transactionsHandler = TransactionsHandler(this, null)
+            val accountsHandler = AccountsHandler(this, null)
+            val accountFromId = accountsHandler.getAccountId(selectedAccountFrom)
+            val accountToId = accountsHandler.getAccountId(selectedAccountTo)
+            val amountToTransfer = transferDialog.etAmountTransferLayout.etAmountTransfer.text.toString()
+            val category = selectedCategory
+
+            val cal = Calendar.getInstance()
+            val day = cal.get(Calendar.DAY_OF_MONTH)
+            val month = cal.get(Calendar.MONTH)
+            val year = cal.get(Calendar.YEAR)
+
+            if (amountToTransfer.isNotEmpty()) {
+                if (accountToId != accountFromId) {
+                    transactionsHandler.addTransaction(TransactionModel(0, "Transfer to $selectedAccountFrom",categoryListHandler.getCategoryId(category), (amountToTransfer.toFloat()*-1).toString(),accountFromId,month, day, year, cal.timeInMillis.toString()))
+                    transactionsHandler.addTransaction(TransactionModel(0, "Transfer from $selectedAccountTo",categoryListHandler.getCategoryId(category), amountToTransfer,accountToId,month, day, year, cal.timeInMillis.toString()))
+
+                    setUpAccountList()
+
+                    Toast.makeText(this, "Transfer added successfully.", Toast.LENGTH_SHORT).show()
+
+                    transferDialog.dismiss()
+                } else {
+                    Toast.makeText(this, "You can't transfer between the same account.", Toast.LENGTH_SHORT).show()
+                }
+            } else {
+                Toast.makeText(this, "Amount can't be blank.", Toast.LENGTH_SHORT).show()
+            }
+        }
+
+        transferDialog.tvCancelTransfer.setOnClickListener {
+            transferDialog.dismiss()
+        }
+
+        transferDialog.show()
     }
 
     private fun setUpAccountList() {
@@ -162,6 +240,21 @@ class AccountsActivity : AppCompatActivity() {
         balance_heading.text =
             getString(R.string.total_account_balance, dbHandler.getBalanceForAllAccounts())
         dbHandler.close()
+    }
+
+    override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+        when (parent!!.id) {
+            R.id.accountFromDropdownTransfer -> selectedAccountFrom =
+                parent.getItemAtPosition(position).toString()
+            R.id.accountToDropdownTransfer -> selectedAccountTo =
+                parent.getItemAtPosition(position).toString()
+            R.id.categoryDropdownTransfer -> selectedCategory =
+                parent.getItemAtPosition(position).toString()
+        }
+    }
+
+    override fun onNothingSelected(parent: AdapterView<*>?) {
+        Toast.makeText(this, "Nothing's selected in the accounts dropdown.", Toast.LENGTH_SHORT).show()
     }
 
 

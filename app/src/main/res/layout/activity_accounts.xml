@@ -15,7 +15,7 @@
         android:layout_marginLeft="50dp"
         android:layout_marginTop="20dp"
         android:layout_marginRight="50dp"
-        android:layout_marginBottom="20dp"
+        android:layout_marginBottom="10dp"
         android:elevation="10dp"
         android:orientation="vertical">
 
@@ -49,10 +49,22 @@
                 app:layout_constraintRight_toRightOf="@id/account_heading"
                 app:layout_constraintTop_toBottomOf="@id/account_heading" />
 
-
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/btnTransfer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="8dp"
+        android:foreground="?attr/selectableItemBackground"
+        android:layout_marginBottom="10dp"
+        android:layout_gravity="center_horizontal"
+        android:textColor="@color/colorAccent"
+        android:fontFamily="@font/open_sans_light"
+        android:text="@string/transfer_between_accounts"
+        android:gravity="center_horizontal"/>
 
     <LinearLayout
         android:layout_width="match_parent"
