@@ -5,7 +5,6 @@ import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
@@ -15,16 +14,13 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.activity_accounts.*
 import kotlinx.android.synthetic.main.dialog_add_account.*
 import kotlinx.android.synthetic.main.dialog_add_account.etNameLayout
-import kotlinx.android.synthetic.main.dialog_add_account.tvAdd
 import kotlinx.android.synthetic.main.dialog_add_account.tvCancel
 import kotlinx.android.synthetic.main.dialog_add_account.view.etName
-import kotlinx.android.synthetic.main.dialog_add_transaction.*
 import kotlinx.android.synthetic.main.dialog_delete_transaction.tvDelete
 import kotlinx.android.synthetic.main.dialog_transfer_between.*
 import kotlinx.android.synthetic.main.dialog_transfer_between.view.*
 import kotlinx.android.synthetic.main.dialog_update_account.*
 import java.util.*
-import kotlin.collections.ArrayList
 
 class AccountsActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
 
@@ -76,7 +72,8 @@ class AccountsActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener
             val accountsHandler = AccountsHandler(this, null)
             val accountFromId = accountsHandler.getAccountId(selectedAccountFrom)
             val accountToId = accountsHandler.getAccountId(selectedAccountTo)
-            val amountToTransfer = transferDialog.etAmountTransferLayout.etAmountTransfer.text.toString()
+            val amountToTransfer =
+                transferDialog.etAmountTransferLayout.etAmountTransfer.text.toString()
             val category = selectedCategory
 
             val cal = Calendar.getInstance()
@@ -86,8 +83,32 @@ class AccountsActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener
 
             if (amountToTransfer.isNotEmpty()) {
                 if (accountToId != accountFromId) {
-                    transactionsHandler.addTransaction(TransactionModel(0, "Transfer to $selectedAccountFrom",categoryListHandler.getCategoryId(category), (amountToTransfer.toFloat()*-1).toString(),accountFromId,month, day, year, cal.timeInMillis.toString()))
-                    transactionsHandler.addTransaction(TransactionModel(0, "Transfer from $selectedAccountTo",categoryListHandler.getCategoryId(category), amountToTransfer,accountToId,month, day, year, cal.timeInMillis.toString()))
+                    transactionsHandler.addTransaction(
+                        TransactionModel(
+                            0,
+                            "Transfer to $selectedAccountFrom",
+                            categoryListHandler.getCategoryId(category),
+                            (amountToTransfer.toFloat() * -1).toString(),
+                            accountFromId,
+                            month,
+                            day,
+                            year,
+                            cal.timeInMillis.toString()
+                        )
+                    )
+                    transactionsHandler.addTransaction(
+                        TransactionModel(
+                            0,
+                            "Transfer from $selectedAccountTo",
+                            categoryListHandler.getCategoryId(category),
+                            amountToTransfer,
+                            accountToId,
+                            month,
+                            day,
+                            year,
+                            cal.timeInMillis.toString()
+                        )
+                    )
 
                     setUpAccountList()
 
@@ -95,7 +116,11 @@ class AccountsActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener
 
                     transferDialog.dismiss()
                 } else {
-                    Toast.makeText(this, "You can't transfer between the same account.", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        this,
+                        "You can't transfer between the same account.",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
             } else {
                 Toast.makeText(this, "Amount can't be blank.", Toast.LENGTH_SHORT).show()
@@ -254,7 +279,8 @@ class AccountsActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener
     }
 
     override fun onNothingSelected(parent: AdapterView<*>?) {
-        Toast.makeText(this, "Nothing's selected in the accounts dropdown.", Toast.LENGTH_SHORT).show()
+        Toast.makeText(this, "Nothing's selected in the accounts dropdown.", Toast.LENGTH_SHORT)
+            .show()
     }
 
 
