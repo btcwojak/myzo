@@ -101,7 +101,6 @@
     <string name="next_posting_date">Next posting date: %1$s</string>
     <string name="amount_transfer">Amount</string>
     <string name="transfer_between_accounts">Transfer between accounts</string>
-    <string name="transfer_between_accounts">Transfer between accounts</string>
     <string name="from">From</string>
     <string name="to">To</string>
     <string name="with_category">With category</string>
