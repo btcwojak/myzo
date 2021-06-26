@@ -12,14 +12,14 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="5dp"
         android:fontFamily="@font/open_sans_light"
-        android:text="Transfer between accounts"
+        android:text="@string/transfer_between_accounts"
         android:textColor="@android:color/black"
         android:textSize="18sp" />
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="From"
+        android:text="@string/from"
         android:layout_marginStart="8dp"
         android:textSize="16sp"
         android:layout_marginTop="20dp"/>
@@ -46,7 +46,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="To"
+        android:text="@string/to"
         android:layout_marginStart="8dp"
         android:textSize="16sp"
         android:layout_marginTop="20dp"/>
@@ -73,7 +73,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="With category"
+        android:text="@string/with_category"
         android:layout_marginStart="8dp"
         android:textSize="16sp"
         android:layout_marginTop="20dp"/>
@@ -131,7 +131,7 @@
             android:foreground="?attr/selectableItemBackground"
             android:gravity="center"
             android:padding="10dp"
-            android:text="Transfer"
+            android:text="@string/transfer"
             android:textColor="#673AB7" />
 
         <TextView
