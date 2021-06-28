@@ -78,7 +78,7 @@ class AccountsActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener
 
             val cal = Calendar.getInstance()
             val day = cal.get(Calendar.DAY_OF_MONTH)
-            val month = cal.get(Calendar.MONTH)
+            val month = cal.get(Calendar.MONTH) + 1
             val year = cal.get(Calendar.YEAR)
 
             if (amountToTransfer.isNotEmpty()) {
@@ -86,7 +86,7 @@ class AccountsActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener
                     transactionsHandler.addTransaction(
                         TransactionModel(
                             0,
-                            "Transfer to $selectedAccountFrom",
+                            "Transfer to $selectedAccountTo",
                             categoryListHandler.getCategoryId(category),
                             (amountToTransfer.toFloat() * -1).toString(),
                             accountFromId,
@@ -99,7 +99,7 @@ class AccountsActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener
                     transactionsHandler.addTransaction(
                         TransactionModel(
                             0,
-                            "Transfer from $selectedAccountTo",
+                            "Transfer from $selectedAccountFrom",
                             categoryListHandler.getCategoryId(category),
                             amountToTransfer,
                             accountToId,
