@@ -1313,7 +1313,7 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
     }
 
     private fun importFullCSV() {
-        if (importCategoriesCSV() && importAccountsCSV() && importTransactionsCSV() && importRecurringsCSV()) {
+        if (importCategoriesCSV() || importAccountsCSV() || importTransactionsCSV() || importRecurringsCSV()) {
             Toast.makeText(
                 this,
                 "Backup files imported successfully from ${this.getExternalFilesDir(null)!!.absolutePath}/SMMBackups",
